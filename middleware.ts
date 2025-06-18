@@ -24,15 +24,17 @@ function getLocale(request: NextRequest): string | undefined {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public`
+  // Skip middleware for static files, images, and Next.js internals
   if (
-    [
-      "/manifest.json",
-      "/favicon.ico",
-      // Your other files in `public`
-    ].includes(pathname)
-  )
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/images/") ||
+    pathname.startsWith("/favicon.ico") ||
+    pathname.startsWith("/manifest.json") ||
+    pathname.match(/\.(png|jpg|jpeg|gif|webp|svg|ico|css|js)$/i)
+  ) {
     return;
+  }
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
