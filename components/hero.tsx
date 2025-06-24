@@ -31,13 +31,15 @@ export const Hero = ({ title, description, locale = "en" }: HeroProps) => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              Available for New Projects
+              Japan ⇄ Global Market Specialist
             </div>
 
             {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               <span className="block">{title}</span>
-              <span className="block text-blue-600 mt-2">Digital Success</span>
+              <span className="block text-blue-600 mt-2">
+                Cross-Border Success
+              </span>
             </h1>
 
             {/* Description */}
@@ -48,12 +50,14 @@ export const Hero = ({ title, description, locale = "en" }: HeroProps) => {
             {/* Stats */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 mb-10">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">500+</div>
-                <div className="text-sm text-gray-600">Projects Completed</div>
+                <div className="text-2xl font-bold text-gray-900">100+</div>
+                <div className="text-sm text-gray-600">
+                  Cross-Border Projects
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">98%</div>
-                <div className="text-sm text-gray-600">Client Satisfaction</div>
+                <div className="text-2xl font-bold text-gray-900">🇯🇵🇺🇸</div>
+                <div className="text-sm text-gray-600">JP ⇄ EN Markets</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">24/7</div>
@@ -65,86 +69,79 @@ export const Hero = ({ title, description, locale = "en" }: HeroProps) => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg" className="h-14 px-8 text-base">
                 <Link href={`/${locale}/contact`}>
-                  Get Started Today
+                  Start Your Global Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
 
               <Button
+                asChild
                 variant="outline"
                 size="lg"
                 className="h-14 px-8 text-base bg-white hover:bg-gray-50"
               >
-                <Play className="mr-2 h-5 w-5" />
-                View Portfolio
+                <Link href={`/${locale}/projects`}>
+                  <Play className="mr-2 h-5 w-5" />
+                  See Our Work
+                </Link>
               </Button>
             </div>
 
             {/* Trust Indicators */}
             <div className="mt-12 pt-8 border-t border-gray-200">
               <p className="text-sm text-gray-500 mb-4">
-                Trusted by industry leaders
+                Specializing in Japan ⇄ Global markets
               </p>
-              <div className="flex flex-wrap justify-center lg:justify-start items-center gap-8 opacity-60">
-                {/* Placeholder for company logos */}
-                <div className="h-8 w-24 bg-gray-200 rounded" />
-                <div className="h-8 w-20 bg-gray-200 rounded" />
-                <div className="h-8 w-28 bg-gray-200 rounded" />
-                <div className="h-8 w-22 bg-gray-200 rounded" />
+              <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm text-gray-600">
+                <span>🌐 Global E-commerce</span>
+                <span>🔍 Multilingual SEO</span>
+                <span>✍️ Cross-cultural Content</span>
+                <span>🛒 Shopify & WordPress</span>
               </div>
             </div>
           </div>
 
-          {/* Right Content - Professional Portrait */}
+          {/* Right Content - Professional Photo */}
           <div className="relative">
             <div className="relative z-10">
-              {/* Main Portrait Container */}
-              <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl overflow-hidden aspect-[3/4] max-w-md mx-auto">
-                <img
-                  src="/images/hero-portrait.jpg"
-                  alt="Professional portrait - Ryan, Digital Marketing Expert"
-                  className="w-full h-full object-cover object-center"
-                />
-
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-
-                {/* Floating Achievement Badges */}
-                <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">
-                      Available Now
-                    </span>
-                  </div>
+              {/* Main Professional Photo */}
+              <div className="relative bg-white rounded-2xl shadow-2xl p-4 border border-gray-100">
+                <div className="relative overflow-hidden rounded-xl">
+                  <Image
+                    src="/images/ryan-main.jpg"
+                    alt="Ryan - Cross-border Marketing Specialist"
+                    width={600}
+                    height={800}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
                 </div>
 
-                <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-900">
-                      Expert Developer
-                    </span>
-                  </div>
+                {/* Floating Elements */}
+                <div className="absolute -top-4 -right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                  ✓ Japan Expert
+                </div>
+                <div className="absolute -bottom-4 -left-4 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  🚀 Global Ready
                 </div>
               </div>
 
-              {/* Floating Skill Cards */}
-              <div className="absolute -top-6 -left-6 bg-white rounded-lg shadow-xl p-4 border border-gray-100 rotate-[-4deg] max-w-[140px]">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-1">
-                    5+
-                  </div>
-                  <div className="text-xs text-gray-600">Years Experience</div>
+              {/* Floating Cards */}
+              <div className="absolute -top-8 -left-8 bg-white rounded-lg shadow-lg p-4 border border-gray-100 rotate-[-4deg]">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-900">
+                    🇯🇵 Japan Native
+                  </span>
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-lg shadow-xl p-4 border border-gray-100 rotate-[4deg] max-w-[140px]">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600 mb-1">
-                    100%
-                  </div>
-                  <div className="text-xs text-gray-600">Success Rate</div>
+              <div className="absolute -bottom-8 -right-8 bg-white rounded-lg shadow-lg p-4 border border-gray-100 rotate-[4deg]">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-900">
+                    🌍 Global Reach
+                  </span>
                 </div>
               </div>
             </div>

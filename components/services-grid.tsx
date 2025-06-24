@@ -1,167 +1,63 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-// Type definition based on Contentful structure
-export interface Service {
-  serviceTitle: string;
-  slug: string;
-  svgIcon: string; // SVG as string or icon name
-  teaser: string;
-  detailedDescription: string;
-  sortOrder: number;
-}
-
-// Dummy data based on your services
-const dummyServices: Service[] = [
-  {
-    serviceTitle: "Web Design",
-    slug: "web-design",
-    svgIcon: "🎨", // Using emoji for now, will be replaced with actual SVG
-    teaser:
-      "Beautiful, responsive websites that convert visitors into customers",
-    detailedDescription:
-      "Custom web design solutions focusing on user experience, mobile responsiveness, and conversion optimization. Perfect for Japanese businesses expanding internationally or international companies entering the Japanese market.",
-    sortOrder: 1,
-  },
-  {
-    serviceTitle: "On-page & Technical SEO",
-    slug: "seo-optimization",
-    svgIcon: "🔍",
-    teaser: "Boost your search rankings with comprehensive SEO strategies",
-    detailedDescription:
-      "Complete SEO optimization including technical audits, on-page optimization, and international SEO strategies. Specialized in helping businesses rank in both Japanese and international markets.",
-    sortOrder: 2,
-  },
-  {
-    serviceTitle: "Content Writing",
-    slug: "content-writing",
-    svgIcon: "✍️",
-    teaser: "Engaging content that speaks to your global audience",
-    detailedDescription:
-      "Professional content creation in English and Japanese, including website copy, blog posts, and marketing materials. Expert in cross-cultural communication and localization.",
-    sortOrder: 3,
-  },
-  {
-    serviceTitle: "E-commerce Solutions",
-    slug: "ecommerce-solutions",
-    svgIcon: "🛒",
-    teaser: "Shopify & WordPress stores optimized for international sales",
-    detailedDescription:
-      "Complete e-commerce development and optimization for Shopify and WordPress platforms. Specialized in multi-currency, multi-language setups for Japan-international business expansion.",
-    sortOrder: 4,
-  },
-  {
-    serviceTitle: "Landing Pages",
-    slug: "landing-pages",
-    svgIcon: "🎯",
-    teaser: "High-converting landing pages that drive results",
-    detailedDescription:
-      "Custom landing page design and development focused on conversion optimization. Perfect for market entry campaigns and targeted marketing initiatives in Japan and international markets.",
-    sortOrder: 5,
-  },
-];
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 interface ServicesGridProps {
-  items?: Service[];
+  services: any[];
   locale?: string;
 }
 
 export const ServicesGrid = ({
-  items = dummyServices,
+  services,
   locale = "en",
 }: ServicesGridProps) => {
-  // Sort services by sortOrder
-  const sortedServices = [...items].sort((a, b) => a.sortOrder - b.sortOrder);
+  // Sort services by order field
+  const sortedServices = services.sort(
+    (a: any, b: any) => (a.fields.order || 0) - (b.fields.order || 0)
+  );
 
   return (
-    <section className="py-24 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            {locale === "ja" ? "サービス" : "Our Services"}
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            {locale === "ja"
-              ? "日本企業の海外展開と、海外企業の日本市場参入を専門にサポートします"
-              : "Specialized solutions for Japanese businesses expanding globally and international companies entering Japan"}
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedServices.map((service: any) => (
+        <div
+          key={service.sys.id}
+          className="group relative bg-white rounded-2xl p-8 border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+        >
+          {/* Service Icon */}
+          {service.fields.icon?.fields?.file?.url ? (
+            <Image
+              src={`https:${service.fields.icon.fields.file.url}`}
+              alt={service.fields.icon.fields.title || service.fields.title}
+              width={96}
+              height={96}
+              className="w-24 h-24 mb-6 object-contain transition-transform duration-300 group-hover:scale-110"
+            />
+          ) : (
+            <div className="w-14 h-14 mb-6 bg-blue-100 rounded-lg"></div>
+          )}
+
+          {/* Service Content */}
+          <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+            {service.fields.title}
+          </h3>
+
+          <p className="text-gray-600 mb-6 leading-relaxed">
+            {service.fields.shortDescription}
           </p>
-        </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedServices.map((service) => (
-            <Card
-              key={service.slug}
-              className="group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/20 bg-card"
-            >
-              <CardHeader className="text-center pb-4">
-                {/* Icon */}
-                <div className="w-16 h-16 mx-auto mb-4 text-4xl flex items-center justify-center bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
-                  {service.svgIcon}
-                </div>
-
-                <CardTitle className="text-xl font-semibold text-card-foreground group-hover:text-primary transition-colors">
-                  {service.serviceTitle}
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="pt-0">
-                <CardDescription className="text-muted-foreground mb-4 text-center">
-                  {service.teaser}
-                </CardDescription>
-
-                <div className="text-sm text-muted-foreground leading-relaxed">
-                  {service.detailedDescription}
-                </div>
-
-                {/* CTA Link */}
-                <div className="mt-6 text-center">
-                  <a
-                    href={`/${locale}/services/${service.slug}`}
-                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
-                  >
-                    {locale === "ja" ? "詳細を見る" : "Learn More"}
-                    <svg
-                      className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-6">
-            {locale === "ja"
-              ? "プロジェクトについてご相談ください"
-              : "Ready to discuss your project?"}
-          </p>
-          <a
-            href={`/${locale}/contact`}
-            className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+          {/* Service Link */}
+          <Link
+            href={`/${locale}/services/${service.fields.slug}`}
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-all"
           >
-            {locale === "ja" ? "お問い合わせ" : "Get In Touch"}
-          </a>
+            Learn More
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+
+          {/* Hover Effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity -z-10" />
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 };
