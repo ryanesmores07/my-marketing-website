@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Hero } from "@/components/hero";
+import { AboutMe } from "@/components/about-me";
 import { ServicesHeader } from "@/components/services-header";
 import { ProjectsHeader } from "@/components/projects-header";
 import { ServicesSection } from "@/components/services-section";
@@ -27,7 +28,7 @@ export default async function Home({ params }: PageProps) {
       <Hero {...staticHeroData} locale={locale} />
 
       {/* Services Section */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-20 lg:py-28 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ServicesHeader />
           <ErrorBoundary fallback={<ServicesError locale={locale} />}>
@@ -38,8 +39,11 @@ export default async function Home({ params }: PageProps) {
         </div>
       </section>
 
+      {/* About Me Section */}
+      <AboutMe />
+
       {/* Projects Section */}
-      <section className="py-20 lg:py-28 bg-gray-50">
+      <section className="py-20 lg:py-28 bg-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ProjectsHeader />
           <ErrorBoundary fallback={<ProjectsError locale={locale} />}>

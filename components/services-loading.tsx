@@ -6,7 +6,7 @@ export function ServicesLoading() {
       {[...Array(6)].map((_, index) => (
         <div
           key={index}
-          className="bg-white rounded-2xl p-8 border border-gray-100"
+          className="bg-card rounded-2xl p-8 border border-border"
         >
           {/* Icon Loading */}
           <Skeleton className="w-14 h-14 rounded-lg mb-6" />

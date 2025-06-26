@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 interface NavigationProps {
   locale: string;
@@ -28,14 +29,14 @@ export const Navigation = ({ locale }: NavigationProps) => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-md bg-background/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
               href={`/${locale}`}
-              className="text-2xl font-bold text-gray-900"
+              className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
             >
               YourBrand
             </Link>
@@ -48,7 +49,7 @@ export const Navigation = ({ locale }: NavigationProps) => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -56,8 +57,8 @@ export const Navigation = ({ locale }: NavigationProps) => {
             </div>
           </div>
 
-          {/* Language Switcher & CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Language Switcher, Theme Switcher & CTA */}
+          <div className="hidden md:flex items-center space-x-3">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -74,6 +75,8 @@ export const Navigation = ({ locale }: NavigationProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <ThemeSwitcher />
 
             <Button asChild>
               <Link href={`/${locale}/contact`}>Get Started</Link>
@@ -100,40 +103,47 @@ export const Navigation = ({ locale }: NavigationProps) => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-border">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
 
-              {/* Mobile Language Switcher */}
-              <div className="pt-4 pb-2 border-t border-gray-200 mt-4">
+              {/* Mobile Language Switcher & Theme */}
+              <div className="pt-4 pb-2 border-t border-border mt-4">
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-gray-600 text-sm font-medium">
+                  <span className="text-muted-foreground text-sm font-medium">
                     Language
                   </span>
                   <div className="flex space-x-2">
                     <Link
                       href="/en"
-                      className="text-sm text-gray-600 hover:text-gray-900"
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       EN
                     </Link>
                     <Link
                       href="/ja"
-                      className="text-sm text-gray-600 hover:text-gray-900"
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       JA
                     </Link>
                   </div>
+                </div>
+
+                <div className="flex items-center justify-between px-3 py-2">
+                  <span className="text-muted-foreground text-sm font-medium">
+                    Theme
+                  </span>
+                  <ThemeSwitcher />
                 </div>
               </div>
 

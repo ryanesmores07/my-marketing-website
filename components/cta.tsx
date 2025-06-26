@@ -8,14 +8,14 @@ interface CTAProps {
 
 export const CTA = ({ locale = "en" }: CTAProps) => {
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-r from-gray-50 to-blue-50">
+    <section className="py-20 lg:py-28 bg-gradient-to-r from-background to-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl p-8 lg:p-12 text-center shadow-lg border border-gray-100">
+        <div className="bg-card rounded-2xl p-8 lg:p-12 text-center shadow-lg border border-border">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl lg:text-3xl font-bold text-card-foreground mb-4">
               Ready to Expand Your Market Reach?
             </h2>
-            <p className="text-gray-600 mb-8 text-lg">
+            <p className="text-muted-foreground mb-8 text-lg">
               Whether you&apos;re a Japanese business going global or an
               international company entering Japan, we have the expertise to
               make your cross-border expansion successful.
@@ -29,35 +29,37 @@ export const CTA = ({ locale = "en" }: CTAProps) => {
                 </Link>
               </Button>
 
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-12 px-8 bg-white hover:bg-gray-50"
-              >
+              <Button variant="outline" size="lg" className="h-12 px-8">
                 <Link href={`/${locale}/projects`}>View Our Work</Link>
               </Button>
             </div>
 
             {/* Key Benefits */}
-            <div className="grid sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200">
+            <div className="grid sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-border">
               <div className="text-center">
                 <div className="text-2xl mb-2">🇯🇵🌏</div>
-                <div className="font-medium text-gray-900">Cultural Bridge</div>
-                <div className="text-sm text-gray-600">
+                <div className="font-medium text-card-foreground">
+                  Cultural Bridge
+                </div>
+                <div className="text-sm text-muted-foreground">
                   Deep understanding of both markets
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl mb-2">🚀</div>
-                <div className="font-medium text-gray-900">Fast Delivery</div>
-                <div className="text-sm text-gray-600">
+                <div className="font-medium text-card-foreground">
+                  Fast Delivery
+                </div>
+                <div className="text-sm text-muted-foreground">
                   Rapid market entry solutions
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl mb-2">📈</div>
-                <div className="font-medium text-gray-900">Proven Results</div>
-                <div className="text-sm text-gray-600">
+                <div className="font-medium text-card-foreground">
+                  Proven Results
+                </div>
+                <div className="text-sm text-muted-foreground">
                   Track record of success
                 </div>
               </div>

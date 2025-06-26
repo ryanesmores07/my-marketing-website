@@ -45,7 +45,7 @@ export const Footer = ({ locale }: FooterProps) => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-12">
@@ -54,11 +54,11 @@ export const Footer = ({ locale }: FooterProps) => {
             <div className="lg:col-span-2">
               <Link
                 href={`/${locale}`}
-                className="text-2xl font-bold mb-4 block"
+                className="text-2xl font-bold mb-4 block hover:text-secondary transition-colors"
               >
                 YourBrand
               </Link>
-              <p className="text-gray-300 mb-6 max-w-md">
+              <p className="text-primary-foreground/80 mb-6 max-w-md">
                 We create beautiful, functional websites that help your business
                 grow. From design to development, we&apos;re your digital
                 partner.
@@ -66,16 +66,16 @@ export const Footer = ({ locale }: FooterProps) => {
 
               {/* Contact Info */}
               <div className="space-y-2">
-                <div className="flex items-center text-gray-300">
-                  <Mail className="h-4 w-4 mr-3 text-gray-400" />
+                <div className="flex items-center text-primary-foreground/80">
+                  <Mail className="h-4 w-4 mr-3 text-primary-foreground/60" />
                   <span>hello@yourbrand.com</span>
                 </div>
-                <div className="flex items-center text-gray-300">
-                  <Phone className="h-4 w-4 mr-3 text-gray-400" />
+                <div className="flex items-center text-primary-foreground/80">
+                  <Phone className="h-4 w-4 mr-3 text-primary-foreground/60" />
                   <span>+1 (555) 123-4567</span>
                 </div>
-                <div className="flex items-center text-gray-300">
-                  <MapPin className="h-4 w-4 mr-3 text-gray-400" />
+                <div className="flex items-center text-primary-foreground/80">
+                  <MapPin className="h-4 w-4 mr-3 text-primary-foreground/60" />
                   <span>New York, NY</span>
                 </div>
               </div>
@@ -84,13 +84,15 @@ export const Footer = ({ locale }: FooterProps) => {
             {/* Footer Sections */}
             {footerSections.map((section) => (
               <div key={section.title}>
-                <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
+                <h3 className="text-lg font-semibold mb-4 text-primary-foreground">
+                  {section.title}
+                </h3>
                 <ul className="space-y-2">
                   {section.links.map((link) => (
                     <li key={link.href + link.label}>
                       <Link
                         href={link.href}
-                        className="text-gray-300 hover:text-white transition-colors"
+                        className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -103,10 +105,10 @@ export const Footer = ({ locale }: FooterProps) => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-gray-800 py-6">
+        <div className="border-t border-primary-foreground/20 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Copyright */}
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+            <div className="text-primary-foreground/60 text-sm mb-4 md:mb-0">
               © {currentYear} YourBrand. All rights reserved.
             </div>
 
@@ -120,7 +122,7 @@ export const Footer = ({ locale }: FooterProps) => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                     aria-label={social.label}
                   >
                     <IconComponent className="h-5 w-5" />
@@ -133,13 +135,13 @@ export const Footer = ({ locale }: FooterProps) => {
             <div className="flex space-x-4 mt-4 md:mt-0">
               <Link
                 href="/en"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
+                className="text-primary-foreground/60 hover:text-primary-foreground text-sm transition-colors"
               >
                 English
               </Link>
               <Link
                 href="/ja"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
+                className="text-primary-foreground/60 hover:text-primary-foreground text-sm transition-colors"
               >
                 日本語
               </Link>

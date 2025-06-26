@@ -6,7 +6,7 @@ export function ProjectsLoading() {
       {[...Array(3)].map((_, index) => (
         <div
           key={index}
-          className="bg-white rounded-2xl p-8 border border-gray-100"
+          className="bg-card rounded-2xl p-8 border border-border"
         >
           {/* Content Loading */}
           <Skeleton className="h-6 mb-4" />

@@ -10,18 +10,18 @@ interface ServicesErrorProps {
 export function ServicesError({ locale = "en" }: ServicesErrorProps) {
   return (
     <div className="text-center py-10">
-      <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-red-50 text-red-700 ring-1 ring-inset ring-red-700/10 mb-6">
+      <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-destructive/10 text-destructive ring-1 ring-inset ring-destructive/20 mb-6">
         <span className="relative flex h-2 w-2 mr-2">
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive"></span>
         </span>
         Services Unavailable
       </div>
 
-      <h3 className="text-xl font-bold text-gray-900 mb-4">
+      <h3 className="text-xl font-bold text-foreground mb-4">
         Unable to Load Services
       </h3>
 
-      <p className="text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+      <p className="text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
         We&apos;re having trouble loading our services right now. Please try
         refreshing the page or contact us directly.
       </p>
