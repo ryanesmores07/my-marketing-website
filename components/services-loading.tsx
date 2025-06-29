@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function ServicesLoading() {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {[...Array(6)].map((_, index) => (
+      {[...Array(3)].map((_, index) => (
         <div
           key={index}
           className="bg-card rounded-2xl p-8 border border-border"

@@ -22,7 +22,7 @@ interface ServiceFields {
   title: string;
   slug: string;
   icon: any; // Asset link
-  shortDescription: string;
+  teaser: string[];
   body: any; // Rich text
   order: number;
 }

@@ -30,7 +30,7 @@ export const ServicesGrid = ({
               alt={service.fields.icon.fields.title || service.fields.title}
               width={96}
               height={96}
-              className="w-24 h-24 mb-6 object-contain transition-transform duration-300 group-hover:scale-110"
+              className="w-24 h-24 mb-6 object-contain transition-transform duration-300 group-hover:scale-110 "
             />
           ) : (
             <div className="w-14 h-14 mb-6 bg-accent rounded-lg"></div>
@@ -41,18 +41,19 @@ export const ServicesGrid = ({
             {service.fields.title}
           </h3>
 
-          <p className="text-muted-foreground mb-6 leading-relaxed">
-            {service.fields.shortDescription}
-          </p>
-
-          {/* Service Link */}
-          <Link
-            href={`/${locale}/services/${service.fields.slug}`}
-            className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm group-hover:translate-x-1 transition-all"
-          >
-            Learn More
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
+          {/* Teaser as numbered list */}
+          {service.fields.teaser && service.fields.teaser.length > 0 && (
+            <ol className="text-muted-foreground mb-6 leading-relaxed space-y-2">
+              {service.fields.teaser.map((item: string, index: number) => (
+                <li key={index} className="flex items-start">
+                  <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-primary bg-primary/10 rounded-full mr-3 mt-0.5 flex-shrink-0">
+                    {index + 1}
+                  </span>
+                  <span className="flex-1">{item}</span>
+                </li>
+              ))}
+            </ol>
+          )}
 
           {/* Hover Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-accent to-muted rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity -z-10" />

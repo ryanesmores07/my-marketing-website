@@ -23,12 +23,10 @@ export const Hero = ({ title, description, locale = "en" }: HeroProps) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative h-full">
         {/* Large Name Display - Full Width */}
-        <div className="mb-16 lg:mb-20">
-          <div className="relative w-full flex justify-center">
-            <h1 className="text-[min(12vw,10rem)] font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center transform scale-x-[1.2] origin-center">
-              ERNIE RYAN<span className="text-[0.3em] align-super ml-2">©</span>
-            </h1>
-          </div>
+        <div className="mb-16 lg:mb-20 w-full flex justify-center">
+          <h1 className="font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] tracking-[-0.05em]">
+            ERNIE RYAN
+          </h1>
         </div>
 
         {/* Main Content Grid */}

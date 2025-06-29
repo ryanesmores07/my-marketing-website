@@ -71,7 +71,7 @@ export const Navigation = ({ locale }: NavigationProps) => {
                   <Link href="/en">English</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/ja">日本語</Link>
+                  <Link href="/jp">日本語</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -130,11 +130,11 @@ export const Navigation = ({ locale }: NavigationProps) => {
                       EN
                     </Link>
                     <Link
-                      href="/ja"
+                      href="/jp"
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      JA
+                      JP
                     </Link>
                   </div>
                 </div>

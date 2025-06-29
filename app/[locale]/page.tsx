@@ -2,16 +2,14 @@ import { Suspense } from "react";
 import { Hero } from "@/components/hero";
 import { AboutMe } from "@/components/about-me";
 import { ServicesHeader } from "@/components/services-header";
-import { ProjectsHeader } from "@/components/projects-header";
 import { ServicesSection } from "@/components/services-section";
 import { ProjectsSection } from "@/components/projects-section";
 import { ServicesLoading } from "@/components/services-loading";
-import { ProjectsLoading } from "@/components/projects-loading";
 import { ServicesError } from "@/components/services-error";
-import { ProjectsError } from "@/components/projects-error";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { CTA } from "@/components/cta";
 import { staticHeroData } from "@/content/hero";
+import { projects } from "@/content/projects";
 import { Locale } from "@/i18n-config";
 
 interface PageProps {
@@ -43,16 +41,7 @@ export default async function Home({ params }: PageProps) {
       <AboutMe />
 
       {/* Projects Section */}
-      <section className="py-20 lg:py-28 bg-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ProjectsHeader />
-          <ErrorBoundary fallback={<ProjectsError locale={locale} />}>
-            <Suspense fallback={<ProjectsLoading />}>
-              <ProjectsSection locale={locale} />
-            </Suspense>
-          </ErrorBoundary>
-        </div>
-      </section>
+      <ProjectsSection projects={projects} locale={locale} />
 
       <CTA locale={locale} />
     </>
