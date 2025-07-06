@@ -85,7 +85,9 @@ export function ProjectDetailClient({
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-black/40" />
+          {/* Enhanced overlay with gradient for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
         </div>
 
         {/* Hero Content */}
@@ -93,23 +95,23 @@ export function ProjectDetailClient({
           <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
             {/* Left Side - Project Info */}
             <div className="space-y-8">
-              {/* Back Button */}
+              {/* Back Button with enhanced background */}
               <Link
-                href={`/${locale}/projects`}
-                className="inline-flex items-center text-white/80 hover:text-white transition-colors text-sm"
+                href={`/${locale}`}
+                className="inline-flex items-center text-white/90 hover:text-white transition-colors text-sm bg-black/30 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20 hover:bg-black/40"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                {locale === "jp" ? "プロジェクト" : "Work"}
+                {locale === "jp" ? "ホームに戻る" : "Back to Home"}
               </Link>
 
-              {/* Project Title */}
+              {/* Project Title with text shadow */}
               <div>
-                <h1 className="text-5xl lg:text-7xl font-black text-white leading-tight mb-4">
+                <h1 className="text-5xl lg:text-7xl font-black text-white leading-tight mb-4 drop-shadow-2xl [text-shadow:_2px_2px_8px_rgb(0_0_0_/_80%)]">
                   {project.title[locale]}
                 </h1>
 
-                {/* Meta Info */}
-                <div className="flex items-center gap-6 text-white/60 text-sm mb-6">
+                {/* Meta Info with enhanced background */}
+                <div className="flex items-center gap-6 text-white/90 text-sm mb-6 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 w-fit">
                   <div className="flex items-center">
                     <Tag className="w-4 h-4 mr-2" />
                     {locale === "jp" ? "クライアント" : "Client"}:{" "}
@@ -121,12 +123,12 @@ export function ProjectDetailClient({
                   </div>
                 </div>
 
-                {/* Technologies */}
+                {/* Technologies with stronger background */}
                 <div className="flex flex-wrap gap-3 mb-8">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 bg-white/10 text-white text-sm rounded-full backdrop-blur-sm"
+                      className="px-4 py-2 bg-black/40 text-white text-sm rounded-full backdrop-blur-md border border-white/20 font-medium"
                     >
                       {tech}
                     </span>
@@ -134,12 +136,12 @@ export function ProjectDetailClient({
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons with enhanced shadows */}
               <div className="flex flex-wrap gap-4">
                 {project.liveUrl && (
                   <Button
                     asChild
-                    className="bg-white text-black hover:bg-white/90"
+                    className="bg-white text-black hover:bg-white/90 shadow-2xl hover:shadow-white/20 transition-all duration-300"
                   >
                     <Link
                       href={project.liveUrl}
@@ -157,7 +159,7 @@ export function ProjectDetailClient({
                   <Button
                     variant="outline"
                     asChild
-                    className="border-white text-white hover:bg-white hover:text-black"
+                    className="border-white/40 bg-black/20 text-white hover:bg-white hover:text-black backdrop-blur-md shadow-xl transition-all duration-300"
                   >
                     <Link
                       href={project.githubUrl}
@@ -172,13 +174,13 @@ export function ProjectDetailClient({
               </div>
             </div>
 
-            {/* Right Side - Project Info Card */}
+            {/* Right Side - Project Info Card with enhanced visibility */}
             <div className="lg:justify-self-end">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 max-w-md">
-                <h3 className="text-xl font-bold text-white mb-4">
+              <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-8 border border-white/30 max-w-md shadow-2xl">
+                <h3 className="text-xl font-bold text-white mb-4 drop-shadow-lg">
                   {locale === "jp" ? "プロジェクト情報" : "Project Info"}
                 </h3>
-                <p className="text-white/80 leading-relaxed">
+                <p className="text-white/90 leading-relaxed drop-shadow-sm">
                   {project.description[locale]}
                 </p>
               </div>

@@ -13,10 +13,8 @@ export const ProjectsSection = ({
   projects,
   locale = "en",
 }: ProjectsSectionProps) => {
-  // Show only featured projects on homepage, limit to 3
-  const featuredProjects = projects
-    .filter((project) => project.featured)
-    .slice(0, 3);
+  // Show all projects on the main page
+  const displayProjects = projects;
 
   return (
     <section className="py-16 lg:py-24 bg-background">
@@ -36,7 +34,7 @@ export const ProjectsSection = ({
 
         {/* Projects Grid */}
         <div className="space-y-16">
-          {featuredProjects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <div
               key={project.id}
               className={`grid lg:grid-cols-2 gap-12 items-center ${
@@ -67,14 +65,14 @@ export const ProjectsSection = ({
                         <ArrowRight className="w-5 h-5" />
                       </Link>
                       {project.liveUrl && (
-                        <a
+                        <Link
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="w-12 h-12 bg-background rounded-full flex items-center justify-center shadow-lg hover:bg-primary hover:text-primary-foreground transition-colors"
                         >
                           <ExternalLink className="w-5 h-5" />
-                        </a>
+                        </Link>
                       )}
                     </div>
                   </div>
@@ -152,22 +150,8 @@ export const ProjectsSection = ({
           ))}
         </div>
 
-        {/* View All Projects Button */}
-        {projects.length > 3 && (
-          <div className="text-center mt-16">
-            <Button variant="outline" size="lg" asChild>
-              <Link href={`/${locale}/projects`}>
-                {locale === "jp"
-                  ? "すべてのプロジェクトを見る"
-                  : "View All Projects"}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        )}
-
         {/* Empty State */}
-        {featuredProjects.length === 0 && (
+        {displayProjects.length === 0 && (
           <div className="text-center py-12">
             <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
               <div className="w-8 h-8 bg-muted-foreground/20 rounded-lg"></div>

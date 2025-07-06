@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -23,14 +22,16 @@ export const CTA = ({ locale = "en" }: CTAProps) => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="h-12 px-8">
-                <Link href={`/${locale}/contact`}>
-                  Start Your Project
+                <a href="#services">
+                  {locale === "jp" ? "プロジェクト開始" : "Start Your Project"}
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+                </a>
               </Button>
 
               <Button variant="outline" size="lg" className="h-12 px-8">
-                <Link href={`/${locale}/projects`}>View Our Work</Link>
+                <a href="#projects">
+                  {locale === "jp" ? "実績を見る" : "View Our Work"}
+                </a>
               </Button>
             </div>
 

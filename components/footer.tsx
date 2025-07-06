@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Github, Twitter, Linkedin } from "lucide-react";
 
 interface FooterProps {
@@ -7,33 +10,56 @@ interface FooterProps {
 
 export const Footer = ({ locale }: FooterProps) => {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Check if we're on a project detail page
+  const isProjectDetailPage =
+    pathname.includes("/projects/") && !pathname.endsWith("/projects");
 
   const footerSections = [
     {
-      title: "Services",
+      title: locale === "jp" ? "サービス" : "Services",
       links: [
-        { href: `/${locale}/services`, label: "Web Design" },
-        { href: `/${locale}/services`, label: "SEO Optimization" },
-        { href: `/${locale}/services`, label: "Content Writing" },
-        { href: `/${locale}/services`, label: "E-commerce" },
+        {
+          href: "#services",
+          label: locale === "jp" ? "ウェブデザイン" : "Web Design",
+        },
+        {
+          href: "#services",
+          label: locale === "jp" ? "SEO最適化" : "SEO Optimization",
+        },
+        {
+          href: "#services",
+          label: locale === "jp" ? "コンテンツ作成" : "Content Writing",
+        },
+        {
+          href: "#services",
+          label: locale === "jp" ? "Eコマース" : "E-commerce",
+        },
       ],
     },
     {
-      title: "Company",
+      title: locale === "jp" ? "会社情報" : "Company",
       links: [
-        { href: `/${locale}`, label: "About Us" },
-        { href: `/${locale}/projects`, label: "Our Work" },
-        { href: `/${locale}/contact`, label: "Contact" },
-        { href: `/${locale}`, label: "Blog" },
+        { href: "#about", label: locale === "jp" ? "概要" : "About Us" },
+        { href: "#projects", label: locale === "jp" ? "実績" : "Our Work" },
+        {
+          href: "#testimonials",
+          label: locale === "jp" ? "お客様の声" : "Testimonials",
+        },
+        { href: "#cta", label: locale === "jp" ? "お問い合わせ" : "Contact" },
       ],
     },
     {
-      title: "Support",
+      title: locale === "jp" ? "サポート" : "Support",
       links: [
-        { href: `/${locale}/contact`, label: "Get Help" },
-        { href: `/${locale}`, label: "FAQ" },
-        { href: `/${locale}`, label: "Privacy Policy" },
-        { href: `/${locale}`, label: "Terms of Service" },
+        { href: "#cta", label: locale === "jp" ? "ヘルプ" : "Get Help" },
+        { href: "#about", label: locale === "jp" ? "よくある質問" : "FAQ" },
+        {
+          href: "#",
+          label: locale === "jp" ? "プライバシーポリシー" : "Privacy Policy",
+        },
+        { href: "#", label: locale === "jp" ? "利用規約" : "Terms of Service" },
       ],
     },
   ];
@@ -53,7 +79,7 @@ export const Footer = ({ locale }: FooterProps) => {
             {/* Company Info */}
             <div className="lg:col-span-2">
               <Link
-                href={`/${locale}`}
+                href="/"
                 className="text-2xl font-bold mb-4 block hover:text-secondary transition-colors"
               >
                 YourBrand
@@ -82,25 +108,33 @@ export const Footer = ({ locale }: FooterProps) => {
             </div>
 
             {/* Footer Sections */}
-            {footerSections.map((section) => (
-              <div key={section.title}>
-                <h3 className="text-lg font-semibold mb-4 text-primary-foreground">
-                  {section.title}
-                </h3>
-                <ul className="space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link.href + link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {!isProjectDetailPage &&
+              footerSections.map((section) => (
+                <div key={section.title}>
+                  <h3 className="text-lg font-semibold mb-4 text-primary-foreground">
+                    {section.title}
+                  </h3>
+                  <ul className="space-y-2">
+                    {section.links.map((link) => (
+                      <li key={link.href + link.label}>
+                        <Link
+                          href={link.href}
+                          className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                          onClick={(e) => {
+                            if (link.href.startsWith("#")) {
+                              e.preventDefault();
+                              const element = document.querySelector(link.href);
+                              element?.scrollIntoView({ behavior: "smooth" });
+                            }
+                          }}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -117,7 +151,7 @@ export const Footer = ({ locale }: FooterProps) => {
               {socialLinks.map((social) => {
                 const IconComponent = social.icon;
                 return (
-                  <a
+                  <Link
                     key={social.href}
                     href={social.href}
                     target="_blank"
@@ -126,7 +160,7 @@ export const Footer = ({ locale }: FooterProps) => {
                     aria-label={social.label}
                   >
                     <IconComponent className="h-5 w-5" />
-                  </a>
+                  </Link>
                 );
               })}
             </div>

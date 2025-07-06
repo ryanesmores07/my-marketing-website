@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,12 +19,21 @@ interface NavigationProps {
 
 export const Navigation = ({ locale }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Check if we're on a project detail page
+  const isProjectDetailPage =
+    pathname.includes("/projects/") && !pathname.endsWith("/projects");
 
   const navigationItems = [
-    { href: `/${locale}`, label: "Home" },
-    { href: `/${locale}/services`, label: "Services" },
-    { href: `/${locale}/projects`, label: "Projects" },
-    { href: `/${locale}/contact`, label: "Contact" },
+    { href: "#hero", label: locale === "jp" ? "ホーム" : "Home" },
+    { href: "#services", label: locale === "jp" ? "サービス" : "Services" },
+    { href: "#projects", label: locale === "jp" ? "プロジェクト" : "Projects" },
+    { href: "#about", label: locale === "jp" ? "概要" : "About" },
+    {
+      href: "#testimonials",
+      label: locale === "jp" ? "お客様の声" : "Testimonials",
+    },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -35,7 +45,7 @@ export const Navigation = ({ locale }: NavigationProps) => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
-              href={`/${locale}`}
+              href="/"
               className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
             >
               YourBrand
@@ -43,19 +53,26 @@ export const Navigation = ({ locale }: NavigationProps) => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
+          {!isProjectDetailPage && (
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.querySelector(item.href);
+                      element?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Language Switcher, Theme Switcher & CTA */}
           <div className="hidden md:flex items-center space-x-3">
@@ -78,9 +95,13 @@ export const Navigation = ({ locale }: NavigationProps) => {
 
             <ThemeSwitcher />
 
-            <Button asChild>
-              <Link href={`/${locale}/contact`}>Get Started</Link>
-            </Button>
+            {!isProjectDetailPage && (
+              <Button asChild>
+                <a href="#cta">
+                  {locale === "jp" ? "開始する" : "Get Started"}
+                </a>
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -104,16 +125,22 @@ export const Navigation = ({ locale }: NavigationProps) => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-border">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {!isProjectDetailPage &&
+                navigationItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      const element = document.querySelector(item.href);
+                      element?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
 
               {/* Mobile Language Switcher & Theme */}
               <div className="pt-4 pb-2 border-t border-border mt-4">
@@ -147,16 +174,23 @@ export const Navigation = ({ locale }: NavigationProps) => {
                 </div>
               </div>
 
-              <div className="px-3 py-2">
-                <Button asChild className="w-full">
-                  <Link
-                    href={`/${locale}/contact`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Get Started
-                  </Link>
-                </Button>
-              </div>
+              {!isProjectDetailPage && (
+                <div className="px-3 py-2">
+                  <Button asChild className="w-full">
+                    <Link
+                      href="#cta"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMenuOpen(false);
+                        const element = document.querySelector("#cta");
+                        element?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      {locale === "jp" ? "開始する" : "Get Started"}
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -7,6 +7,7 @@ import { ProjectsSection } from "@/components/projects-section";
 import { ServicesLoading } from "@/components/services-loading";
 import { ServicesError } from "@/components/services-error";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { Testimonials } from "@/components/testimonials";
 import { CTA } from "@/components/cta";
 import { staticHeroData } from "@/content/hero";
 import { projects } from "@/content/projects";
@@ -23,10 +24,13 @@ export default async function Home({ params }: PageProps) {
 
   return (
     <>
-      <Hero {...staticHeroData} locale={locale} />
+      {/* Hero Section */}
+      <section id="hero">
+        <Hero {...staticHeroData} locale={locale} />
+      </section>
 
       {/* Services Section */}
-      <section className="py-20 lg:py-28 bg-background">
+      <section id="services" className="py-20 lg:py-28 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ServicesHeader />
           <ErrorBoundary fallback={<ServicesError locale={locale} />}>
@@ -37,13 +41,21 @@ export default async function Home({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Projects Section - Selected Works */}
+      <section id="projects">
+        <ProjectsSection projects={projects.slice(0, 4)} locale={locale} />
+      </section>
+
       {/* About Me Section */}
-      <AboutMe />
+      <AboutMe locale={locale} />
 
-      {/* Projects Section */}
-      <ProjectsSection projects={projects} locale={locale} />
+      {/* Testimonials Section */}
+      <Testimonials locale={locale} />
 
-      <CTA locale={locale} />
+      {/* CTA Section */}
+      <section id="cta">
+        <CTA locale={locale} />
+      </section>
     </>
   );
 }
