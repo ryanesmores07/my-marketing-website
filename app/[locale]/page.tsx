@@ -1,12 +1,7 @@
-import { Suspense } from "react";
 import { Hero } from "@/components/hero";
 import { AboutMe } from "@/components/about-me";
-import { ServicesHeader } from "@/components/services-header";
-import { ServicesSection } from "@/components/services-section";
+import { ServicesSection } from "@/components/services-section-new";
 import { ProjectsSection } from "@/components/projects-section";
-import { ServicesLoading } from "@/components/services-loading";
-import { ServicesError } from "@/components/services-error";
-import { ErrorBoundary } from "@/components/error-boundary";
 import { Testimonials } from "@/components/testimonials";
 import { CTA } from "@/components/cta";
 import { staticHeroData } from "@/content/hero";
@@ -30,16 +25,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 lg:py-28 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ServicesHeader />
-          <ErrorBoundary fallback={<ServicesError locale={locale} />}>
-            <Suspense fallback={<ServicesLoading />}>
-              <ServicesSection locale={locale} />
-            </Suspense>
-          </ErrorBoundary>
-        </div>
-      </section>
+      <ServicesSection locale={locale} />
 
       {/* Projects Section - Selected Works */}
       <section id="projects">

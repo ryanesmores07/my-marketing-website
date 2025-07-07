@@ -5,189 +5,118 @@ interface AboutMeProps {
 }
 
 export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
-  return (
-    <section id="about" className="py-20 lg:py-32 bg-background relative">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
-      <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2">
-        <div className="w-96 h-96 bg-accent rounded-full blur-3xl opacity-20" />
-      </div>
+  const content = {
+    en: {
+      badge: "About Me",
+      title: ["DESIGNER,", "DEVELOPER,", "CREATOR/"],
+      description:
+        "With 7+ years based in Tokyo, I specialize in building localized Shopify stores and bilingual (English/Japanese) landing pages that drive results. As a Shopify expert proficient in On-Page and Technical SEO, I excel at keyword research and crafting SEO-optimized content tailored for both English and Japanese markets.",
+      approach:
+        "My approach blends Japan's renowned customer-first philosophy with technical excellence—I treat your goals as my own, ensuring success.",
+      personal:
+        "When not creating or optimizing websites, you'll find me at the gym or snowboarding in Japan's mountains.",
+    },
+    jp: {
+      badge: "私について",
+      title: ["デザイナー・", "開発者・", "クリエイター"],
+      description:
+        "東京を拠点に7年以上、Shopifyを活用した多言語（日英）対応のECサイトやランディングページ制作を得意としています。Shopify構築に関する幅広い知識を持ち、オンページSEO・テクニカルSEOを駆使したキーワードリサーチやSEOライティングにも精通しています。",
+      approach:
+        "日本の「おもてなし」の心を大切にし、お客様の目標を自分ごととして捉え、結果にこだわり抜きます。",
+      personal:
+        "仕事を離れると、ジムでトレーニングをしたり、日本の山々でスノーボードを楽しんでいます。",
+    },
+  };
 
+  const currentContent = content[locale];
+
+  return (
+    <section id="about" className="py-20 lg:py-28 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content - Image */}
           <div className="relative order-2 lg:order-1">
-            <div className="relative">
-              {/* Main Image */}
-              <div className="relative bg-card rounded-3xl shadow-2xl p-6 border border-border">
-                <div className="relative overflow-hidden rounded-2xl">
-                  <Image
-                    src="/images/ryan-main.jpg"
-                    alt={locale === "jp" ? "エルニー・ライアン" : "Ernie Ryan"}
-                    width={500}
-                    height={600}
-                    className="w-full h-auto object-cover filter grayscale"
-                    priority
-                  />
-                </div>
-
-                {/* Floating Badge */}
-                <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                  {locale === "jp" ? "東京在住" : "Tokyo Based"}
-                </div>
+            <div className="relative bg-muted rounded-3xl p-6 shadow-2xl">
+              <div className="relative overflow-hidden rounded-2xl bg-card">
+                <Image
+                  src="/images/ryan-main.jpg"
+                  alt="Ernie Ryan - Designer, Developer, Creator"
+                  width={500}
+                  height={700}
+                  className="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition-all duration-500"
+                  priority
+                />
               </div>
 
-              {/* Background Decoration */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent to-muted rounded-3xl transform -rotate-2 -z-10 opacity-20" />
-
-              {/* Floating Info Cards */}
-              <div className="absolute -bottom-6 -left-6 bg-card rounded-xl shadow-lg p-4 border border-border rotate-[-2deg]">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-card-foreground">
-                    {locale === "jp" ? "7年以上の経験" : "7+ Years Experience"}
-                  </span>
-                </div>
+              {/* Floating Elements */}
+              <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                🇯🇵 Tokyo Based
+              </div>
+              <div className="absolute -bottom-4 -left-4 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                7+ Years
               </div>
             </div>
+
+            {/* Background Decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-3xl transform rotate-3 -z-10" />
           </div>
 
           {/* Right Content - Text */}
           <div className="space-y-8 order-1 lg:order-2">
-            {/* Large Typography */}
-            <div className="space-y-4">
-              <h2 className="text-5xl lg:text-6xl xl:text-7xl font-black text-foreground leading-none tracking-tight">
-                {locale === "jp" ? (
-                  <>
-                    デザイナー、
-                    <br />
-                    デベロッパー、
-                    <br />
-                    クリエイター
-                  </>
-                ) : (
-                  <>
-                    DESIGNER,
-                    <br />
-                    DEVELOPER,
-                    <br />
-                    CREATOR
-                  </>
-                )}
-              </h2>
+            {/* Badge */}
+            <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground ring-1 ring-inset ring-border">
+              <span className="relative flex h-2 w-2 mr-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              {currentContent.badge}
             </div>
 
-            {/* About Me Content */}
+            {/* Title */}
+            <div className="space-y-2">
+              {currentContent.title.map((line, index) => (
+                <h2
+                  key={index}
+                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-none tracking-tight"
+                >
+                  {line}
+                </h2>
+              ))}
+            </div>
+
+            {/* Description */}
             <div className="space-y-6">
-              <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground ring-1 ring-inset ring-border">
-                <span className="relative flex h-2 w-2 mr-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {currentContent.description}
+              </p>
+
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {currentContent.approach}
+              </p>
+
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {currentContent.personal}
+              </p>
+            </div>
+
+            {/* Skills/Specialties */}
+            <div className="pt-8 border-t border-border">
+              <div className="flex flex-wrap gap-3">
+                <span className="px-4 py-2 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-colors">
+                  Shopify Expert
                 </span>
-                {locale === "jp" ? "（ABOUT ME）" : "(ABOUT ME)"}
-              </div>
-
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                {locale === "jp" ? (
-                  <>
-                    <p className="text-lg">
-                      東京を拠点に7年以上、日本と海外をつなぐShopifyストアや
-                      バイリンガル（日本語・英語）のランディングページ制作に特化して活動しています。
-                      お客様のグローバルなビジネス展開をデザインと開発の両面からサポートします。
-                    </p>
-                    <p>
-                      日本の「おもてなし」を大切にし、お客様の課題を自分ごととして捉え、
-                      望まれる結果が出るまで徹底してサポートを続けるのが私のこだわりです。
-                    </p>
-                    <p>
-                      仕事を離れると、ジムでトレーニングをしたり、
-                      冬は日本の美しい山でスノーボードを楽しんだりして過ごしています。
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-lg">
-                      With over 7 years of experience living and working in
-                      Tokyo, Japan, I specialize in creating localized Shopify
-                      ecommerce stores and bilingual (English/Japanese) landing
-                      pages tailored to startups and businesses aiming to expand
-                      their reach globally.
-                    </p>
-                    <p>
-                      Passionate about both design and development, I adopt
-                      Japan&apos;s customer-first philosophy, making your goals
-                      my own. Every project is an opportunity to solve your
-                      business challenges, and I won&apos;t stop until we
-                      achieve the results you envision.
-                    </p>
-                    <p>
-                      When I&apos;m not building websites, you&apos;ll find me
-                      hitting the gym or snowboarding on Japan&apos;s beautiful
-                      mountain slopes.
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Specialties */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold text-foreground">
-                {locale === "jp" ? "得意分野:" : "Specialties:"}
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">
-                    {locale === "jp"
-                      ? "Shopifyを活用した多言語対応ECサイト制作（日・英）"
-                      : "Shopify ecommerce stores (Japanese & English localization)"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">
-                    {locale === "jp"
-                      ? "コンバージョン重視のランディングページ制作"
-                      : "Conversion-focused landing pages"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">
-                    {locale === "jp"
-                      ? "越境デジタルソリューション"
-                      : "Cross-border digital solutions"}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
-              <div className="text-left">
-                <div className="text-2xl lg:text-3xl font-black text-primary mb-1">
-                  7<span className="text-accent">+</span>
-                </div>
-                <div className="text-xs text-muted-foreground leading-tight">
-                  {locale === "jp" ? "年の経験" : "Years Experience"}
-                </div>
-              </div>
-              <div className="text-left">
-                <div className="text-2xl lg:text-3xl font-black text-primary mb-1">
-                  100<span className="text-accent">+</span>
-                </div>
-                <div className="text-xs text-muted-foreground leading-tight">
-                  {locale === "jp" ? "プロジェクト" : "Projects Completed"}
-                </div>
-              </div>
-              <div className="text-left">
-                <div className="text-2xl lg:text-3xl font-black text-primary mb-1">
-                  🇯🇵🇺🇸
-                </div>
-                <div className="text-xs text-muted-foreground leading-tight">
-                  {locale === "jp" ? "日米市場" : "JP ⇄ US Markets"}
-                </div>
+                <span className="px-4 py-2 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-colors">
+                  SEO Optimization
+                </span>
+                <span className="px-4 py-2 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-colors">
+                  EN/JP Bilingual
+                </span>
+                <span className="px-4 py-2 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-colors">
+                  Cross-Border
+                </span>
+                <span className="px-4 py-2 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-colors">
+                  7+ Years Tokyo
+                </span>
               </div>
             </div>
           </div>
