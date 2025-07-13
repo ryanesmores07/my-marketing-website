@@ -1,8 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Github, Twitter, Linkedin } from "lucide-react";
+import { FooterScrollLinks } from "@/components/footer-scroll-links";
 
 interface FooterProps {
   locale: string;
@@ -10,11 +8,6 @@ interface FooterProps {
 
 export const Footer = ({ locale }: FooterProps) => {
   const currentYear = new Date().getFullYear();
-  const pathname = usePathname();
-
-  // Check if we're on a project detail page
-  const isProjectDetailPage =
-    pathname.includes("/projects/") && !pathname.endsWith("/projects");
 
   const footerSections = [
     {
@@ -64,121 +57,93 @@ export const Footer = ({ locale }: FooterProps) => {
     },
   ];
 
-  const socialLinks = [
-    { href: "https://github.com", icon: Github, label: "GitHub" },
-    { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  ];
-
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {/* Company Info */}
-            <div className="lg:col-span-2">
-              <Link
-                href="/"
-                className="text-2xl font-bold mb-4 block hover:text-secondary transition-colors"
-              >
-                YourBrand
-              </Link>
-              <p className="text-primary-foreground/80 mb-6 max-w-md">
-                We create beautiful, functional websites that help your business
-                grow. From design to development, we&apos;re your digital
-                partner.
-              </p>
+    <footer className="bg-muted/30 border-t border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div className="lg:col-span-1">
+            <Link
+              href="/"
+              className="text-2xl font-bold text-foreground hover:text-primary transition-colors mb-4 block"
+            >
+              YourBrand
+            </Link>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              {locale === "jp"
+                ? "日本と世界を繋ぐクロスボーダーマーケティングのエキスパート。あなたのビジネスの成長をサポートします。"
+                : "Cross-border marketing expert connecting Japan with the world. Helping your business grow globally."}
+            </p>
 
-              {/* Contact Info */}
-              <div className="space-y-2">
-                <div className="flex items-center text-primary-foreground/80">
-                  <Mail className="h-4 w-4 mr-3 text-primary-foreground/60" />
-                  <span>hello@yourbrand.com</span>
-                </div>
-                <div className="flex items-center text-primary-foreground/80">
-                  <Phone className="h-4 w-4 mr-3 text-primary-foreground/60" />
-                  <span>+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center text-primary-foreground/80">
-                  <MapPin className="h-4 w-4 mr-3 text-primary-foreground/60" />
-                  <span>New York, NY</span>
-                </div>
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <div className="flex items-center text-muted-foreground">
+                <Mail className="h-4 w-4 mr-3" />
+                <span className="text-sm">hello@yourbrand.com</span>
+              </div>
+              <div className="flex items-center text-muted-foreground">
+                <Phone className="h-4 w-4 mr-3" />
+                <span className="text-sm">+81 3-1234-5678</span>
+              </div>
+              <div className="flex items-center text-muted-foreground">
+                <MapPin className="h-4 w-4 mr-3" />
+                <span className="text-sm">
+                  {locale === "jp" ? "東京, 日本" : "Tokyo, Japan"}
+                </span>
               </div>
             </div>
-
-            {/* Footer Sections */}
-            {!isProjectDetailPage &&
-              footerSections.map((section) => (
-                <div key={section.title}>
-                  <h3 className="text-lg font-semibold mb-4 text-primary-foreground">
-                    {section.title}
-                  </h3>
-                  <ul className="space-y-2">
-                    {section.links.map((link) => (
-                      <li key={link.href + link.label}>
-                        <Link
-                          href={link.href}
-                          className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                          onClick={(e) => {
-                            if (link.href.startsWith("#")) {
-                              e.preventDefault();
-                              const element = document.querySelector(link.href);
-                              element?.scrollIntoView({ behavior: "smooth" });
-                            }
-                          }}
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
           </div>
+
+          {/* Footer Sections */}
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="font-semibold text-foreground mb-4">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.href + link.label}>
+                    <FooterScrollLinks href={link.href} label={link.label} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Footer */}
-        <div className="border-t border-primary-foreground/20 py-6">
+        {/* Bottom Section */}
+        <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* Copyright */}
-            <div className="text-primary-foreground/60 text-sm mb-4 md:mb-0">
-              © {currentYear} YourBrand. All rights reserved.
-            </div>
+            <p className="text-muted-foreground text-sm mb-4 md:mb-0">
+              © {currentYear} YourBrand.{" "}
+              {locale === "jp"
+                ? "すべての権利を保有しています。"
+                : "All rights reserved."}
+            </p>
 
             {/* Social Links */}
             <div className="flex space-x-4">
-              {socialLinks.map((social) => {
-                const IconComponent = social.icon;
-                return (
-                  <Link
-                    key={social.href}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-                    aria-label={social.label}
-                  >
-                    <IconComponent className="h-5 w-5" />
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Language Links */}
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link
-                href="/en"
-                className="text-primary-foreground/60 hover:text-primary-foreground text-sm transition-colors"
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="GitHub"
               >
-                English
-              </Link>
-              <Link
-                href="/ja"
-                className="text-primary-foreground/60 hover:text-primary-foreground text-sm transition-colors"
+                <Github className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Twitter"
               >
-                日本語
-              </Link>
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
             </div>
           </div>
         </div>

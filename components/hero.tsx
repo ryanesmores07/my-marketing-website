@@ -1,12 +1,26 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { HeroCTAButton } from "@/components/hero-cta-button";
 
 interface HeroProps {
-  description: string;
+  heroData: {
+    en: {
+      questions: string[];
+      description: string;
+      ctaText: string;
+    };
+    jp: {
+      questions: string[];
+      description: string;
+      ctaText: string;
+    };
+  };
   locale?: string;
 }
 
-export const Hero = ({ description, locale = "en" }: HeroProps) => {
+export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
+  const currentContent =
+    heroData[locale as keyof typeof heroData] || heroData.en;
+
   return (
     <section className="relative bg-gradient-to-br from-background to-secondary py-8 lg:py-12 overflow-hidden min-h-screen">
       {/* Background Elements */}
@@ -21,142 +35,152 @@ export const Hero = ({ description, locale = "en" }: HeroProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative h-full">
         {/* Large Name Display - Full Width */}
         <div className="mb-16 lg:mb-20 w-full flex justify-center">
-          <h1 className="font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] tracking-[-0.05em]">
+          <h1 className="font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] ">
             ERNIE RYAN
           </h1>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Content */}
-          <div className="space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground ring-1 ring-inset ring-border">
-              <span className="relative flex h-2 w-2 mr-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Japan ⇄ Global Market Specialist
-            </div>
-
-            {/* Description */}
+        {/* New Hero Content Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          {/* Questions and CTA Section */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Questions */}
             <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                I help growing brands and startups gain an unfair advantage
-                through premium, results driven websites.
-              </p>
-
-              <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
-                {description}
-              </p>
-            </div>
-
-            {/* CTA Button */}
-            <div className="pt-4">
-              <Button
-                asChild
-                size="lg"
-                className="h-14 px-8 text-base bg-foreground text-background hover:bg-foreground/90"
-              >
-                <a href="#cta">
-                  {locale === "jp" ? "相談予約 →" : "BOOK A CALL →"}
-                </a>
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="flex flex-wrap gap-8 pt-8">
-              <div className="text-left">
-                <div className="text-2xl font-bold text-foreground">100+</div>
-                <div className="text-sm text-muted-foreground">
-                  Cross-Border Projects
+              {currentContent.questions.map((question, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm">
+                    {index + 1}
+                  </div>
+                  <p className="text-lg md:text-xl font-semibold text-foreground leading-relaxed">
+                    {question}
+                  </p>
                 </div>
+              ))}
+
+              <div className="pt-6">
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {currentContent.description}
+                </p>
               </div>
-              <div className="text-left">
-                <div className="text-2xl font-bold text-foreground">🇯🇵🇺🇸</div>
-                <div className="text-sm text-muted-foreground">
-                  JP ⇄ EN Markets
-                </div>
-              </div>
-              <div className="text-left">
-                <div className="text-2xl font-bold text-foreground">24/7</div>
-                <div className="text-sm text-muted-foreground">
-                  Support Available
-                </div>
+
+              {/* CTA Section */}
+              <div className="pt-8">
+                <HeroCTAButton ctaText={currentContent.ctaText} />
               </div>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="pt-8 border-t border-border">
-              <p className="text-sm text-muted-foreground mb-4">
-                Specializing in Japan ⇄ Global markets
-              </p>
-              <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-                <span>🌐 Global E-commerce</span>
-                <span>🔍 Multilingual SEO</span>
-                <span>✍️ Cross-cultural Content</span>
-                <span>🛒 Shopify & WordPress</span>
+            {/* Right Side - Futuristic Profile Section */}
+            <div className="relative flex items-center justify-center lg:justify-end">
+              {/* Animated Background Orbs */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-80 h-80 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse"></div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Content - Professional Photo */}
-          <div className="relative">
-            <div className="relative z-10">
-              {/* Main Professional Photo */}
-              <div className="relative bg-card rounded-2xl shadow-2xl p-4 border border-border">
-                <div className="relative overflow-hidden rounded-xl">
-                  <Image
-                    src="/images/ryan-main.jpg"
-                    alt="Ernie Ryan - Cross-border Marketing Specialist"
-                    width={600}
-                    height={800}
-                    className="w-full h-auto object-cover filter grayscale"
-                    priority
-                  />
-                </div>
-
-                {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-medium">
-                  ✓ Japan Expert
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                  🚀 Global Ready
-                </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-60 h-60 bg-gradient-to-l from-accent/30 to-primary/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
               </div>
 
-              {/* Floating Cards */}
-              <div className="absolute -top-8 -left-8 bg-card rounded-lg shadow-lg p-4 border border-border rotate-[-4deg]">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-destructive rounded-full"></div>
-                  <span className="text-sm font-medium text-card-foreground">
-                    🇯🇵 Japan Native
+              {/* Main Profile Container */}
+              <div className="relative z-10 w-80 h-80 lg:w-96 lg:h-96">
+                {/* Rotating Border Ring */}
+                <div
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary animate-spin opacity-75"
+                  style={{ animationDuration: "8s" }}
+                >
+                  <div className="w-full h-full rounded-full bg-background m-1"></div>
+                </div>
+
+                {/* Inner Glowing Ring */}
+                <div className="absolute inset-2 rounded-full bg-gradient-to-r from-primary/50 to-accent/50 shadow-2xl shadow-primary/25">
+                  <div className="w-full h-full rounded-full bg-background m-1"></div>
+                </div>
+
+                {/* Profile Image Container */}
+                <div className="absolute inset-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20 shadow-2xl">
+                  {/* Hexagonal Overlay Pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+                  </div>
+
+                  {/* Main Profile Image */}
+                  <div className="relative w-full h-full">
+                    <Image
+                      src="/images/ryan-main.jpg"
+                      alt="Ernie Ryan"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover"
+                      priority
+                    />
+
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-accent/20 mix-blend-overlay"></div>
+                  </div>
+                </div>
+
+                {/* Floating Tech Elements */}
+                <div className="absolute -top-6 -right-6 w-14 h-14 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/50 animate-bounce border border-primary/30">
+                  <span className="text-primary-foreground font-bold text-sm">
+                    7+
                   </span>
                 </div>
-              </div>
 
-              <div className="absolute -bottom-8 -right-8 bg-card rounded-lg shadow-lg p-4 border border-border rotate-[4deg]">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-sm font-medium text-card-foreground">
-                    🌍 Global Reach
+                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-r from-accent to-accent/80 rounded-2xl flex items-center justify-center shadow-lg shadow-accent/50 animate-bounce delay-500 border border-accent/30">
+                  <span className="text-accent-foreground font-bold text-sm">
+                    JP
                   </span>
+                </div>
+
+                <div className="absolute top-1/4 -left-8 w-12 h-12 bg-gradient-to-r from-muted to-muted/80 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-300 border border-border">
+                  <div className="w-3 h-3 bg-primary rounded-full animate-ping"></div>
+                </div>
+
+                <div className="absolute bottom-1/4 -right-8 w-10 h-10 bg-gradient-to-r from-secondary to-secondary/80 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-700 border border-border">
+                  <div className="w-2 h-2 bg-accent rounded-full animate-ping"></div>
+                </div>
+
+                {/* Scanning Line Effect */}
+                <div className="absolute inset-4 rounded-full overflow-hidden pointer-events-none">
+                  <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-pulse opacity-60"></div>
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse delay-500 opacity-60"></div>
                 </div>
               </div>
             </div>
-
-            {/* Background Decoration */}
-            <div className="absolute inset-0 bg-gradient-to-r from-accent to-muted rounded-2xl transform rotate-3 -z-10 opacity-20" />
           </div>
         </div>
 
-        {/* Availability Indicator - Bottom Right */}
-        <div className="absolute bottom-8 right-8 text-right">
-          <p className="text-sm text-muted-foreground mb-2 tracking-wider">
-            AVAILABLE FOR FREELANCE WORK
-          </p>
-          <div className="text-6xl sm:text-7xl lg:text-8xl font-black text-foreground tracking-tighter">
-            JULY &apos;25
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="text-center">
+            <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
+              7+
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {locale === "jp" ? "年の経験" : "Years Experience"}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
+              50+
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {locale === "jp" ? "プロジェクト" : "Projects Completed"}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
+              2
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {locale === "jp" ? "言語対応" : "Languages Supported"}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
+              100%
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {locale === "jp" ? "顧客満足度" : "Client Satisfaction"}
+            </div>
           </div>
         </div>
       </div>

@@ -139,37 +139,33 @@ export function ProjectDetailClient({
               {/* Action Buttons with enhanced shadows */}
               <div className="flex flex-wrap gap-4">
                 {project.liveUrl && (
-                  <Button
-                    asChild
-                    className="bg-white text-black hover:bg-white/90 shadow-2xl hover:shadow-white/20 transition-all duration-300"
+                  <Link
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Link
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Button className="bg-white text-black hover:bg-white/90 shadow-2xl hover:shadow-white/20 transition-all duration-300">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       {locale === "jp"
                         ? "ライブサイトを見る"
                         : "View Live Site"}
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 )}
                 {project.githubUrl && (
-                  <Button
-                    variant="outline"
-                    asChild
-                    className="border-white/40 bg-black/20 text-white hover:bg-white hover:text-black backdrop-blur-md shadow-xl transition-all duration-300"
+                  <Link
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Link
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Button
+                      variant="outline"
+                      className="border-white/40 bg-black/20 text-white hover:bg-white hover:text-black backdrop-blur-md shadow-xl transition-all duration-300"
                     >
                       <Github className="w-4 h-4 mr-2" />
                       {locale === "jp" ? "コード" : "Code"}
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>

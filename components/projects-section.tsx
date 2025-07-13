@@ -17,18 +17,18 @@ export const ProjectsSection = ({
   const displayProjects = projects;
 
   return (
-    <section className="py-16 lg:py-24 bg-background">
+    <section className="bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-black text-foreground mb-6">
-            {locale === "jp" ? "プロジェクト" : "Projects"}
+            {locale === "jp" ? "プロジェクト" : "Selected Works"}
           </h2>
           <div className="w-12 h-1 bg-primary rounded-full mx-auto mb-6"></div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {locale === "jp"
-              ? "日本と世界市場をつなぐクロスボーダーマーケティングプロジェクトをご紹介します。"
-              : "Showcasing cross-border marketing projects that connect Japan with global markets."}
+              ? "多言語対応のShopifyストアからSEO最適化されたランディングページまで、すべてのプロジェクトはビジネスの成長を目的に設計されています。国内外で成果を出すために制作した実績をご紹介します。"
+              : "From multilingual Shopify stores to SEO-optimized landing pages, each project is built to help businesses grow beyond borders. Here are some of the results-driven solutions I’ve crafted with international and local impact in mind."}
           </p>
         </div>
 
@@ -125,24 +125,24 @@ export const ProjectsSection = ({
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4 pt-4">
-                  <Button asChild>
-                    <Link href={`/${locale}/projects/${project.slug}`}>
+                  <Link href={`/${locale}/projects/${project.slug}`}>
+                    <Button>
                       {locale === "jp" ? "詳細を見る" : "View Project"}
                       <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
 
                   {project.liveUrl && (
-                    <Button variant="outline" asChild>
-                      <Link
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                    <Link
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="outline">
                         <ExternalLink className="mr-2 h-4 w-4" />
                         {locale === "jp" ? "ライブサイト" : "Live Site"}
-                      </Link>
-                    </Button>
+                      </Button>
+                    </Link>
                   )}
                 </div>
               </div>

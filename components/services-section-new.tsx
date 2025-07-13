@@ -1,4 +1,6 @@
 import { services } from "@/content/services";
+import Image from "next/image";
+import { ServicesCTAButton } from "@/components/services-cta-button";
 
 interface ServicesSectionProps {
   locale?: "en" | "jp";
@@ -19,13 +21,13 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            {locale === "jp" ? "デジタルソリューション" : "How I Can Help You"}
+            {locale === "jp" ? "専門サービス" : "How I Can Help You"}
           </h2>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {locale === "jp"
-              ? "あなたのビジネスを次のレベルに押し上げる包括的なデジタルサービス"
-              : "Comprehensive digital services to elevate your business to the next level"}
+              ? "Shopifyと多言語SEOを専門とした、日本と海外市場をつなぐデジタルソリューション"
+              : "Specialized Shopify and multilingual SEO solutions connecting Japanese and international markets"}
           </p>
         </div>
 
@@ -84,18 +86,120 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16 pt-16 border-t border-border">
-          <p className="text-muted-foreground mb-6 text-lg">
-            {locale === "jp"
-              ? "プロジェクトについて話し合いましょう"
-              : "Ready to discuss your project?"}
-          </p>
-          <a
-            href="#cta"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-          >
-            {locale === "jp" ? "相談を始める" : "Get Started"}
-          </a>
+        <div className="relative -mt-10 pt-32 pb-20 overflow-hidden">
+          {/* Primary background with strong fade */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                linear-gradient(135deg, 
+                  transparent 0%, 
+                  transparent 15%, 
+                  rgba(0, 0, 0, 0.3) 30%, 
+                  rgba(0, 0, 0, 0.8) 60%, 
+                  rgba(0, 0, 0, 0.95) 100%
+                ),
+                linear-gradient(45deg, 
+                  hsl(var(--background)) 0%, 
+                  transparent 25%, 
+                  transparent 75%, 
+                  hsl(var(--background)) 100%
+                )
+              `,
+            }}
+          ></div>
+
+          {/* Top edge fade */}
+          <div
+            className="absolute top-0 left-0 right-0 h-32"
+            style={{
+              background: `linear-gradient(to bottom, 
+                hsl(var(--background)) 0%, 
+                hsl(var(--background) / 0.8) 20%, 
+                transparent 100%
+              )`,
+            }}
+          ></div>
+
+          {/* Side edge fades */}
+          <div
+            className="absolute inset-y-0 left-0 w-32"
+            style={{
+              background: `linear-gradient(to right, 
+                hsl(var(--background)) 0%, 
+                hsl(var(--background) / 0.6) 40%, 
+                transparent 100%
+              )`,
+            }}
+          ></div>
+          <div
+            className="absolute inset-y-0 right-0 w-32"
+            style={{
+              background: `linear-gradient(to left, 
+                hsl(var(--background)) 0%, 
+                hsl(var(--background) / 0.6) 40%, 
+                transparent 100%
+              )`,
+            }}
+          ></div>
+
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-3">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `
+                linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
+              `,
+                backgroundSize: "60px 60px",
+              }}
+            ></div>
+          </div>
+
+          <div className="relative flex items-center justify-between max-w-6xl mx-auto min-h-[400px] px-4">
+            {/* Left side - Text content */}
+            <div className="flex-1 space-y-8 max-w-2xl">
+              <h3 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+                {locale === "jp"
+                  ? "お悩みやご相談、いつでもお気軽に！"
+                  : "Got a project in mind or just a few questions?"}
+              </h3>
+
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+                {locale === "jp"
+                  ? "24時間いつでも対応可能。返信も迅速です。サイトの立ち上げ、スケールアップ、日本市場へのローカライズなど、あなたの課題をぜひお聞かせください。一緒に最適な解決策を考えましょう。"
+                  : "I'm available 24/7 and always quick to reply. Whether you need help launching, scaling, or localizing your website, I'd love to hear what challenges you're facing—and how I can help."}
+              </p>
+
+              <ServicesCTAButton locale={locale} />
+            </div>
+
+            {/* Right side - Futuristic globe image */}
+            <div className="flex-shrink-0 ml-12 relative hidden lg:block">
+              <div className="w-96 h-96 relative flex items-center justify-center">
+                {/* Glow effect behind the globe */}
+                <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+                <div className="absolute inset-0 bg-blue-400/5 rounded-full blur-2xl animate-pulse"></div>
+
+                {/* Globe image */}
+                <Image
+                  src="/images/cta-section-image.png"
+                  alt="Global connectivity and digital transformation"
+                  width={320}
+                  height={320}
+                  className="w-80 h-80 object-contain relative z-10 drop-shadow-2xl"
+                  priority
+                />
+
+                {/* Floating particles around the globe */}
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-60"></div>
+                <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse opacity-80"></div>
+                <div className="absolute top-1/2 left-1/6 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping opacity-40"></div>
+                <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-blue-400 rounded-full animate-pulse opacity-60"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

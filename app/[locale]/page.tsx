@@ -21,7 +21,7 @@ export default async function Home({ params }: PageProps) {
     <>
       {/* Hero Section */}
       <section id="hero">
-        <Hero {...staticHeroData} locale={locale} />
+        <Hero heroData={staticHeroData} locale={locale} />
       </section>
 
       {/* Services Section */}

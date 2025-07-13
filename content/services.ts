@@ -20,106 +20,141 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    id: "web-development",
+    id: "shopify-development",
     number: "01",
     title: {
-      en: "Web Development",
-      jp: "ウェブ開発",
+      en: "Shopify Store Development",
+      jp: "Shopifyストア構築",
     },
     description: {
-      en: "Build powerful, scalable websites and web applications with modern technologies. From simple landing pages to complex e-commerce platforms, I create digital solutions that drive results.",
-      jp: "最新技術を駆使して、強力でスケーラブルなウェブサイトやウェブアプリケーションを構築します。シンプルなランディングページから複雑なEコマースプラットフォームまで、結果を生み出すデジタルソリューションを作成します。",
+      en: "Customized Shopify stores designed for optimal conversions.",
+      jp: "最適なコンバージョンを目指したカスタムShopifyストア。",
     },
     subServices: [
       {
         number: "01",
         title: {
-          en: "Shopify Development",
-          jp: "Shopify開発",
+          en: "Custom Themes & Apps",
+          jp: "カスタムテーマ＆アプリ開発",
         },
       },
       {
         number: "02",
         title: {
-          en: "Custom Web Apps",
-          jp: "カスタムウェブアプリ",
+          en: "Store Migration",
+          jp: "ストア移行",
         },
       },
       {
         number: "03",
         title: {
-          en: "E-commerce Solutions",
-          jp: "Eコマースソリューション",
+          en: "Localization and Geo-targeting",
+          jp: "ローカライゼーション＆ジオターゲティング",
         },
       },
     ],
   },
   {
-    id: "web-design",
+    id: "seo-services",
     number: "02",
     title: {
-      en: "Web Design",
-      jp: "ウェブデザイン",
-    },
-    description: {
-      en: "Amplify your online presence with a website that truly connects with your audience's feelings and desires. I design stunning, high-converting sites that align with your business goals, helping you stand out and scale effectively.",
-      jp: "オーディエンスの感情や欲求に真につながるウェブサイトで、オンラインプレゼンスを向上させます。ビジネス目標に合致した美しく高コンバージョンのサイトをデザインし、目立って効果的にスケールするお手伝いをします。",
-    },
-    subServices: [
-      {
-        number: "01",
-        title: {
-          en: "Responsive Design",
-          jp: "レスポンシブデザイン",
-        },
-      },
-      {
-        number: "02",
-        title: {
-          en: "Wireframing",
-          jp: "ワイヤーフレーム作成",
-        },
-      },
-      {
-        number: "03",
-        title: {
-          en: "UX Writing",
-          jp: "UXライティング",
-        },
-      },
-    ],
-  },
-  {
-    id: "seo",
-    number: "03",
-    title: {
-      en: "SEO",
+      en: "SEO Services",
       jp: "SEO対策",
     },
     description: {
-      en: "Your website deserves to be seen. I optimize your online presence to elevate your visibility in search results, helping your business attract the right audience and stand out in the digital landscape.",
-      jp: "あなたのウェブサイトは見られるべきです。検索結果での可視性を高めるためにオンラインプレゼンスを最適化し、適切なオーディエンスを引き付け、デジタル環境で目立つお手伝いをします。",
+      en: "Comprehensive multilingual SEO—technical, On-Page, and strategy-focused.",
+      jp: "テクニカル・ページ内SEO・多言語SEOを包括的にサポート。",
     },
     subServices: [
       {
         number: "01",
         title: {
-          en: "Technical SEO",
-          jp: "テクニカルSEO",
+          en: "Technical SEO Audits",
+          jp: "テクニカルSEO監査",
         },
       },
       {
         number: "02",
         title: {
-          en: "On-Page Optimization",
-          jp: "オンページ最適化",
+          en: "On-Page SEO Optimization",
+          jp: "オンページSEO最適化",
         },
       },
       {
         number: "03",
         title: {
-          en: "SEO Audits & Analysis",
-          jp: "SEO監査・分析",
+          en: "Keyword Research & Strategy",
+          jp: "キーワード調査＆戦略策定",
+        },
+      },
+    ],
+  },
+  {
+    id: "web-design-and-development",
+    number: "03",
+    title: {
+      en: "Custom Web Design & Development",
+      jp: "カスタムウェブデザイン＆開発",
+    },
+    description: {
+      en: "Beautiful, intuitive designs crafted specifically for Japan and international markets.",
+      jp: "日本市場と海外市場向けに直感的で魅力的なデザインを提供。",
+    },
+    subServices: [
+      {
+        number: "01",
+        title: {
+          en: "Responsive and Mobile-Friendly Design",
+          jp: "レスポンシブ＆モバイルフレンドリーなデザイン",
+        },
+      },
+      {
+        number: "02",
+        title: {
+          en: "Wireframing & Prototyping",
+          jp: "ワイヤーフレーム＆プロトタイプ作成",
+        },
+      },
+      {
+        number: "03",
+        title: {
+          en: "User-Centered UX Design and Development",
+          jp: "ユーザー中心のUXデザイン＆開発",
+        },
+      },
+    ],
+  },
+  {
+    id: "multilingual-content",
+    number: "04",
+    title: {
+      en: "Multilingual Content Writing",
+      jp: "多言語コンテンツライティング",
+    },
+    description: {
+      en: "Engaging, SEO-rich content creation in Japanese and English.",
+      jp: "SEOを意識した魅力的な日英コンテンツ制作。",
+    },
+    subServices: [
+      {
+        number: "01",
+        title: {
+          en: "Localized Content and Translation",
+          jp: "ローカライズドコンテンツ＆翻訳",
+        },
+      },
+      {
+        number: "02",
+        title: {
+          en: "SEO-Optimized Copywriting",
+          jp: "SEO最適化コピーライティング",
+        },
+      },
+      {
+        number: "03",
+        title: {
+          en: "Content Marketing Strategy and Execution",
+          jp: "コンテンツマーケティング戦略＆実行",
         },
       },
     ],
