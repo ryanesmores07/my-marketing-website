@@ -139,12 +139,6 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                     <span className="flex items-baseline">
                       {line}
                       <span className="relative inline-block ml-1">
-                        {/* Glowing Background Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur-lg animate-pulse"></div>
-
-                        {/* Matrix-style Background */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded border border-primary/20 backdrop-blur-sm"></div>
-
                         {/* First Word - VELOPER/デベロッパー */}
                         <span
                           className="relative z-10 inline-block animate-[futuristicFadeIn_5s_infinite] opacity-100 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-black"
