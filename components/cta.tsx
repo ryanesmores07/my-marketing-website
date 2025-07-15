@@ -1,110 +1,85 @@
-import Image from "next/image";
-import { CTAScrollLinks } from "@/components/cta-scroll-links";
-
 interface CTAProps {
   locale?: string;
 }
 
 export const CTA = ({ locale = "en" }: CTAProps) => {
+  // Use site palette but new layout
   const content = {
     en: {
-      title: "Got a project in mind or just a few questions?",
-      subtitle: "Let's chat about how we can help bring your vision to life.",
-      primaryButton: "Let's Chat →",
-      secondaryButton: "View Projects →",
+      subtitle: "Need an unfair advantage?",
+      headline: "LET'S MAKE IT HAPPEN",
+      button: "BOOK A CALL",
+      leftTop: "Working Globally",
+      // leftBottom will be dynamic
+      rightTop: "FOR FURTHER INQUIRIES",
+      rightBottom: "hello@yourdomain.com",
     },
     jp: {
-      title: "お悩みやご相談、いつでもお気軽に！",
-      subtitle: "あなたのビジョンを実現するお手伝いをします。",
-      primaryButton: "今すぐ相談する →",
-      secondaryButton: "プロジェクトを見る →",
+      subtitle: "アドバンテージが必要ですか？",
+      headline: "一緒に実現しましょう",
+      button: "相談予約",
+      leftTop: "グローバル対応",
+      // leftBottom will be dynamic
+      rightTop: "お問い合わせ",
+      rightBottom: "hello@yourdomain.com",
     },
   };
+  const c = content[locale as keyof typeof content] || content.en;
 
-  const currentContent = content[locale as keyof typeof content] || content.en;
+  // Dynamic leftBottom: Available [Month] '[YY]
+  const now = new Date();
+  const month = now.toLocaleString(locale === "jp" ? "ja-JP" : "en-US", {
+    month: "long",
+  });
+  const year = now.getFullYear().toString().slice(-2);
+  const leftBottom =
+    locale === "jp"
+      ? `${now.getFullYear()}年${now.getMonth() + 1}月より受付`
+      : `Available ${month} '${year}`;
 
   return (
-    <section className="relative py-20 lg:py-28 overflow-hidden -mt-10">
-      {/* Multi-directional fade system */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background to-black/90"></div>
-
-      {/* Edge masking with diagonal gradients */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `
-            linear-gradient(135deg, transparent 0px, var(--background) 32px),
-            linear-gradient(45deg, transparent 0px, var(--background) 32px),
-            linear-gradient(to bottom, var(--background) 0px, transparent 32px),
-            linear-gradient(to right, var(--background) 0px, transparent 32px),
-            linear-gradient(to left, var(--background) 0px, transparent 32px)
-          `,
-        }}
-      ></div>
-
-      {/* Grid pattern with reduced opacity */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      ></div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left side - Content */}
-          <div className="text-left space-y-8">
-            <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                {currentContent.title}
-              </h2>
-              <p className="text-xl text-blue-100 leading-relaxed">
-                {currentContent.subtitle}
-              </p>
-            </div>
-
-            {/* Buttons with scroll functionality */}
-            <CTAScrollLinks
-              primaryText={currentContent.primaryButton}
-              secondaryText={currentContent.secondaryButton}
-            />
-          </div>
-
-          {/* Right side - Globe Image with Effects */}
-          <div className="relative flex justify-center lg:justify-end">
-            {/* Glow halos */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-80 h-80 bg-blue-500/20 rounded-full blur-3xl"></div>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-60 h-60 bg-blue-400/30 rounded-full blur-2xl"></div>
-            </div>
-
-            {/* Floating particles */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-2 h-2 bg-blue-400 rounded-full absolute top-20 left-10 animate-pulse"></div>
-              <div className="w-1 h-1 bg-blue-300 rounded-full absolute top-32 right-16 animate-ping"></div>
-              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full absolute bottom-24 left-20 animate-pulse"></div>
-              <div className="w-1 h-1 bg-blue-200 rounded-full absolute bottom-16 right-12 animate-ping"></div>
-            </div>
-
-            {/* Globe Image */}
-            <div className="relative z-10">
-              <Image
-                src="/images/cta-section-image.png"
-                alt="Futuristic Globe"
-                width={320}
-                height={320}
-                priority
-                className="drop-shadow-2xl"
-              />
-            </div>
-          </div>
+    <section className="relative min-h-[80vh] flex flex-col items-center justify-center bg-background text-foreground px-4">
+      {/* Subtitle */}
+      <div className="mb-2 text-center text-xs md:text-sm text-muted-foreground tracking-widest uppercase">
+        {c.subtitle}
+      </div>
+      {/* Headline */}
+      <h2 className="text-center font-black text-[clamp(2.5rem,8vw,6rem)] leading-none tracking-tight mb-8">
+        {c.headline}
+      </h2>
+      {/* CTA Button */}
+      <a
+        href="#contact"
+        className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-muted text-foreground font-bold text-lg shadow-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        tabIndex={0}
+        aria-label={c.button}
+      >
+        {c.button}
+        <svg
+          className="ml-2 w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </a>
+      {/* Bottom Left Info */}
+      <div className="absolute left-4 bottom-4 text-xs text-muted-foreground space-y-1 bg-background/80 rounded-md px-3 py-2 border border-border/40 shadow-sm">
+        <div>{c.leftTop}</div>
+        <div className="opacity-80">{leftBottom}</div>
+      </div>
+      {/* Bottom Right Info */}
+      <div className="absolute right-4 bottom-4 text-right text-xs text-muted-foreground space-y-1 bg-background/80 rounded-md px-3 py-2 border border-border/40 shadow-sm">
+        <div className="uppercase tracking-widest font-semibold">
+          {c.rightTop}
         </div>
+        <div className="opacity-80">{c.rightBottom}</div>
       </div>
     </section>
   );

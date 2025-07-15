@@ -51,7 +51,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
             <div className="relative w-full max-w-md mx-auto">
               {/* Rotating Outer Ring */}
               <div
-                className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-accent to-primary animate-spin opacity-60"
+                className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-accent to-primary motion-safe:animate-spin opacity-60 will-change-transform"
                 style={{ animationDuration: "12s" }}
               >
                 <div className="w-full h-full rounded-3xl bg-background m-1"></div>
@@ -81,37 +81,18 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                     height={700}
                     className="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
                     priority
+                    sizes="(max-width: 768px) 100vw, 500px"
                   />
 
                   {/* Color Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/15 via-transparent to-accent/15 mix-blend-overlay"></div>
                 </div>
 
-                {/* Scanning Lines */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute top-1/4 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-pulse opacity-60"></div>
-                  <div className="absolute bottom-1/3 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse delay-1000 opacity-60"></div>
-                </div>
+                {/* Remove scanning lines for performance */}
               </div>
 
-              {/* Floating Tech Elements */}
-              <div className="absolute -top-6 -right-6 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-4 py-2 rounded-2xl text-sm font-medium shadow-lg shadow-primary/50 animate-bounce border border-primary/30">
-                🇯🇵 Tokyo Based
-              </div>
-
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-accent to-accent/80 text-accent-foreground px-4 py-2 rounded-2xl text-sm font-medium shadow-lg shadow-accent/50 animate-bounce delay-500 border border-accent/30">
-                7+ Years
-              </div>
-
-              <div className="absolute top-1/3 -left-8 w-12 h-12 bg-gradient-to-r from-muted to-muted/80 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-300 border border-border">
-                <div className="w-3 h-3 bg-primary rounded-full animate-ping"></div>
-              </div>
-
-              <div className="absolute bottom-1/3 -right-8 w-10 h-10 bg-gradient-to-r from-secondary to-secondary/80 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-700 border border-border">
-                <div className="w-2 h-2 bg-accent rounded-full animate-ping"></div>
-              </div>
-
-              {/* Background Decoration */}
+              {/* Remove floating tech elements for performance */}
+              {/* Background Decoration - keep for subtle depth */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl transform rotate-2 -z-10 blur-sm" />
               <div className="absolute inset-0 bg-gradient-to-tl from-accent/5 to-primary/5 rounded-3xl transform -rotate-1 -z-20 blur-lg" />
             </div>
