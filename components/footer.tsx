@@ -1,150 +1,135 @@
+"use client";
+
 import Link from "next/link";
-import { Mail, Phone, MapPin, Github, Twitter, Linkedin } from "lucide-react";
-import { FooterScrollLinks } from "@/components/footer-scroll-links";
+import { useEffect, useState } from "react";
 
 interface FooterProps {
   locale: string;
 }
 
+const menuLinks = [
+  { href: "#", label: { en: "Home", jp: "ホーム" } },
+  { href: "#services", label: { en: "Services", jp: "サービス" } },
+  { href: "#projects", label: { en: "Works", jp: "実績" } },
+  { href: "#about", label: { en: "About", jp: "概要" } },
+  { href: "#testimonials", label: { en: "Testimonials", jp: "お客様の声" } },
+  { href: "#cta", label: { en: "Contact", jp: "お問い合わせ" } },
+];
+
+const socialLinks = [
+  { href: "https://www.linkedin.com/in/ryanesmores/", label: "Linkedin" },
+  { href: "https://github.com/ryanesmores07", label: "Github" },
+];
+
+function LocalTime() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          hour12: false,
+          timeZone: "Asia/Tokyo",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }) + ",  JST"
+      );
+    };
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <span className="font-mono text-xs text-muted-foreground">{time}</span>
+  );
+}
+
 export const Footer = ({ locale }: FooterProps) => {
   const currentYear = new Date().getFullYear();
-
-  const footerSections = [
-    {
-      title: locale === "jp" ? "サービス" : "Services",
-      links: [
-        {
-          href: "#services",
-          label: locale === "jp" ? "ウェブデザイン" : "Web Design",
-        },
-        {
-          href: "#services",
-          label: locale === "jp" ? "SEO最適化" : "SEO Optimization",
-        },
-        {
-          href: "#services",
-          label: locale === "jp" ? "コンテンツ作成" : "Content Writing",
-        },
-        {
-          href: "#services",
-          label: locale === "jp" ? "Eコマース" : "E-commerce",
-        },
-      ],
-    },
-    {
-      title: locale === "jp" ? "会社情報" : "Company",
-      links: [
-        { href: "#about", label: locale === "jp" ? "概要" : "About Us" },
-        { href: "#projects", label: locale === "jp" ? "実績" : "Our Work" },
-        {
-          href: "#testimonials",
-          label: locale === "jp" ? "お客様の声" : "Testimonials",
-        },
-        { href: "#cta", label: locale === "jp" ? "お問い合わせ" : "Contact" },
-      ],
-    },
-    {
-      title: locale === "jp" ? "サポート" : "Support",
-      links: [
-        { href: "#cta", label: locale === "jp" ? "ヘルプ" : "Get Help" },
-        { href: "#about", label: locale === "jp" ? "よくある質問" : "FAQ" },
-        {
-          href: "#",
-          label: locale === "jp" ? "プライバシーポリシー" : "Privacy Policy",
-        },
-        { href: "#", label: locale === "jp" ? "利用規約" : "Terms of Service" },
-      ],
-    },
-  ];
-
   return (
-    <footer className="bg-muted/30 border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
-            <Link
-              href="/"
-              className="text-2xl font-bold text-foreground hover:text-primary transition-colors mb-4 block"
-            >
-              YourBrand
-            </Link>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              {locale === "jp"
-                ? "日本と世界を繋ぐクロスボーダーマーケティングのエキスパート。あなたのビジネスの成長をサポートします。"
-                : "Cross-border marketing expert connecting Japan with the world. Helping your business grow globally."}
-            </p>
-
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <div className="flex items-center text-muted-foreground">
-                <Mail className="h-4 w-4 mr-3" />
-                <span className="text-sm">hello@yourbrand.com</span>
-              </div>
-              <div className="flex items-center text-muted-foreground">
-                <Phone className="h-4 w-4 mr-3" />
-                <span className="text-sm">+81 3-1234-5678</span>
-              </div>
-              <div className="flex items-center text-muted-foreground">
-                <MapPin className="h-4 w-4 mr-3" />
-                <span className="text-sm">
-                  {locale === "jp" ? "東京, 日本" : "Tokyo, Japan"}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer Sections */}
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="font-semibold text-foreground mb-4">
-                {section.title}
-              </h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <FooterScrollLinks href={link.href} label={link.label} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <footer className="bg-muted/30 border-t border-border w-full">
+      {/* Divider */}
+      <div className="border-t border-border w-full mb-8"></div>
+      {/* Main Columns */}
+      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-start gap-12 pb-12">
+        {/* Menu */}
+        <div className="flex-1 min-w-[160px]">
+          <h3 className="font-semibold mb-2 text-foreground">Menu</h3>
+          <ul className="space-y-1">
+            {menuLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:underline text-muted-foreground text-sm"
+                >
+                  {link.label[locale as "en" | "jp"] || link.label.en}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm mb-4 md:mb-0">
-              © {currentYear} YourBrand.{" "}
-              {locale === "jp"
-                ? "すべての権利を保有しています。"
-                : "All rights reserved."}
-            </p>
-
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub"
+        {/* Socials */}
+        <div className="flex-1 min-w-[160px]">
+          <h3 className="font-semibold mb-2 text-foreground">Socials</h3>
+          <ul className="space-y-1">
+            {socialLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-muted-foreground text-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      {/* Bottom Row */}
+      <div className="w-full flex flex-col md:flex-row justify-between items-end max-w-7xl mx-auto px-4 pb-6">
+        {/* Copyright */}
+        <div className="flex-1 flex items-end">
+          <span className="text-2xl md:text-3xl font-bold text-foreground leading-none">
+            © {currentYear} Ernie Ryan
+            <br />
+            <span className="text-base font-normal">All rights reserved.</span>
+          </span>
+        </div>
+        {/* Local Time */}
+        <div className="flex-1 flex flex-col items-center justify-end pb-2">
+          <span className="uppercase text-xs font-semibold text-foreground mb-1">
+            Local Time
+          </span>
+          <LocalTime />
+        </div>
+        {/* Scroll to Top */}
+        <div className="flex-1 flex justify-end items-end">
+          <div className="relative group">
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="rounded-full border border-muted-foreground/40 bg-muted-foreground/30 hover:bg-muted-foreground/80 transition w-16 h-16 flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-muted-foreground group-hover:-translate-y-1 group-active:scale-95"
+              aria-label="Scroll to top"
+              tabIndex={0}
+            >
+              <svg
+                width="32"
+                height="32"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                className="transition-transform group-hover:-translate-y-1"
               >
-                <Github className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
+                <path
+                  d="M12 19V5M5 12l7-7 7 7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
