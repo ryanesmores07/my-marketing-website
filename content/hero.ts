@@ -7,7 +7,7 @@ export const staticHeroData = {
     ],
     description:
       "Grow your business internationally with beautifully designed, SEO-optimized websites tailored specifically for Japan and global markets.",
-    ctaText: "Book Your Free Bilingual Strategy Session",
+    ctaText: "Collaborate With Me",
   },
   jp: {
     questions: [
@@ -17,6 +17,6 @@ export const staticHeroData = {
     ],
     description:
       "日英対応のSEO最適化された魅力的なウェブサイトで、ビジネスの可能性を世界へ広げましょう。",
-    ctaText: "無料バイリンガル戦略セッションを予約",
+    ctaText: "私と一緒に働きましょう",
   },
 };

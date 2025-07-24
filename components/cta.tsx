@@ -5,10 +5,8 @@ interface CTAProps {
   locale?: "en" | "jp";
 }
 
-const getCurrentMonthYear = (locale: "en" | "jp") => {
-  const now = new Date();
-  const year = String(now.getFullYear()).slice(-2);
-  const months = {
+const getCurrentMonthYear = (locale: string = "en") => {
+  const months: Record<"en" | "jp", string[]> = {
     en: [
       "January",
       "February",
@@ -38,7 +36,12 @@ const getCurrentMonthYear = (locale: "en" | "jp") => {
       "12月",
     ],
   };
-  return { month: months[locale][now.getMonth()], year };
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(-2);
+  const isSupportedLocale = (l: string): l is "en" | "jp" =>
+    l === "en" || l === "jp";
+  const monthList = isSupportedLocale(locale) ? months[locale] : months["en"];
+  return { month: monthList[now.getMonth()], year };
 };
 
 const CTA = ({ locale = "en" }: CTAProps) => {

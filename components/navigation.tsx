@@ -26,10 +26,11 @@ export const Navigation = ({ locale }: NavigationProps) => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link
-                href="/"
-                className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
+                href={`/${locale}`}
+                className="text-xl font-bold text-foreground hover:text-primary transition-colors"
+                prefetch={false}
               >
-                YourBrand
+                ernieryan.dev
               </Link>
             </div>
 

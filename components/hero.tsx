@@ -1,5 +1,31 @@
 import Image from "next/image";
 import { HeroCTAButton } from "@/components/hero-cta-button";
+import React from "react";
+
+// ShinyText component for stats numbers
+const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span
+    className="inline-block"
+    style={{
+      color: "#b5b5b5a4",
+      background:
+        "linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 60%)",
+      backgroundSize: "200% 100%",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+      display: "inline-block",
+      animation: "shine 5s linear infinite",
+    }}
+  >
+    {children}
+    <style>{`
+      @keyframes shine {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+    `}</style>
+  </span>
+);
 
 interface HeroProps {
   heroData: {
@@ -121,7 +147,7 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
-              7+
+              <ShinyText>7+</ShinyText>
             </div>
             <div className="text-sm text-muted-foreground">
               {locale === "jp" ? "年の経験" : "Years Experience"}
@@ -129,23 +155,25 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
           </div>
           <div className="text-center">
             <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
-              50+
+              <ShinyText>EN/JP</ShinyText>
             </div>
             <div className="text-sm text-muted-foreground">
-              {locale === "jp" ? "プロジェクト" : "Projects Completed"}
+              {locale === "jp" ? "多言語対応" : "Bilingual Support"}
             </div>
           </div>
           <div className="text-center">
             <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
-              2
+              <ShinyText>24/7</ShinyText>
             </div>
             <div className="text-sm text-muted-foreground">
-              {locale === "jp" ? "言語対応" : "Languages Supported"}
+              {locale === "jp"
+                ? "世界最高の応答速度"
+                : "World Class Response Time"}
             </div>
           </div>
           <div className="text-center">
             <div className="text-3xl lg:text-4xl font-black text-primary mb-2">
-              100%
+              <ShinyText>100%</ShinyText>
             </div>
             <div className="text-sm text-muted-foreground">
               {locale === "jp" ? "顧客満足度" : "Client Satisfaction"}

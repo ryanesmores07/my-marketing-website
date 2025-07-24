@@ -1,6 +1,32 @@
 import { services } from "@/content/services";
 import Image from "next/image";
 import { ServicesCTAButton } from "@/components/services-cta-button";
+import React from "react";
+
+// ShinyText component for subService titles
+const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span
+    className="inline-block"
+    style={{
+      color: "#b5b5b5a4",
+      background:
+        "linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 60%)",
+      backgroundSize: "200% 100%",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+      display: "inline-block",
+      animation: "shine 5s linear infinite",
+    }}
+  >
+    {children}
+    <style>{`
+      @keyframes shine {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+    `}</style>
+  </span>
+);
 
 interface ServicesSectionProps {
   locale?: "en" | "jp";
@@ -66,16 +92,16 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
                   {service.subServices.map((subService) => (
                     <div
                       key={`${service.id}-${subService.number}`}
-                      className="group flex items-center gap-4 p-4 rounded-lg border border-border hover:border-primary/20 hover:bg-accent/50 transition-all duration-300"
+                      className="group flex items-center gap-4 p-4 rounded-lg border border-border transition-all duration-300"
                     >
                       {/* Sub Service Number */}
-                      <div className="flex-shrink-0 w-8 h-8 bg-muted text-muted-foreground rounded-full flex items-center justify-center text-sm font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <div className="flex-shrink-0 w-8 h-8 bg-muted text-muted-foreground rounded-full flex items-center justify-center text-sm font-bold">
                         {subService.number}
                       </div>
 
-                      {/* Sub Service Title */}
-                      <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {subService.title[locale]}
+                      {/* Sub Service Title with shiny effect */}
+                      <h4 className="text-lg font-semibold text-foreground">
+                        <ShinyText>{subService.title[locale]}</ShinyText>
                       </h4>
                     </div>
                   ))}
@@ -86,7 +112,7 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="relative -mt-10 pt-32 pb-20 overflow-hidden">
+        <div className="relative pt-32 pb-20 overflow-hidden">
           {/* Primary background with strong fade */}
           <div
             className="absolute inset-0"

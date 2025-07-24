@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import { LanguageGate } from "@/components/language-gate";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning>
-      <body className="font-sans antialiased">{children}</body>
+      <body>
+        <LanguageGate />
+        {children}
+      </body>
     </html>
   );
 }
