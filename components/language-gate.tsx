@@ -16,6 +16,19 @@ export const LanguageGate = () => {
     if (!lang) setShow(true);
   }, []);
 
+  // Prevent background scroll when overlay is open
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    // Clean up on unmount
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [show]);
+
   const handleSelect = (locale: "en" | "jp") => {
     localStorage.setItem("preferredLocale", locale);
     setShow(false); // Hide overlay immediately

@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import React from "react";
 
 interface AboutMeProps {
   locale?: "en" | "jp";
@@ -17,6 +18,14 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
         "While I lead every project as the captain of the ship, I'm not alone! My trusted team includes native Japanese members who work alongside me to ensure nothing is lost in translation, especially when gathering and executing your business requirements.",
       experience:
         "Together, we build results-driven, culturally-tuned websites that help your brand grow across borders.",
+      skills: [
+        "Shopify Expert",
+        "Multilingual SEO",
+        "EN/JP Bilingual",
+        "Cross-Border Commerce",
+        "Tokyo-Based",
+        "E-commerce Strategy",
+      ],
     },
     jp: {
       badge: "私について",
@@ -28,6 +37,14 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
         "私はプロジェクトの舵を取る立場ですが、日本語ネイティブのメンバーとチームを組んでおり、要件のヒアリングから開発まで、日本語での細かなニュアンスも正確に反映できる体制を整えています。",
       experience:
         "文化の壁を越えた、成果重視のウェブサイトを一緒に作りましょう。",
+      skills: [
+        "Shopify専門家",
+        "多言語SEO",
+        "英語・日本語対応",
+        "越境EC",
+        "東京拠点",
+        "EC戦略",
+      ],
     },
   };
 
@@ -113,7 +130,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
             <div className="space-y-2">
               {currentContent.title.map((line, index) => (
                 <h2
-                  key={index}
+                  key={`title-line-${index}-${line}`}
                   className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-none tracking-tight"
                 >
                   {index === 1 ? (
@@ -122,7 +139,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                       <span className="relative inline-block ml-1">
                         {/* First Word - VELOPER/デベロッパー */}
                         <span
-                          className="relative z-10 inline-block animate-[futuristicFadeIn_5s_infinite] opacity-100 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-black"
+                          className="relative z-10 inline-block animate-futuristic-fade-in opacity-100 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-black"
                           style={{
                             animationDelay: "0s",
                             textShadow: "0 0 20px rgba(var(--primary), 0.5)",
@@ -130,17 +147,17 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                               "drop-shadow(0 0 10px rgba(var(--primary), 0.3))",
                           }}
                         >
-                          <span className="animate-[typeWriter_2.5s_infinite]">
+                          <span className="animate-type-writer">
                             {currentContent.animatedWords[0]}
                           </span>
-                          <span className="animate-[blink_1s_infinite] ml-1 text-primary">
+                          <span className="animate-blink ml-1 text-primary">
                             |
                           </span>
                         </span>
 
                         {/* Second Word - SIGNER/デザイナー */}
                         <span
-                          className="absolute inset-0 z-10 inline-block animate-[futuristicFadeIn_5s_infinite] opacity-0 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent font-black"
+                          className="absolute inset-0 z-10 inline-block animate-futuristic-fade-in opacity-0 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent font-black"
                           style={{
                             animationDelay: "2.5s",
                             textShadow: "0 0 20px rgba(var(--accent), 0.5)",
@@ -149,13 +166,13 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                           }}
                         >
                           <span
-                            className="animate-[typeWriter_2.5s_infinite]"
+                            className="animate-type-writer"
                             style={{ animationDelay: "2.5s" }}
                           >
                             {currentContent.animatedWords[1]}
                           </span>
                           <span
-                            className="animate-[blink_1s_infinite] ml-1 text-accent"
+                            className="animate-blink ml-1 text-accent"
                             style={{ animationDelay: "2.5s" }}
                           >
                             |
@@ -163,11 +180,11 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                         </span>
 
                         {/* Scanning Line Effect */}
-                        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-[scanLine_5s_infinite] opacity-60"></div>
+                        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-scan-line opacity-60"></div>
 
                         {/* Particle Effects */}
-                        <div className="absolute -top-2 -right-2 w-1 h-1 bg-primary rounded-full animate-[float_3s_infinite]"></div>
-                        <div className="absolute -bottom-2 -left-2 w-1 h-1 bg-accent rounded-full animate-[float_3s_infinite] delay-1000"></div>
+                        <div className="absolute -top-2 -right-2 w-1 h-1 bg-primary rounded-full animate-float"></div>
+                        <div className="absolute -bottom-2 -left-2 w-1 h-1 bg-accent rounded-full animate-float-delay"></div>
                       </span>
                     </span>
                   ) : (
@@ -179,15 +196,15 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
 
             {/* Description */}
             <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-foreground leading-relaxed">
                 {currentContent.description}
               </p>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-foreground leading-relaxed">
                 {currentContent.mission}
               </p>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-foreground leading-relaxed">
                 {currentContent.experience}
               </p>
             </div>
@@ -195,113 +212,19 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
             {/* Enhanced Skills/Specialties */}
             <div className="pt-8 border-t border-border/50">
               <div className="flex flex-wrap gap-3">
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  Shopify Expert
-                </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  Multilingual SEO
-                </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  EN/JP Bilingual
-                </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  Cross-Border Commerce
-                </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  Tokyo-Based
-                </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm">
-                  E-commerce Strategy
-                </span>
+                {currentContent.skills.map((skill, index) => (
+                  <span
+                    key={`skill-${index}-${skill}`}
+                    className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Enhanced Custom CSS for Futuristic Animations */}
-      <style jsx>{`
-        @keyframes futuristicFadeIn {
-          0%,
-          45% {
-            opacity: 1;
-            transform: translateY(0px) scale(1);
-            filter: blur(0px);
-          }
-          50% {
-            opacity: 0.8;
-            transform: translateY(-2px) scale(1.02);
-            filter: blur(1px);
-          }
-          55%,
-          100% {
-            opacity: 0;
-            transform: translateY(-5px) scale(0.98);
-            filter: blur(2px);
-          }
-        }
-
-        @keyframes typeWriter {
-          0% {
-            width: 0;
-          }
-          50% {
-            width: 100%;
-          }
-          100% {
-            width: 100%;
-          }
-        }
-
-        @keyframes blink {
-          0%,
-          50% {
-            opacity: 1;
-          }
-          51%,
-          100% {
-            opacity: 0;
-          }
-        }
-
-        @keyframes scanLine {
-          0% {
-            transform: translateX(-100%);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-        }
-
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-            opacity: 1;
-          }
-          50% {
-            transform: translateY(-10px) rotate(180deg);
-            opacity: 0.7;
-          }
-        }
-
-        @keyframes glow {
-          0%,
-          100% {
-            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor,
-              0 0 15px currentColor;
-          }
-          50% {
-            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor,
-              0 0 30px currentColor;
-          }
-        }
-      `}</style>
     </section>
   );
 };

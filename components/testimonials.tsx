@@ -80,10 +80,10 @@ export const Testimonials = ({ locale = "en" }: TestimonialProps) => {
             {locale === "jp" ? "お客様の声" : "Don’t just take my word for it"}
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
             {locale === "jp"
-              ? "スタートアップから大手企業まで、いろんなクライアントとお仕事してきました。使っているのは「Upwork（アップワーク）」という、世界中のフリーランスと企業をつなぐ人気のサービスです。ここでは、実際にいただいたクライアントの声を紹介します。"
-              : "From startups to established brands, I’ve worked with all kinds of clients through Upwork, the world’s go-to platform for hiring freelancers. Here’s what some of my clients have shared."}
+              ? "クライアントからの信頼と満足度を証明する実績をご覧ください。"
+              : "See what clients say about working with me on their international projects."}
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export const Testimonials = ({ locale = "en" }: TestimonialProps) => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
             <div
-              key={testimonial.id}
+              key={`testimonial-${testimonial.id}`}
               className="relative bg-gradient-to-br from-card via-card to-card/50 rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 group overflow-hidden backdrop-blur-sm"
             >
               {/* Animated Background Elements */}

@@ -1,29 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { HeroCTAButton } from "@/components/hero-cta-button";
 import React from "react";
 
-// ShinyText component for stats numbers
+// ShinyText component for stats numbers with light/dark mode support
 const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span
-    className="inline-block"
-    style={{
-      color: "#b5b5b5a4",
-      background:
-        "linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 60%)",
-      backgroundSize: "200% 100%",
-      WebkitBackgroundClip: "text",
-      backgroundClip: "text",
-      display: "inline-block",
-      animation: "shine 5s linear infinite",
-    }}
-  >
+  <span className="inline-block text-foreground dark:text-[#b5b5b5a4] animate-shine shiny-text">
     {children}
-    <style>{`
-      @keyframes shine {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-      }
-    `}</style>
   </span>
 );
 
@@ -60,7 +44,7 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative h-full">
         {/* Large Name Display - Full Width */}
         <div className="mb-16 lg:mb-20 w-full flex justify-center">
-          <h1 className="font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] ">
+          <h1 className="font-black text-foreground leading-none tracking-tighter whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] min-h-[4rem] lg:min-h-[6rem]">
             ERNIE RYAN
           </h1>
         </div>
@@ -72,7 +56,10 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
             {/* Left Side - Questions */}
             <div className="space-y-6">
               {currentContent.questions.map((question, index) => (
-                <div key={index} className="flex items-start gap-4">
+                <div
+                  key={`question-${index}-${question.slice(0, 20)}`}
+                  className="flex items-start gap-4"
+                >
                   <div className="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm">
                     {index + 1}
                   </div>
@@ -83,14 +70,24 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
               ))}
 
               <div className="pt-6">
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base md:text-lg text-foreground leading-relaxed">
                   {currentContent.description}
                 </p>
               </div>
 
               {/* CTA Section */}
-              <div className="pt-8">
+              <div className="pt-8 flex flex-col sm:flex-row gap-4">
                 <HeroCTAButton ctaText={currentContent.ctaText} />
+                <Link href="#projects">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto px-8 py-4 text-foreground border-2 border-foreground/20 hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 font-semibold text-base"
+                  >
+                    {locale === "jp" ? "プロジェクトを見る" : "View Projects"}
+                    <span className="ml-2">→</span>
+                  </Button>
+                </Link>
               </div>
             </div>
 
@@ -124,12 +121,13 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
                   <div className="relative w-full h-full">
                     <Image
                       src="/images/ryan-main.jpg"
-                      alt="Ernie Ryan"
+                      alt="Ernie Ryan - Bilingual Web Developer & SEO Expert"
                       width={400}
                       height={400}
                       className="w-full h-full object-cover"
                       priority
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      sizes="(max-width: 768px) 320px, (max-width: 1024px) 384px, 400px"
+                      fetchPriority="high"
                     />
 
                     {/* Gradient Overlay */}

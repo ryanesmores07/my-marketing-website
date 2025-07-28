@@ -17,6 +17,6 @@ export const staticHeroData = {
     ],
     description:
       "日英対応のSEO最適化された魅力的なウェブサイトで、ビジネスの可能性を世界へ広げましょう。",
-    ctaText: "私と一緒に働きましょう",
+    ctaText: "コラボレーションを始める",
   },
 };

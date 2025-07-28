@@ -69,34 +69,34 @@ const CTA = ({ locale = "en" }: CTAProps) => {
   const t = content[locale] || content.en;
 
   return (
-    <section className="relative min-h-[calc(100vh-100px)] flex flex-col justify-center items-center bg-background text-neutral-200 px-4">
+    <section className="relative min-h-[calc(100vh-100px)] lg:min-h-[calc(100vh-200px)] flex flex-col justify-center items-center bg-background text-neutral-200 px-4">
       {/* Subtitle */}
       <span
-        className="mb-2 text-sm tracking-widest text-neutral-400 text-center"
+        className="mb-2 lg:mb-4 text-lg tracking-widest text-neutral-600 text-center"
         aria-label={t.subtitle}
       >
         {t.subtitle}
       </span>
       {/* Main Heading */}
-      <h1 className="text-6xl md:text-8xl font-bold text-center leading-none mb-8">
+      <h2 className="text-6xl md:text-8xl lg:text-7xl xl:text-8xl font-bold text-center leading-none mb-6 lg:mb-8 text-foreground">
         {t.heading.split(" ").map((word, i) => (
-          <React.Fragment key={i}>
+          <React.Fragment key={`word-${i}-${word}`}>
             {word}
             {i === 1 ? <br /> : " "}
           </React.Fragment>
         ))}
-      </h1>
+      </h2>
       {/* CTA Button */}
       <Link
         href="/contact"
-        className="mt-2 px-14 py-6 rounded-full bg-neutral-800 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600"
+        className="mt-2 lg:mt-4 px-14 py-6 rounded-full bg-neutral-800 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600"
         tabIndex={0}
         aria-label={t.button}
       >
         {t.button}
       </Link>
       {/* Bottom Left: Working Globally & Available Date */}
-      <div className="absolute left-4 bottom-4 flex flex-col items-start text-xs text-neutral-400">
+      <div className="absolute left-4 bottom-4 flex flex-col items-start text-xs text-neutral-600">
         <span className="mb-0.5 flex items-center gap-1">
           <svg
             width="16"
@@ -123,7 +123,7 @@ const CTA = ({ locale = "en" }: CTAProps) => {
         </span>
       </div>
       {/* Bottom Right: Contact Email */}
-      <div className="absolute right-4 bottom-4 text-xs text-neutral-400 text-right">
+      <div className="absolute right-4 bottom-4 text-xs text-neutral-600 text-right">
         <span className="block">{t.inquiries}</span>
         <a
           href={`mailto:${t.email}`}

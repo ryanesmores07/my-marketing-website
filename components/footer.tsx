@@ -40,9 +40,7 @@ function LocalTime() {
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
-  return (
-    <span className="font-mono text-xs text-muted-foreground">{time}</span>
-  );
+  return <span className="font-mono text-xs text-foreground">{time}</span>;
 }
 
 export const Footer = ({ locale }: FooterProps) => {
@@ -61,7 +59,7 @@ export const Footer = ({ locale }: FooterProps) => {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:underline text-muted-foreground text-sm"
+                  className="hover:underline text-foreground text-sm"
                 >
                   {link.label[locale as "en" | "jp"] || link.label.en}
                 </Link>
@@ -79,7 +77,7 @@ export const Footer = ({ locale }: FooterProps) => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline text-muted-foreground text-sm"
+                  className="hover:underline text-foreground text-sm"
                 >
                   {link.label}
                 </a>

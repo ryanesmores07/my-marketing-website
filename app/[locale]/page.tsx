@@ -19,27 +19,51 @@ export default async function Home({ params }: PageProps) {
 
   return (
     <>
-      {/* Hero Section */}
-      <section id="hero">
+      {/* Hero Section - Main landmark */}
+      <section
+        id="hero"
+        aria-label={locale === "jp" ? "メインコンテンツ" : "Main content"}
+      >
         <Hero heroData={staticHeroData} locale={locale} />
       </section>
 
       {/* Services Section */}
-      <ServicesSection locale={locale} />
+      <section
+        id="services"
+        aria-label={locale === "jp" ? "サービス" : "Services"}
+      >
+        <ServicesSection locale={locale} />
+      </section>
 
       {/* Projects Section - Selected Works */}
-      <section id="projects">
+      <section
+        id="projects"
+        aria-label={locale === "jp" ? "プロジェクト" : "Projects"}
+      >
         <ProjectsSection projects={projects.slice(0, 4)} locale={locale} />
       </section>
 
       {/* About Me Section */}
-      <AboutMe locale={locale} />
+      <section
+        id="about"
+        aria-label={locale === "jp" ? "私について" : "About me"}
+      >
+        <AboutMe locale={locale} />
+      </section>
 
       {/* Testimonials Section */}
-      <Testimonials locale={locale} />
+      <section
+        id="testimonials"
+        aria-label={locale === "jp" ? "お客様の声" : "Testimonials"}
+      >
+        <Testimonials locale={locale} />
+      </section>
 
       {/* CTA Section */}
-      <section id="cta">
+      <section
+        id="cta"
+        aria-label={locale === "jp" ? "お問い合わせ" : "Contact"}
+      >
         <CTA locale={locale} />
       </section>
     </>

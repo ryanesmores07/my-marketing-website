@@ -3,28 +3,10 @@ import Image from "next/image";
 import { ServicesCTAButton } from "@/components/services-cta-button";
 import React from "react";
 
-// ShinyText component for subService titles
+// ShinyText component for subService titles with light/dark mode support
 const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span
-    className="inline-block"
-    style={{
-      color: "#b5b5b5a4",
-      background:
-        "linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 60%)",
-      backgroundSize: "200% 100%",
-      WebkitBackgroundClip: "text",
-      backgroundClip: "text",
-      display: "inline-block",
-      animation: "shine 5s linear infinite",
-    }}
-  >
+  <span className="inline-block text-foreground dark:text-[#b5b5b5a4] shiny-text animate-shine">
     {children}
-    <style>{`
-      @keyframes shine {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-      }
-    `}</style>
   </span>
 );
 
@@ -50,10 +32,10 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
             {locale === "jp" ? "専門サービス" : "How I Can Help You"}
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
             {locale === "jp"
-              ? "Shopifyと多言語SEOを専門とした、日本と海外市場をつなぐデジタルソリューション"
-              : "Specialized Shopify and multilingual SEO solutions connecting Japanese and international markets"}
+              ? "日本と世界を繋ぐクロスボーダーマーケティングプロジェクトの実績をご覧ください。"
+              : "Explore my portfolio of cross-border marketing projects connecting Japan with the global market."}
           </p>
         </div>
 
@@ -99,8 +81,8 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
                         {subService.number}
                       </div>
 
-                      {/* Sub Service Title with shiny effect */}
-                      <h4 className="text-lg font-semibold text-foreground">
+                      {/* Sub Service Title with darker text in light mode */}
+                      <h4 className="text-lg font-semibold">
                         <ShinyText>{subService.title[locale]}</ShinyText>
                       </h4>
                     </div>
