@@ -1,13 +1,23 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { ContactModal } from "./contact-modal";
 
 interface HeroCTAButtonProps {
   ctaText: string;
+  locale?: "en" | "jp";
 }
 
-export const HeroCTAButton = ({ ctaText }: HeroCTAButtonProps) => {
+export const HeroCTAButton = ({
+  ctaText,
+  locale = "en",
+}: HeroCTAButtonProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <Link href="#cta">
+    <>
       <Button
         size="lg"
         className="relative w-full sm:w-auto px-8 py-4 text-white rounded-lg font-semibold text-base overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 animate-shiny-gradient"
@@ -18,6 +28,7 @@ export const HeroCTAButton = ({ ctaText }: HeroCTAButtonProps) => {
           textShadow: "0 1px 2px rgba(0, 0, 0, 0.8)",
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
         }}
+        onClick={() => setIsModalOpen(true)}
       >
         {/* Dark overlay for better text contrast */}
         <div
@@ -29,11 +40,15 @@ export const HeroCTAButton = ({ ctaText }: HeroCTAButtonProps) => {
         />
 
         {/* Text content with relative positioning */}
-        <span className="relative z-10 font-bold">
-          {ctaText}
-          <span className="ml-2">→</span>
-        </span>
+        {ctaText}
+        <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
-    </Link>
+
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        locale={locale}
+      />
+    </>
   );
 };

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,11 +28,6 @@ export const NavigationClient = ({
   locale,
 }: NavigationClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-
-  // Check if we're on a project detail page
-  const isProjectDetailPage =
-    pathname.includes("/projects/") && !pathname.endsWith("/projects");
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -45,25 +39,23 @@ export const NavigationClient = ({
   return (
     <>
       {/* Desktop Navigation */}
-      {!isProjectDetailPage && (
-        <div className="hidden md:block">
-          <div className="ml-10 flex items-baseline space-x-4">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleScrollToSection(item.href);
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+      <div className="hidden md:block">
+        <div className="ml-10 flex items-baseline space-x-4">
+          {navigationItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                handleScrollToSection(item.href);
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* Language Switcher, Theme Switcher & CTA */}
       <div className="hidden md:flex items-center space-x-3">
@@ -86,7 +78,7 @@ export const NavigationClient = ({
 
         <ThemeSwitcher />
 
-        {!isProjectDetailPage && <NavCTAButton locale={locale} />}
+        <NavCTAButton locale={locale} />
       </div>
 
       {/* Mobile menu button */}
@@ -109,21 +101,20 @@ export const NavigationClient = ({
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border z-50">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {!isProjectDetailPage &&
-              navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMenuOpen(false);
-                    handleScrollToSection(item.href);
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {navigationItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  handleScrollToSection(item.href);
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
 
             {/* Mobile Language Switcher & Theme */}
             <div className="pt-4 pb-2 border-t border-border mt-4">
@@ -157,15 +148,13 @@ export const NavigationClient = ({
               </div>
             </div>
 
-            {!isProjectDetailPage && (
-              <div className="px-3 py-2">
-                <NavCTAButton
-                  locale={locale}
-                  fullWidth={true}
-                  onClose={() => setIsMenuOpen(false)}
-                />
-              </div>
-            )}
+            <div className="px-3 py-2">
+              <NavCTAButton
+                locale={locale}
+                fullWidth={true}
+                onClose={() => setIsMenuOpen(false)}
+              />
+            </div>
           </div>
         </div>
       )}

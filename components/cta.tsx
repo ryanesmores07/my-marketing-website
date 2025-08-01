@@ -1,5 +1,8 @@
-import React from "react";
-import Link from "next/link";
+"use client";
+
+import React, { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { ContactModal } from "./contact-modal";
 
 interface CTAProps {
   locale?: "en" | "jp";
@@ -45,12 +48,13 @@ const getCurrentMonthYear = (locale: string = "en") => {
 };
 
 const CTA = ({ locale = "en" }: CTAProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { month, year } = getCurrentMonthYear(locale);
   const content = {
     en: {
       subtitle: "(Need an unfair advantage?)",
       heading: "LET'S MAKE IT HAPPEN",
-      button: "BOOK A CALL ↗",
+      button: "GET IN TOUCH",
       working: "Working Globally",
       available: `Available ${month} '${year}`,
       inquiries: "FOR FURTHER INQUIRIES",
@@ -59,7 +63,7 @@ const CTA = ({ locale = "en" }: CTAProps) => {
     jp: {
       subtitle: "（他社にない強みが必要ですか？）",
       heading: "一緒に実現しましょう",
-      button: "相談予約 ↗",
+      button: "お問い合わせ",
       working: "世界中で対応",
       available: `${month} '${year} 受付中`,
       inquiries: "お問い合わせ先",
@@ -87,14 +91,15 @@ const CTA = ({ locale = "en" }: CTAProps) => {
         ))}
       </h2>
       {/* CTA Button */}
-      <Link
-        href="/contact"
-        className="mt-2 lg:mt-4 px-14 py-6 rounded-full bg-neutral-800 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600"
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="mt-2 lg:mt-4 px-14 py-6 rounded-full bg-neutral-800 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600 flex items-center"
         tabIndex={0}
         aria-label={t.button}
       >
         {t.button}
-      </Link>
+        <ArrowRight className="ml-2 h-5 w-5" />
+      </button>
       {/* Bottom Left: Working Globally & Available Date */}
       <div className="absolute left-4 bottom-4 flex flex-col items-start text-xs text-neutral-600">
         <span className="mb-0.5 flex items-center gap-1">
@@ -134,6 +139,13 @@ const CTA = ({ locale = "en" }: CTAProps) => {
           ↳ {t.email}
         </a>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        locale={locale}
+      />
     </section>
   );
 };

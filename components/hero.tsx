@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { HeroCTAButton } from "@/components/hero-cta-button";
 import React from "react";
 
@@ -77,7 +78,10 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
 
               {/* CTA Section */}
               <div className="pt-8 flex flex-col sm:flex-row gap-4">
-                <HeroCTAButton ctaText={currentContent.ctaText} />
+                <HeroCTAButton
+                  ctaText={currentContent.ctaText}
+                  locale={locale as "en" | "jp"}
+                />
                 <Link href="#projects">
                   <Button
                     size="lg"
@@ -85,7 +89,7 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
                     className="w-full sm:w-auto px-8 py-4 text-foreground border-2 border-foreground/20 hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 font-semibold text-base"
                   >
                     {locale === "jp" ? "プロジェクトを見る" : "View Projects"}
-                    <span className="ml-2">→</span>
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>

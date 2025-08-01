@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { ContactModal } from "./contact-modal";
 
 interface NavCTAButtonProps {
   locale: string;
@@ -13,19 +15,26 @@ export const NavCTAButton = ({
   fullWidth = false,
   onClose,
 }: NavCTAButtonProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleClick = () => {
-    const element = document.querySelector("#cta");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    setIsModalOpen(true);
     if (onClose) {
       onClose();
     }
   };
 
   return (
-    <Button onClick={handleClick} className={fullWidth ? "w-full" : ""}>
-      {locale === "jp" ? "開始する" : "Get Started"}
-    </Button>
+    <>
+      <Button onClick={handleClick} className={fullWidth ? "w-full" : ""}>
+        {locale === "jp" ? "開始する" : "Get Started"}
+      </Button>
+
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        locale={locale as "en" | "jp"}
+      />
+    </>
   );
 };
