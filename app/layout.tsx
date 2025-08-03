@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   },
   description:
     "Bilingual web developer based in Tokyo specializing in Shopify development and multilingual SEO strategies. 7+ years experience in cross-border e-commerce.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/favicon.jpg", sizes: "32x32", type: "image/jpeg" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   keywords: [
     "web developer",
     "Shopify",

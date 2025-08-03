@@ -2,6 +2,7 @@ import { i18n, type Locale } from "@/i18n-config";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { LocaleProvider } from "@/components/locale-provider";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import Script from "next/script";
 
@@ -91,6 +92,7 @@ export default async function RootLayout({
           <Navigation locale={locale} />
           <main className="min-h-screen">{children}</main>
           <Footer locale={locale} />
+          <Toaster />
         </LocaleProvider>
       </body>
     </html>

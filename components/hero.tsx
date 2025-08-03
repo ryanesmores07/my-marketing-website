@@ -36,10 +36,7 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
     <section className="relative bg-gradient-to-br from-background to-secondary py-8 lg:py-12 overflow-hidden min-h-screen">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
-      {/* Keep only one subtle animated orb for performance */}
-      <div className="absolute top-0 right-0 -translate-y-12 translate-x-12">
-        <div className="w-72 h-72 bg-accent rounded-full blur-3xl opacity-70 motion-safe:animate-pulse will-change-transform" />
-      </div>
+
       {/* Remove the bottom left orb for reduced animation density */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative h-full">
@@ -124,7 +121,7 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
                   {/* Main Profile Image */}
                   <div className="relative w-full h-full">
                     <Image
-                      src="/images/ryan-main.jpg"
+                      src="/images/ernieryan-main-photo.jpg"
                       alt="Ernie Ryan - Bilingual Web Developer & SEO Expert"
                       width={400}
                       height={400}

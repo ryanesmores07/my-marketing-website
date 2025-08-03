@@ -36,7 +36,12 @@ export const ProjectsSection = ({
 
   return (
     <>
-      <section className="bg-background">
+      <section className="bg-background pb-20">
+        {/* Subtle Divider */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="text-center mb-16">
@@ -106,11 +111,6 @@ export const ProjectsSection = ({
                       </div>
                     </div>
                   </div>
-
-                  {/* Floating badge */}
-                  <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                    {locale === "jp" ? "注目" : "Featured"}
-                  </div>
                 </div>
 
                 {/* Project Info */}
@@ -119,11 +119,6 @@ export const ProjectsSection = ({
                     index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
                   }`}
                 >
-                  {/* Category */}
-                  <div className="inline-flex items-center px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm font-medium">
-                    {project.category}
-                  </div>
-
                   {/* Title */}
                   <h3 className="text-3xl lg:text-4xl font-bold text-foreground">
                     {project.title[locale]}
@@ -139,7 +134,7 @@ export const ProjectsSection = ({
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full font-medium hover:scale-105 transition-transform"
+                        className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full font-medium"
                       >
                         {tech}
                       </span>
@@ -195,6 +190,11 @@ export const ProjectsSection = ({
               </p>
             </div>
           )}
+        </div>
+
+        {/* Subtle Divider */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
         </div>
       </section>
 

@@ -5,26 +5,33 @@ export const contactConfig = {
 
   // Direct messaging contact details
   line: {
-    id: "@your-line-id", // Replace with your actual Line ID
-    url: "https://line.me/R/ti/p/@your-line-id",
-    qrCodePath: "/images/line-qr-code.png", // Add your LINE QR code image here
+    id: "@g97kZgJz04", // Replace with your actual Line ID
+    url: "https://line.me/ti/p/g97kZgJz04",
+    mobileUrl: "line://ti/p/g97kZgJz04", // Mobile app URL
+    qrCodePath: "/images/Line-QR.JPG", // Add your LINE QR code image here
   },
 
   whatsapp: {
-    number: "your-whatsapp-number", // Replace with your actual WhatsApp number (with country code, no +)
-    url: "https://wa.me/your-whatsapp-number",
+    number: "818075750507", // Replace with your actual WhatsApp number (with country code, no +)
+    url: "https://wa.me/818075750507",
   },
 
   email: "mytokyowebdev@ernieryan.dev",
 
   // Response time promise
   responseTime: "24 hours",
-};
 
-// Pre-written messages for direct contact
-export const directMessages = {
-  en: "Hi! I'm interested in your web development services.",
-  jp: "こんにちは！Web開発サービスについて興味があります。",
+  // QR Code paths for desktop users
+  qrCodes: {
+    line: "/images/Line-QR.JPG",
+    whatsapp: "/images/Whatsapp-QR.jpeg", // WhatsApp QR code
+  },
+
+  // Direct message templates
+  messageTemplates: {
+    en: "Hi! I'm interested in your web development services.",
+    jp: "こんにちは！Web開発サービスについて興味があります。",
+  },
 };
 
 // Service types for dropdown

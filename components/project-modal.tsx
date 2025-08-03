@@ -9,10 +9,12 @@ import {
   ChevronRight,
   ExternalLink,
   Github,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Project, ProjectScreenshot } from "@/content/projects";
 import { Locale } from "@/i18n-config";
+import { ContactModal } from "./contact-modal";
 
 interface ProjectModalProps {
   project: Project | null;
@@ -31,6 +33,7 @@ export function ProjectModal({
     screenshot: ProjectScreenshot;
     index: number;
   } | null>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const openImageModal = (screenshot: ProjectScreenshot, index: number) => {
     setSelectedImage({ screenshot, index });
@@ -364,6 +367,30 @@ export function ProjectModal({
                   </div>
                 )}
               </div>
+
+              {/* CTA Section */}
+              <div className="mt-16 p-8 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl border border-primary/20">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold text-foreground">
+                    {locale === "jp"
+                      ? "このようなプロジェクトを作りたいですか？"
+                      : "Want to build something like this?"}
+                  </h3>
+                  <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    {locale === "jp"
+                      ? "お客様のビジネスに合わせたカスタムソリューションを提供いたします。今すぐご相談ください。"
+                      : "I can create custom solutions tailored to your business needs. Let's discuss your project today."}
+                  </p>
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-lg font-semibold shadow-lg"
+                    onClick={() => setIsContactModalOpen(true)}
+                  >
+                    {locale === "jp" ? "今すぐ相談する" : "Get Started Today"}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -442,6 +469,13 @@ export function ProjectModal({
           </div>
         </div>
       )}
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+        locale={locale}
+      />
     </>
   );
 }

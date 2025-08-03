@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, MessageCircle, Send, Loader2 } from "lucide-react";
+import { Mail, Send, Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useForm as useFormspreeForm, ValidationError } from "@formspree/react";
-import {
-  contactConfig,
-  directMessages,
-  serviceTypes,
-} from "@/lib/contact-config";
+import { toast } from "sonner";
+import { contactConfig, serviceTypes } from "@/lib/contact-config";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,14 +28,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SmartContactHandler } from "./smart-contact-handler";
 
 // Zod schema for form validation
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  website: z.string().optional(),
   serviceType: z.string().min(1, "Please select a service type"),
   message: z.string().min(10, "Message must be at least 10 characters"),
+  // Honeypot field - hidden from users, bots will fill it
+  website: z.string().max(0, "Invalid submission"),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -50,6 +50,7 @@ interface ContactModalProps {
 
 const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitTime, setSubmitTime] = useState<number | null>(null);
 
   // Formspree form hook
   const [formspreeState, formspreeHandleSubmit] = useFormspreeForm("manogljy");
@@ -59,9 +60,9 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
     defaultValues: {
       name: "",
       email: "",
-      website: "",
       serviceType: "",
       message: "",
+      website: "", // Honeypot field
     },
   });
 
@@ -72,7 +73,6 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       formTitle: "Quick Contact Form",
       nameLabel: "Name",
       emailLabel: "Email",
-      websiteLabel: "Website URL (optional)",
       serviceTypeLabel: "Service Type",
       serviceTypePlaceholder: "Select a service...",
       messageLabel: "Message",
@@ -107,7 +107,6 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       formTitle: "お問い合わせフォーム",
       nameLabel: "お名前",
       emailLabel: "メールアドレス",
-      websiteLabel: "ウェブサイトURL（任意）",
       serviceTypeLabel: "サービス種類",
       serviceTypePlaceholder: "サービスを選択してください...",
       messageLabel: "メッセージ",
@@ -141,11 +140,30 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
   const t = content[locale];
 
   const handleSubmit = async (data: ContactFormData) => {
+    // Spam prevention checks
+    const now = Date.now();
+    const minSubmitTime = 3000; // Minimum 3 seconds to fill form
+
+    // Check if form was filled too quickly (likely a bot)
+    if (submitTime && now - submitTime < minSubmitTime) {
+      toast.error(
+        locale === "jp"
+          ? "送信が早すぎます。もう一度お試しください。"
+          : "Submission too fast. Please try again."
+      );
+      return;
+    }
+
+    // Check honeypot field (bots will fill this)
+    if (data.website && data.website.length > 0) {
+      console.log("Honeypot triggered - likely spam");
+      return; // Silently reject
+    }
+
     // Use Formspree's handleSubmit with our form data
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("email", data.email);
-    formData.append("website", data.website || "");
     formData.append("serviceType", data.serviceType);
     formData.append("message", data.message);
     formData.append("locale", locale);
@@ -153,6 +171,13 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
     // Submit using Formspree's handleSubmit
     await formspreeHandleSubmit(formData);
   };
+
+  // Set submit time when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSubmitTime(Date.now());
+    }
+  }, [isOpen]);
 
   // Handle success state from Formspree
   React.useEffect(() => {
@@ -162,16 +187,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
     }
   }, [formspreeState.succeeded, form]);
 
-  const handleDirectContact = (platform: "line" | "whatsapp") => {
-    const encodedMessage = encodeURIComponent(directMessages[locale]);
-
-    const urls = {
-      line: `${contactConfig.line.url}?text=${encodedMessage}`,
-      whatsapp: `${contactConfig.whatsapp.url}?text=${encodedMessage}`,
-    };
-
-    window.open(urls[platform], "_blank");
-  };
+  // Removed handleDirectContact as it's now handled by SmartContactHandler
 
   const handleClose = () => {
     if (isSuccess) {
@@ -182,7 +198,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-2xl text-gray-900">
         <DialogTitle className="sr-only">{t.title}</DialogTitle>
         {!isSuccess ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -194,9 +210,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">{t.profileName}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {t.profileTitle}
-                  </p>
+                  <p className="text-sm text-gray-600">{t.profileTitle}</p>
                 </div>
               </div>
 
@@ -205,18 +219,18 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                   <span className="text-yellow-400">👋</span>
                   <span>{t.consultationTitle}</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   {t.consultationDescription}
                 </p>
               </div>
 
               <div className="border-t pt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="text-muted-foreground">⏱️</span>
+                  <span className="text-gray-500">⏱️</span>
                   <span>{t.availability}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="text-muted-foreground">🌐</span>
+                  <span className="text-gray-500">🌐</span>
                   <span>{t.location}</span>
                 </div>
               </div>
@@ -260,24 +274,6 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                             <Input
                               type="email"
                               placeholder="your@email.com"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="website"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t.websiteLabel}</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="url"
-                              placeholder="https://yourwebsite.com"
                               {...field}
                             />
                           </FormControl>
@@ -334,6 +330,26 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       )}
                     />
 
+                    {/* Honeypot field - hidden from users */}
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem className="sr-only">
+                          <FormLabel>Website</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="text"
+                              {...field}
+                              tabIndex={-1}
+                              autoComplete="off"
+                              style={{ display: "none" }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
                     <Button
                       type="submit"
                       className="w-full py-2"
@@ -362,33 +378,41 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                 <h3 className="text-lg font-semibold mb-3">
                   {t.quickContactTitle}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   {t.quickContactDescription}
                 </p>
               </div>
 
               <div className="space-y-3">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => handleDirectContact("line")}
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  {t.lineButton}
-                </Button>
+                <SmartContactHandler platform="line" locale={locale}>
+                  <Button variant="outline" className="w-full">
+                    <Image
+                      src="/images/line.png"
+                      alt="LINE"
+                      width={24}
+                      height={24}
+                      className="mr-3"
+                    />
+                    {t.lineButton}
+                  </Button>
+                </SmartContactHandler>
 
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => handleDirectContact("whatsapp")}
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  {t.whatsappButton}
-                </Button>
+                <SmartContactHandler platform="whatsapp" locale={locale}>
+                  <Button variant="outline" className="w-full">
+                    <Image
+                      src="/images/whatsapp.png"
+                      alt="WhatsApp"
+                      width={24}
+                      height={24}
+                      className="mr-3"
+                    />
+                    {t.whatsappButton}
+                  </Button>
+                </SmartContactHandler>
               </div>
 
               <div className="text-center pt-4 border-t">
-                <p className="text-xs text-muted-foreground">{t.lineSubtext}</p>
+                <p className="text-xs text-gray-500">{t.lineSubtext}</p>
               </div>
             </div>
           </div>
@@ -399,7 +423,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
               <Mail className="w-8 h-8 text-green-600" />
             </div>
             <h3 className="text-xl font-semibold">{t.successTitle}</h3>
-            <p className="text-muted-foreground">{t.successMessage}</p>
+            <p className="text-gray-600">{t.successMessage}</p>
             <Button onClick={handleClose} className="mt-4">
               {t.closeButton}
             </Button>

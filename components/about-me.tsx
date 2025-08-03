@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +12,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
       title: ["BILINGUAL", "WEB DE", "& SEO EXPERT"],
       animatedWords: ["VELOPER", "SIGNER"],
       description:
-        "Hi! I'm a bilingual freelance web developer based in Tokyo, specializing in Shopify and multilingual SEO strategies. Over the past 7 years in Japan, I've immersed myself in the local e-commerce landscape, blending global best practices with deep cultural understanding.",
+        "Hi! My name is Ernie Ryan and I'm a bilingual freelance web developer based in Tokyo, Japan. I specialize in Shopify and multilingual SEO and content creation. Over the past 7 years in Japan, I've immersed myself in the local e-commerce landscape, blending global best practices with deep cultural understanding.",
       mission:
         "While I lead every project as the captain of the ship, I'm not alone! My trusted team includes native Japanese members who work alongside me to ensure nothing is lost in translation, especially when gathering and executing your business requirements.",
       experience:
@@ -32,7 +31,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
       title: ["バイリンガル", "ウェブ", "& SEO専門家"],
       animatedWords: ["デベロッパー", "デザイナー"],
       description:
-        "こんにちは！東京を拠点にShopifyと多言語SEOを専門とするバイリンガルのフリーランスWebデベロッパーです。日本での7年間で、国際的な技術と日本の市場感覚を融合させ、効果的なECサイト構築に取り組んできました。",
+        "こんにちは！ 私の名前はエルニー・ライアンです。東京を拠点にShopifyと多言語SEOを専門とするバイリンガルのフリーランスWebデベロッパーです。日本での7年間で、国際的な技術と日本の市場感覚を融合させ、効果的なECサイト構築に取り組んできました。",
       mission:
         "私はプロジェクトの舵を取る立場ですが、日本語ネイティブのメンバーとチームを組んでおり、要件のヒアリングから開発まで、日本語での細かなニュアンスも正確に反映できる体制を整えています。",
       experience:
@@ -62,56 +61,25 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content - Enhanced Futuristic Image */}
+          {/* Left Content - Simple Image */}
           <div className="relative order-2 lg:order-1">
             {/* Main Image Container */}
             <div className="relative w-full max-w-md mx-auto">
-              {/* Rotating Outer Ring */}
-              <div
-                className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-accent to-primary motion-safe:animate-spin opacity-60 will-change-transform"
-                style={{ animationDuration: "12s" }}
-              >
-                <div className="w-full h-full rounded-3xl bg-background m-1"></div>
-              </div>
-
-              {/* Inner Glow Ring */}
-              <div className="absolute inset-2 rounded-3xl bg-gradient-to-br from-primary/30 to-accent/30 shadow-2xl shadow-primary/20">
-                <div className="w-full h-full rounded-3xl bg-background m-1"></div>
-              </div>
-
-              {/* Image Container */}
-              <div
-                className="relative inset-4 rounded-2xl overflow-hidden bg-gradient-to-br from-muted/50 to-card shadow-2xl border border-primary/20 backdrop-blur-sm"
-                style={{ margin: "16px" }}
-              >
-                {/* Tech Grid Overlay */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="w-full h-full bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
-                </div>
-
+              {/* Simple Image Container */}
+              <div className="relative rounded-lg overflow-hidden shadow-2xl">
                 {/* Main Image */}
                 <div className="relative">
                   <Image
-                    src="/images/ryan-main.jpg"
+                    src="/images/about-me.jpg"
                     alt="Ernie Ryan - Bilingual Web Developer & SEO Expert"
                     width={500}
                     height={700}
-                    className="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-auto object-cover"
                     priority
                     sizes="(max-width: 768px) 100vw, 500px"
                   />
-
-                  {/* Color Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/15 via-transparent to-accent/15 mix-blend-overlay"></div>
                 </div>
-
-                {/* Remove scanning lines for performance */}
               </div>
-
-              {/* Remove floating tech elements for performance */}
-              {/* Background Decoration - keep for subtle depth */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl transform rotate-2 -z-10 blur-sm" />
-              <div className="absolute inset-0 bg-gradient-to-tl from-accent/5 to-primary/5 rounded-3xl transform -rotate-1 -z-20 blur-lg" />
             </div>
           </div>
 
@@ -126,73 +94,60 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
               {currentContent.badge}
             </div>
 
-            {/* Title with Enhanced Futuristic Animated Text */}
-            <div className="space-y-2">
-              {currentContent.title.map((line, index) => (
-                <h2
-                  key={`title-line-${index}-${line}`}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-none tracking-tight"
-                >
-                  {index === 1 ? (
-                    <span className="flex items-baseline">
-                      {line}
-                      <span className="relative inline-block ml-1">
-                        {/* First Word - VELOPER/デベロッパー */}
-                        <span
-                          className="relative z-10 inline-block animate-futuristic-fade-in opacity-100 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-black"
-                          style={{
-                            animationDelay: "0s",
-                            textShadow: "0 0 20px rgba(var(--primary), 0.5)",
-                            filter:
-                              "drop-shadow(0 0 10px rgba(var(--primary), 0.3))",
-                          }}
-                        >
-                          <span className="animate-type-writer">
-                            {currentContent.animatedWords[0]}
-                          </span>
-                          <span className="animate-blink ml-1 text-primary">
-                            |
-                          </span>
-                        </span>
-
-                        {/* Second Word - SIGNER/デザイナー */}
-                        <span
-                          className="absolute inset-0 z-10 inline-block animate-futuristic-fade-in opacity-0 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent font-black"
-                          style={{
-                            animationDelay: "2.5s",
-                            textShadow: "0 0 20px rgba(var(--accent), 0.5)",
-                            filter:
-                              "drop-shadow(0 0 10px rgba(var(--accent), 0.3))",
-                          }}
-                        >
-                          <span
-                            className="animate-type-writer"
-                            style={{ animationDelay: "2.5s" }}
-                          >
-                            {currentContent.animatedWords[1]}
-                          </span>
-                          <span
-                            className="animate-blink ml-1 text-accent"
-                            style={{ animationDelay: "2.5s" }}
-                          >
-                            |
-                          </span>
-                        </span>
-
-                        {/* Scanning Line Effect */}
-                        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-scan-line opacity-60"></div>
-
-                        {/* Particle Effects */}
-                        <div className="absolute -top-2 -right-2 w-1 h-1 bg-primary rounded-full animate-float"></div>
-                        <div className="absolute -bottom-2 -left-2 w-1 h-1 bg-accent rounded-full animate-float-delay"></div>
-                      </span>
+            {/* Main Heading */}
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-none tracking-tight">
+              <span className="block">{currentContent.title[0]}</span>
+              <span className="flex items-baseline">
+                {currentContent.title[1]}
+                <span className="relative inline-block ml-1">
+                  {/* First Word - VELOPER/デベロッパー */}
+                  <span
+                    className="relative z-10 inline-block animate-futuristic-fade-in opacity-100 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-black"
+                    style={{
+                      animationDelay: "0s",
+                      textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                      filter: "drop-shadow(0 0 10px rgba(var(--primary), 0.3))",
+                    }}
+                  >
+                    <span className="animate-type-writer">
+                      {currentContent.animatedWords[0]}
                     </span>
-                  ) : (
-                    line
-                  )}
-                </h2>
-              ))}
-            </div>
+                    <span className="animate-blink ml-1 text-primary">|</span>
+                  </span>
+
+                  {/* Second Word - SIGNER/デザイナー */}
+                  <span
+                    className="absolute inset-0 z-10 inline-block animate-futuristic-fade-in opacity-0 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent font-black"
+                    style={{
+                      animationDelay: "2.5s",
+                      textShadow: "0 0 20px rgba(var(--accent), 0.5)",
+                      filter: "drop-shadow(0 0 10px rgba(var(--accent), 0.3))",
+                    }}
+                  >
+                    <span
+                      className="animate-type-writer"
+                      style={{ animationDelay: "2.5s" }}
+                    >
+                      {currentContent.animatedWords[1]}
+                    </span>
+                    <span
+                      className="animate-blink ml-1 text-accent"
+                      style={{ animationDelay: "2.5s" }}
+                    >
+                      |
+                    </span>
+                  </span>
+
+                  {/* Scanning Line Effect */}
+                  <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-scan-line opacity-60"></div>
+
+                  {/* Particle Effects */}
+                  <div className="absolute -top-2 -right-2 w-1 h-1 bg-primary rounded-full animate-float"></div>
+                  <div className="absolute -bottom-2 -left-2 w-1 h-1 bg-accent rounded-full animate-float-delay"></div>
+                </span>
+              </span>
+              <span className="block">{currentContent.title[2]}</span>
+            </h2>
 
             {/* Description */}
             <div className="space-y-6">
@@ -215,7 +170,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
                 {currentContent.skills.map((skill, index) => (
                   <span
                     key={`skill-${index}-${skill}`}
-                    className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium hover:from-primary hover:to-primary/80 hover:text-primary-foreground transition-all duration-300 border border-border/50 hover:border-primary/50 shadow-sm"
+                    className="px-4 py-2 bg-gradient-to-r from-muted to-muted/80 text-muted-foreground text-sm rounded-full font-medium border border-border/50  shadow-sm"
                   >
                     {skill}
                   </span>
