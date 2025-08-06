@@ -247,7 +247,16 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                   <form
                     onSubmit={form.handleSubmit(handleSubmit)}
                     className="space-y-3"
+                    aria-describedby="form-description"
+                    noValidate
                   >
+                    {/* Form description for screen readers */}
+                    <div id="form-description" className="sr-only">
+                      {locale === "jp"
+                        ? "お問い合わせフォームです。必須項目を入力してください。"
+                        : "Contact form. Please fill in all required fields."}
+                    </div>
+
                     {/* Formspree validation errors */}
                     <ValidationError errors={formspreeState.errors} />
                     <FormField
@@ -255,11 +264,17 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t.nameLabel}</FormLabel>
+                          <FormLabel htmlFor="name">{t.nameLabel}</FormLabel>
                           <FormControl>
-                            <Input placeholder={t.nameLabel} {...field} />
+                            <Input
+                              id="name"
+                              placeholder={t.nameLabel}
+                              {...field}
+                              aria-required="true"
+                              aria-describedby="name-error"
+                            />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage id="name-error" />
                         </FormItem>
                       )}
                     />
@@ -269,15 +284,18 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t.emailLabel}</FormLabel>
+                          <FormLabel htmlFor="email">{t.emailLabel}</FormLabel>
                           <FormControl>
                             <Input
+                              id="email"
                               type="email"
                               placeholder="your@email.com"
                               {...field}
+                              aria-required="true"
+                              aria-describedby="email-error"
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage id="email-error" />
                         </FormItem>
                       )}
                     />
@@ -287,13 +305,18 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       name="serviceType"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t.serviceTypeLabel}</FormLabel>
+                          <FormLabel htmlFor="service-type">
+                            {t.serviceTypeLabel}
+                          </FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger
+                                id="service-type"
+                                aria-describedby="service-type-error"
+                              >
                                 <SelectValue
                                   placeholder={t.serviceTypePlaceholder}
                                 />
@@ -307,7 +330,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                               ))}
                             </SelectContent>
                           </Select>
-                          <FormMessage />
+                          <FormMessage id="service-type-error" />
                         </FormItem>
                       )}
                     />
@@ -317,15 +340,20 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t.messageLabel}</FormLabel>
+                          <FormLabel htmlFor="message">
+                            {t.messageLabel}
+                          </FormLabel>
                           <FormControl>
                             <Textarea
+                              id="message"
                               placeholder={t.messagePlaceholder}
                               className="min-h-[80px]"
                               {...field}
+                              aria-required="true"
+                              aria-describedby="message-error"
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage id="message-error" />
                         </FormItem>
                       )}
                     />
@@ -354,19 +382,47 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       type="submit"
                       className="w-full py-2"
                       disabled={formspreeState.submitting}
+                      aria-label={
+                        formspreeState.submitting
+                          ? locale === "jp"
+                            ? "送信中です"
+                            : "Sending message..."
+                          : locale === "jp"
+                          ? "メッセージを送信"
+                          : "Send message"
+                      }
+                      aria-describedby={
+                        formspreeState.submitting ? "submit-status" : undefined
+                      }
                     >
                       {formspreeState.submitting ? (
                         <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          <Loader2
+                            className="w-4 h-4 mr-2 animate-spin"
+                            aria-hidden="true"
+                          />
                           {locale === "jp" ? "送信中..." : "Sending..."}
                         </>
                       ) : (
                         <>
-                          <Send className="w-4 h-4 mr-2" />
+                          <Send className="w-4 h-4 mr-2" aria-hidden="true" />
                           {t.sendButton}
                         </>
                       )}
                     </Button>
+
+                    {/* Status announcement for screen readers */}
+                    {formspreeState.submitting && (
+                      <div
+                        id="submit-status"
+                        className="sr-only"
+                        aria-live="polite"
+                      >
+                        {locale === "jp"
+                          ? "フォームを送信中です"
+                          : "Submitting form..."}
+                      </div>
+                    )}
                   </form>
                 </Form>
               </div>

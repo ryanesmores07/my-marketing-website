@@ -52,7 +52,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
   return (
     <section
       id="about"
-      className="py-20 lg:py-28 bg-background relative overflow-hidden"
+      className="py-20 lg:py-40 bg-background relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,transparent,white,transparent)] opacity-30" />
@@ -60,7 +60,7 @@ export const AboutMe = ({ locale = "en" }: AboutMeProps) => {
       <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-gradient-to-r from-accent/10 to-transparent rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Content - Simple Image */}
           <div className="relative order-2 lg:order-1">
             {/* Main Image Container */}

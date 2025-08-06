@@ -23,6 +23,7 @@ export default async function Home({ params }: PageProps) {
       <section
         id="hero"
         aria-label={locale === "jp" ? "メインコンテンツ" : "Main content"}
+        role="banner"
       >
         <Hero heroData={staticHeroData} locale={locale} />
       </section>

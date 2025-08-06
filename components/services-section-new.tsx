@@ -16,7 +16,7 @@ interface ServicesSectionProps {
 
 export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
   return (
-    <section id="services" className="py-20 lg:py-28 bg-background">
+    <section id="services" className="pt-20 lg:py-28 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -94,7 +94,7 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="relative pt-32 pb-20 overflow-hidden">
+        <div className="relative lg:pt-32 pt-10 pb-20 overflow-hidden">
           {/* Primary background with strong fade */}
           <div
             className="absolute inset-0"

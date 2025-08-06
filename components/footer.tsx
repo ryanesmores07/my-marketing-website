@@ -109,8 +109,10 @@ export const Footer = ({ locale }: FooterProps) => {
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="rounded-full border border-muted-foreground/40 bg-muted-foreground/30 hover:bg-muted-foreground/80 transition w-16 h-16 flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-muted-foreground group-hover:-translate-y-1 group-active:scale-95"
-              aria-label="Scroll to top"
-              tabIndex={0}
+              aria-label={
+                locale === "jp" ? "ページトップに戻る" : "Scroll to top"
+              }
+              aria-describedby="scroll-top-description"
             >
               <svg
                 width="32"
@@ -120,6 +122,7 @@ export const Footer = ({ locale }: FooterProps) => {
                 stroke="currentColor"
                 strokeWidth="2.5"
                 className="transition-transform group-hover:-translate-y-1"
+                aria-hidden="true"
               >
                 <path
                   d="M12 19V5M5 12l7-7 7 7"
@@ -127,6 +130,11 @@ export const Footer = ({ locale }: FooterProps) => {
                   strokeLinejoin="round"
                 />
               </svg>
+              <span id="scroll-top-description" className="sr-only">
+                {locale === "jp"
+                  ? "ページの最上部にスクロールします"
+                  : "Scrolls to the top of the page"}
+              </span>
             </button>
           </div>
         </div>

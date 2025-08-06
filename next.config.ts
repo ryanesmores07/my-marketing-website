@@ -8,9 +8,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       // Add any other image domains you need here
     ],
+    // Add loading optimization
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     optimizePackageImports: ["lucide-react"],
+    // Add performance optimizations
+    scrollRestoration: true,
   },
   compress: true,
   poweredByHeader: false,
@@ -18,6 +24,7 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // Add performance headers
   headers: async () => {
     return [
       {
@@ -38,6 +45,21 @@ const nextConfig: NextConfig = {
           {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
+          },
+          // Add performance headers
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      // Add specific headers for static assets
+      {
+        source: "/_next/static/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

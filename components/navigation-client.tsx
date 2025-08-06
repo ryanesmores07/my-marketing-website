@@ -61,17 +61,25 @@ export const NavigationClient = ({
       <div className="hidden md:flex items-center space-x-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
-              <Globe className="h-4 w-4 mr-2" />
+            <Button
+              variant="outline"
+              size="sm"
+              aria-label={locale === "jp" ? "言語を変更" : "Change language"}
+            >
+              <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
               {locale.toUpperCase()}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
-              <Link href="/en">English</Link>
+              <Link href="/en" lang="en">
+                English
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/jp">日本語</Link>
+              <Link href="/jp" lang="ja">
+                日本語
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -120,11 +128,12 @@ export const NavigationClient = ({
             <div className="pt-4 pb-2 border-t border-border mt-4">
               <div className="flex items-center justify-between px-3 py-2">
                 <span className="text-muted-foreground text-sm font-medium">
-                  Language
+                  {locale === "jp" ? "言語" : "Language"}
                 </span>
                 <div className="flex space-x-2">
                   <Link
                     href="/en"
+                    lang="en"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -132,6 +141,7 @@ export const NavigationClient = ({
                   </Link>
                   <Link
                     href="/jp"
+                    lang="ja"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >

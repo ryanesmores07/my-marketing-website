@@ -6,11 +6,15 @@ import { HeroCTAButton } from "@/components/hero-cta-button";
 import React from "react";
 
 // ShinyText component for stats numbers with light/dark mode support
-const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="inline-block text-foreground dark:text-[#b5b5b5a4] animate-shine shiny-text">
-    {children}
-  </span>
+const ShinyText: React.FC<{ children: React.ReactNode }> = React.memo(
+  ({ children }) => (
+    <span className="inline-block text-foreground dark:text-[#b5b5b5a4] animate-shine shiny-text">
+      {children}
+    </span>
+  )
 );
+
+ShinyText.displayName = "ShinyText";
 
 interface HeroProps {
   heroData: {
@@ -28,12 +32,12 @@ interface HeroProps {
   locale?: string;
 }
 
-export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
+export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
   const currentContent =
     heroData[locale as keyof typeof heroData] || heroData.en;
 
   return (
-    <section className="relative bg-gradient-to-br from-background to-secondary py-8 lg:py-12 overflow-hidden min-h-screen">
+    <section className="relative bg-gradient-to-br from-background to-secondary py-8 lg:pt-12 lg:pb-24 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
 
@@ -182,4 +186,6 @@ export const Hero = ({ heroData, locale = "en" }: HeroProps) => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = "Hero";

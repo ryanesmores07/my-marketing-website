@@ -75,7 +75,7 @@ const CTA = ({ locale = "en" }: CTAProps) => {
   return (
     <section
       id="cta"
-      className="relative min-h-[calc(100vh-100px)] lg:min-h-[calc(100vh-200px)] flex flex-col justify-center items-center bg-background text-neutral-200 px-4"
+      className="relative min-h-[calc(70vh-100px)] lg:min-h-[calc(100vh-200px)] 2xl:min-h-[60vh] flex flex-col justify-center items-center bg-background text-neutral-200 px-4"
     >
       {/* Subtitle */}
       <span

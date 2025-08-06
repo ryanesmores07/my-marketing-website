@@ -36,9 +36,9 @@ export const ProjectsSection = ({
 
   return (
     <>
-      <section className="bg-background pb-20">
+      <section className="bg-background">
         {/* Subtle Divider */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
           <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
         </div>
 
@@ -193,7 +193,7 @@ export const ProjectsSection = ({
         </div>
 
         {/* Subtle Divider */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
           <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
         </div>
       </section>
