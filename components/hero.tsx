@@ -89,7 +89,7 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
                     variant="outline"
                     className="w-full sm:w-auto px-8 py-4 text-foreground border-2 border-foreground/20 hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 font-semibold text-base"
                   >
-                    {locale === "jp" ? "プロジェクトを見る" : "View Projects"}
+                    {locale === "jp" ? "プロジェクトを見る" : "View my work"}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>

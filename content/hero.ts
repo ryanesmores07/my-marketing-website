@@ -1,22 +1,22 @@
 export const staticHeroData = {
   en: {
     questions: [
-      "Struggling to get your brand noticed internationally?",
-      "Need a Japanese website that authentically connects with your audience?",
-      "Looking for a Shopify expert fluent in both Japanese and English?",
+      "Are you looking to grow your business in the Japanese market? ",
+      "Need a website that truly resonates with your Japanese audience?",
+      "Or maybe you’re searching for a Shopify expert who’s fluent in both English and Japanese?",
     ],
     description:
-      "Grow your business internationally with beautifully designed, SEO-optimized websites tailored specifically for Japan and global markets.",
+      "If so, you're in the right place. I'm a bilingual Web Developer and Designer based in Tokyo, Japan. You can focus on what you do best, running your business and let me take care of everything technical.",
     ctaText: "Collaborate With Me",
   },
   jp: {
     questions: [
-      "海外でブランドをもっと知られたいですか？",
-      "海外顧客の心を掴む英語サイトが必要ですか？",
-      "日英両言語に精通したShopifyの専門家をお探しですか？",
+      "海外で自社ブランドをもっと広めたい。",
+      "海外の顧客の心に響く英語サイトを作りたい。",
+      "日英両方に対応できるShopifyの専門家がいれば安心。",
     ],
     description:
-      "日英対応のSEO最適化された魅力的なウェブサイトで、ビジネスの可能性を世界へ広げましょう。",
+      "そんなあなたのために、世界に向けてビジネスを広げる魅力的なウェブサイトを一緒に作りましょう。",
     ctaText: "コラボレーションを始める",
   },
 };
