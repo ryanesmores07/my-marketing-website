@@ -97,17 +97,6 @@ export const projects: Project[] = [
     featured: true,
     featuredRank: 1,
     completedAt: "2026-04-20",
-    primaryMetric: {
-      value: "6",
-      label: {
-        en: "confirmed purchases in 10 days",
-        jp: "10日間で6件の購入",
-      },
-      note: {
-        en: "supported by ROAS 3.42 / 3.80 across Meta MOF and BOF",
-        jp: "MetaのMOF / BOFでROAS 3.42 / 3.80を記録",
-      },
-    },
     proofStats: [
       {
         value: "JPY 353,135",
