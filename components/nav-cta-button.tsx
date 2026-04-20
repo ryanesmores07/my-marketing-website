@@ -15,17 +15,13 @@ export const NavCTAButton = ({
 }: NavCTAButtonProps) => {
   const handleClick = () => {
     const element = document.querySelector("#cta");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    if (onClose) {
-      onClose();
-    }
+    element?.scrollIntoView({ behavior: "smooth" });
+    onClose?.();
   };
 
   return (
     <Button onClick={handleClick} className={fullWidth ? "w-full" : ""}>
-      {locale === "jp" ? "開始する" : "Get Started"}
+      {locale === "jp" ? "お問い合わせ" : "Get Started"}
     </Button>
   );
 };

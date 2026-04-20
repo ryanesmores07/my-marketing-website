@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Mail, Send, Loader2 } from "lucide-react";
-import Image from "next/image";
 import { useForm as useFormspreeForm, ValidationError } from "@formspree/react";
 import { toast } from "sonner";
 import { contactConfig, serviceTypes } from "@/lib/contact-config";
@@ -30,17 +30,13 @@ import {
 } from "@/components/ui/select";
 import { SmartContactHandler } from "./smart-contact-handler";
 
-// Zod schema for form validation
-const contactFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  serviceType: z.string().min(1, "Please select a service type"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-  // Honeypot field - hidden from users, bots will fill it
-  website: z.string().max(0, "Invalid submission"),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
+type ContactFormData = {
+  name: string;
+  email: string;
+  serviceType: string;
+  message: string;
+  website: string;
+};
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -48,119 +44,133 @@ interface ContactModalProps {
   locale: "en" | "jp";
 }
 
+const content = {
+  en: {
+    title: "Let's Talk About Your Project",
+    profileTitle: "Shopify Development & Performance Marketing",
+    consultationTitle: "Project consultation",
+    consultationDescription:
+      "Tell me what you are building, what you want to improve, or where you are stuck. I will review it and come back with the next best step.",
+    availability: "Based in Tokyo, supporting clients in Japan and abroad",
+    location: "Tokyo, Japan",
+    contactInfoTitle: "Project details",
+    nameLabel: "Name",
+    emailLabel: "Email",
+    serviceTypeLabel: "Service type",
+    serviceTypePlaceholder: "Select a service...",
+    messageLabel: "Message",
+    messagePlaceholder:
+      "Tell me about your website, ads, market, or the challenge you want to solve...",
+    sendButton: "Send Message",
+    quickContactTitle: "Prefer direct contact?",
+    quickContactDescription:
+      "If messaging is easier, you can also reach out on LINE or WhatsApp.",
+    lineButton: "LINE",
+    whatsappButton: "WhatsApp",
+    lineSubtext:
+      "Useful for a first message, quick questions, or follow-ups during a project.",
+    successTitle: "Message sent",
+    successMessage:
+      "Thanks for reaching out. I received your message and will get back to you soon.",
+    closeButton: "Close",
+    tooFast: "Submission was too fast. Please try again.",
+    submitting: "Sending...",
+    submitAria: "Send message",
+    formDescription:
+      "Project inquiry form. Please complete the required fields before submitting.",
+    validation: {
+      name: "Name must be at least 2 characters.",
+      email: "Please enter a valid email address.",
+      serviceType: "Please select a service type.",
+      message: "Message must be at least 10 characters.",
+      website: "Invalid submission.",
+    },
+  },
+  jp: {
+    title: "プロジェクトについて相談する",
+    profileTitle: "Shopify構築・広告運用支援",
+    consultationTitle: "ご相談内容",
+    consultationDescription:
+      "新規制作、改善したい点、今つまずいていることなどをお知らせください。内容を確認したうえで、次の進め方をご提案します。",
+    availability: "東京を拠点に、日本国内・海外向けの案件を支援しています",
+    location: "東京, 日本",
+    contactInfoTitle: "お問い合わせ内容",
+    nameLabel: "お名前",
+    emailLabel: "メールアドレス",
+    serviceTypeLabel: "ご相談内容",
+    serviceTypePlaceholder: "サービスを選択してください",
+    messageLabel: "メッセージ",
+    messagePlaceholder:
+      "Webサイト、広告運用、対象市場、今の課題などをお知らせください...",
+    sendButton: "送信する",
+    quickContactTitle: "LINE / WhatsAppで連絡する",
+    quickContactDescription:
+      "メールより気軽に相談したい場合は、LINEまたはWhatsAppでもご連絡いただけます。",
+    lineButton: "LINE",
+    whatsappButton: "WhatsApp",
+    lineSubtext:
+      "初回のご相談、簡単な質問、進行中のやり取りにも使いやすい連絡方法です。",
+    successTitle: "送信が完了しました",
+    successMessage:
+      "お問い合わせありがとうございます。内容を確認のうえ、順次ご返信します。",
+    closeButton: "閉じる",
+    tooFast: "送信が早すぎました。少し時間をおいて再度お試しください。",
+    submitting: "送信中...",
+    submitAria: "メッセージを送信",
+    formDescription:
+      "お問い合わせフォームです。必須項目を入力してから送信してください。",
+    validation: {
+      name: "お名前を2文字以上で入力してください。",
+      email: "有効なメールアドレスを入力してください。",
+      serviceType: "ご相談内容を選択してください。",
+      message: "メッセージを10文字以上で入力してください。",
+      website: "無効な送信です。",
+    },
+  },
+} as const;
+
+const getContactFormSchema = (locale: "en" | "jp") => {
+  const t = content[locale].validation;
+
+  return z.object({
+    name: z.string().min(2, t.name),
+    email: z.string().email(t.email),
+    serviceType: z.string().min(1, t.serviceType),
+    message: z.string().min(10, t.message),
+    website: z.string().max(0, t.website),
+  });
+};
+
 const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitTime, setSubmitTime] = useState<number | null>(null);
-
-  // Formspree form hook
   const [formspreeState, formspreeHandleSubmit] = useFormspreeForm("manogljy");
+  const t = content[locale];
+  const schema = useMemo(() => getContactFormSchema(locale), [locale]);
 
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       name: "",
       email: "",
       serviceType: "",
       message: "",
-      website: "", // Honeypot field
+      website: "",
     },
   });
 
-  const content = {
-    en: {
-      title: "Let's Make It Happen",
-      subtitle: "Choose your preferred way to get in touch",
-      formTitle: "Quick Contact Form",
-      nameLabel: "Name",
-      emailLabel: "Email",
-      serviceTypeLabel: "Service Type",
-      serviceTypePlaceholder: "Select a service...",
-      messageLabel: "Message",
-      messagePlaceholder: "Tell me about your project...",
-      sendButton: "Send Message",
-      orText: "Or contact directly:",
-      lineButton: "Line",
-      whatsappButton: "WhatsApp",
-      lineSubtext:
-        "Prefer chatting? Add me on LINE or WhatsApp for quick messages.",
-      whatsappSubtext: "Chat via WhatsApp for instant access.",
-      successTitle: "Message Sent!",
-      successMessage: `Thank you for reaching out! We've received your message and will get back to you within ${contactConfig.responseTime}.`,
-      closeButton: "Close",
-      // Left section content
-      profileName: "Ryan",
-      profileTitle: "Web Developer",
-      consultationTitle: "Free consultation call",
-      consultationDescription:
-        "Let's discuss your project and see how I can help you achieve your goals.",
-      availability: "24/7",
-      location: "Tokyo, Japan",
-      // Middle section content
-      contactInfoTitle: "Contact Information",
-      // Right section content
-      quickContactTitle: "Quick Contact",
-      quickContactDescription: "Prefer instant messaging? Contact us directly:",
-    },
-    jp: {
-      title: "一緒に実現しましょう",
-      subtitle: "お好みの連絡方法をお選びください",
-      formTitle: "お問い合わせフォーム",
-      nameLabel: "お名前",
-      emailLabel: "メールアドレス",
-      serviceTypeLabel: "サービス種類",
-      serviceTypePlaceholder: "サービスを選択してください...",
-      messageLabel: "メッセージ",
-      messagePlaceholder: "プロジェクトについて教えてください...",
-      sendButton: "送信",
-      orText: "または直接連絡:",
-      lineButton: "Line",
-      whatsappButton: "WhatsApp",
-      lineSubtext: "簡単なご相談はLINE又はWhatsAppからもお気軽にどうぞ。",
-      whatsappSubtext: "WhatsAppで相談する",
-      successTitle: "送信完了！",
-      successMessage: `お問い合わせありがとうございます。${contactConfig.responseTime}以内に返信させていただきます。`,
-      closeButton: "閉じる",
-      // Left section content
-      profileName: "Ryan",
-      profileTitle: "Web開発者",
-      consultationTitle: "無料相談",
-      consultationDescription:
-        "プロジェクトについて相談し、目標達成のお手伝いをさせていただきます。",
-      availability: "24時間対応",
-      location: "東京、日本",
-      // Middle section content
-      contactInfoTitle: "お問い合わせ情報",
-      // Right section content
-      quickContactTitle: "簡単連絡",
-      quickContactDescription:
-        "メッセージアプリをご希望ですか？直接お問い合わせください：",
-    },
-  };
-
-  const t = content[locale];
-
   const handleSubmit = async (data: ContactFormData) => {
-    // Spam prevention checks
     const now = Date.now();
-    const minSubmitTime = 3000; // Minimum 3 seconds to fill form
 
-    // Check if form was filled too quickly (likely a bot)
-    if (submitTime && now - submitTime < minSubmitTime) {
-      toast.error(
-        locale === "jp"
-          ? "送信が早すぎます。もう一度お試しください。"
-          : "Submission too fast. Please try again."
-      );
+    if (submitTime && now - submitTime < 3000) {
+      toast.error(t.tooFast);
       return;
     }
 
-    // Check honeypot field (bots will fill this)
-    if (data.website && data.website.length > 0) {
-      console.log("Honeypot triggered - likely spam");
-      return; // Silently reject
+    if (data.website) {
+      return;
     }
 
-    // Use Formspree's handleSubmit with our form data
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("email", data.email);
@@ -168,26 +178,21 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
     formData.append("message", data.message);
     formData.append("locale", locale);
 
-    // Submit using Formspree's handleSubmit
     await formspreeHandleSubmit(formData);
   };
 
-  // Set submit time when modal opens
   useEffect(() => {
     if (isOpen) {
       setSubmitTime(Date.now());
     }
   }, [isOpen]);
 
-  // Handle success state from Formspree
-  React.useEffect(() => {
+  useEffect(() => {
     if (formspreeState.succeeded) {
       setIsSuccess(true);
       form.reset();
     }
   }, [formspreeState.succeeded, form]);
-
-  // Removed handleDirectContact as it's now handled by SmartContactHandler
 
   const handleClose = () => {
     if (isSuccess) {
@@ -198,25 +203,23 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-2xl text-gray-900">
+      <DialogContent className="max-h-[90vh] overflow-y-auto border border-gray-200 bg-white text-gray-900 shadow-2xl sm:max-w-4xl">
         <DialogTitle className="sr-only">{t.title}</DialogTitle>
         {!isSuccess ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Section - Contact Info */}
-            <div className="lg:col-span-1 space-y-4">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="space-y-4 lg:col-span-1">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-primary-foreground" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
+                  <Mail className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">{t.profileName}</h3>
+                  <h3 className="text-lg font-semibold">Ryan</h3>
                   <p className="text-sm text-gray-600">{t.profileTitle}</p>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-yellow-400">👋</span>
+                <div className="flex items-center gap-2 text-sm font-medium">
                   <span>{t.consultationTitle}</span>
                 </div>
                 <p className="text-sm text-gray-600">
@@ -224,22 +227,21 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                 </p>
               </div>
 
-              <div className="border-t pt-4 space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-gray-500">⏱️</span>
-                  <span>{t.availability}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-gray-500">🌐</span>
-                  <span>{t.location}</span>
-                </div>
+              <div className="space-y-2 border-t pt-4 text-sm">
+                <div className="text-gray-700">{t.availability}</div>
+                <div className="text-gray-700">{t.location}</div>
+                <a
+                  href={`mailto:${contactConfig.email}`}
+                  className="text-gray-600 underline underline-offset-2"
+                >
+                  {contactConfig.email}
+                </a>
               </div>
             </div>
 
-            {/* Middle Section - Form */}
-            <div className="lg:col-span-1 space-y-4">
+            <div className="space-y-4 lg:col-span-1">
               <div>
-                <h3 className="text-lg font-semibold mb-3">
+                <h3 className="mb-3 text-lg font-semibold">
                   {t.contactInfoTitle}
                 </h3>
 
@@ -250,15 +252,12 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                     aria-describedby="form-description"
                     noValidate
                   >
-                    {/* Form description for screen readers */}
                     <div id="form-description" className="sr-only">
-                      {locale === "jp"
-                        ? "お問い合わせフォームです。必須項目を入力してください。"
-                        : "Contact form. Please fill in all required fields."}
+                      {t.formDescription}
                     </div>
 
-                    {/* Formspree validation errors */}
                     <ValidationError errors={formspreeState.errors} />
+
                     <FormField
                       control={form.control}
                       name="name"
@@ -270,11 +269,9 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                               id="name"
                               placeholder={t.nameLabel}
                               {...field}
-                              aria-required="true"
-                              aria-describedby="name-error"
                             />
                           </FormControl>
-                          <FormMessage id="name-error" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -291,11 +288,9 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                               type="email"
                               placeholder="your@email.com"
                               {...field}
-                              aria-required="true"
-                              aria-describedby="email-error"
                             />
                           </FormControl>
-                          <FormMessage id="email-error" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -313,10 +308,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger
-                                id="service-type"
-                                aria-describedby="service-type-error"
-                              >
+                              <SelectTrigger id="service-type">
                                 <SelectValue
                                   placeholder={t.serviceTypePlaceholder}
                                 />
@@ -330,7 +322,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                               ))}
                             </SelectContent>
                           </Select>
-                          <FormMessage id="service-type-error" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -349,16 +341,13 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                               placeholder={t.messagePlaceholder}
                               className="min-h-[80px]"
                               {...field}
-                              aria-required="true"
-                              aria-describedby="message-error"
                             />
                           </FormControl>
-                          <FormMessage id="message-error" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
 
-                    {/* Honeypot field - hidden from users */}
                     <FormField
                       control={form.control}
                       name="website"
@@ -382,59 +371,34 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       type="submit"
                       className="w-full py-2"
                       disabled={formspreeState.submitting}
-                      aria-label={
-                        formspreeState.submitting
-                          ? locale === "jp"
-                            ? "送信中です"
-                            : "Sending message..."
-                          : locale === "jp"
-                          ? "メッセージを送信"
-                          : "Send message"
-                      }
-                      aria-describedby={
-                        formspreeState.submitting ? "submit-status" : undefined
-                      }
+                      aria-label={t.submitAria}
                     >
                       {formspreeState.submitting ? (
                         <>
                           <Loader2
-                            className="w-4 h-4 mr-2 animate-spin"
+                            className="mr-2 h-4 w-4 animate-spin"
                             aria-hidden="true"
                           />
-                          {locale === "jp" ? "送信中..." : "Sending..."}
+                          {t.submitting}
                         </>
                       ) : (
                         <>
-                          <Send className="w-4 h-4 mr-2" aria-hidden="true" />
+                          <Send className="mr-2 h-4 w-4" aria-hidden="true" />
                           {t.sendButton}
                         </>
                       )}
                     </Button>
-
-                    {/* Status announcement for screen readers */}
-                    {formspreeState.submitting && (
-                      <div
-                        id="submit-status"
-                        className="sr-only"
-                        aria-live="polite"
-                      >
-                        {locale === "jp"
-                          ? "フォームを送信中です"
-                          : "Submitting form..."}
-                      </div>
-                    )}
                   </form>
                 </Form>
               </div>
             </div>
 
-            {/* Right Section - Direct Contact */}
-            <div className="lg:col-span-1 space-y-4">
+            <div className="space-y-4 lg:col-span-1">
               <div>
-                <h3 className="text-lg font-semibold mb-3">
+                <h3 className="mb-3 text-lg font-semibold">
                   {t.quickContactTitle}
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="mb-4 text-sm text-gray-600">
                   {t.quickContactDescription}
                 </p>
               </div>
@@ -467,16 +431,15 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                 </SmartContactHandler>
               </div>
 
-              <div className="text-center pt-4 border-t">
+              <div className="border-t pt-4 text-center">
                 <p className="text-xs text-gray-500">{t.lineSubtext}</p>
               </div>
             </div>
           </div>
         ) : (
-          /* Success State */
-          <div className="text-center space-y-4 py-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-              <Mail className="w-8 h-8 text-green-600" />
+          <div className="space-y-4 py-8 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <Mail className="h-8 w-8 text-green-600" />
             </div>
             <h3 className="text-xl font-semibold">{t.successTitle}</h3>
             <p className="text-gray-600">{t.successMessage}</p>

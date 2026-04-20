@@ -1,30 +1,33 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { ArrowRight, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Globe, ArrowRight } from "lucide-react";
 
 export const LanguageGate = () => {
   const [show, setShow] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Only show if no language is set
+    if (!pathname || pathname.startsWith("/en") || pathname.startsWith("/jp")) {
+      setShow(false);
+      return;
+    }
+
     const lang =
       typeof window !== "undefined"
         ? localStorage.getItem("preferredLocale")
         : null;
-    if (!lang) setShow(true);
-  }, []);
 
-  // Prevent background scroll when overlay is open
-  useEffect(() => {
-    if (show) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (!lang && pathname === "/") {
+      setShow(true);
     }
-    // Clean up on unmount
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = show ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -32,7 +35,7 @@ export const LanguageGate = () => {
 
   const handleSelect = (locale: "en" | "jp") => {
     localStorage.setItem("preferredLocale", locale);
-    setShow(false); // Hide overlay immediately
+    setShow(false);
     router.replace(`/${locale}`);
   };
 
@@ -40,70 +43,67 @@ export const LanguageGate = () => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm">
-      <div className="w-full max-w-lg mx-auto p-8 rounded-2xl shadow-2xl bg-card border border-border flex flex-col items-center gap-8">
-        {/* Header with Icon */}
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Globe className="w-8 h-8 text-primary" />
+      <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-8 rounded-2xl border border-border bg-card p-8 shadow-2xl">
+        <div className="space-y-4 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <Globe className="h-8 w-8 text-primary" />
           </div>
           <h2 className="text-3xl font-bold text-foreground">
             Welcome / ようこそ
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-lg leading-relaxed text-muted-foreground">
             Please select your preferred language
             <br />
-            お好みの言語を選択してください
+            ご希望の言語を選択してください
           </p>
         </div>
 
-        {/* Language Options */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex w-full flex-col gap-4">
           <Button
-            className="w-full py-8 text-xl font-semibold group hover:scale-[1.02] transition-all duration-200"
+            className="group w-full py-8 text-xl font-semibold transition-all duration-200 hover:scale-[1.02]"
             onClick={() => handleSelect("en")}
             aria-label="Select English"
           >
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
-                <span className="text-2xl">🇺🇸</span>
+                <span className="text-2xl">EN</span>
                 <div className="text-left">
                   <div className="font-bold">English</div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm font-normal text-muted-foreground">
                     Continue in English
                   </div>
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </div>
           </Button>
 
           <Button
             variant="outline"
-            className="w-full py-8 text-xl font-semibold group hover:scale-[1.02] transition-all duration-200 border-2"
+            className="group w-full border-2 py-8 text-xl font-semibold transition-all duration-200 hover:scale-[1.02]"
             onClick={() => handleSelect("jp")}
             aria-label="日本語を選択"
           >
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
-                <span className="text-2xl">🇯🇵</span>
+                <span className="text-2xl">JP</span>
                 <div className="text-left">
                   <div className="font-bold">日本語</div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm font-normal text-muted-foreground">
                     日本語で続ける
                   </div>
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </div>
           </Button>
         </div>
 
-        {/* Footer Note */}
-        <div className="text-center text-sm text-muted-foreground mt-4">
+        <div className="mt-4 text-center text-sm text-muted-foreground">
           <p>
             You can change this later in the navigation
             <br />
-            後でナビゲーションから変更できます
+            あとからナビゲーションでも変更できます
           </p>
         </div>
       </div>

@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/api/", "/_next/"],
     },
     sitemap: "https://ernieryan.dev/sitemap.xml",
+    host: "https://ernieryan.dev",
   };
 }

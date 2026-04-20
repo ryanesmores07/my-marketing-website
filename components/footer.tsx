@@ -8,21 +8,22 @@ interface FooterProps {
 }
 
 const menuLinks = [
-  { href: "#", label: { en: "Home", jp: "ホーム" } },
+  { href: "#hero", label: { en: "Home", jp: "ホーム" } },
   { href: "#services", label: { en: "Services", jp: "サービス" } },
   { href: "#projects", label: { en: "Works", jp: "実績" } },
-  { href: "#about", label: { en: "About", jp: "概要" } },
+  { href: "#about", label: { en: "About", jp: "プロフィール" } },
   { href: "#testimonials", label: { en: "Testimonials", jp: "お客様の声" } },
   { href: "#cta", label: { en: "Contact", jp: "お問い合わせ" } },
 ];
 
 const socialLinks = [
-  { href: "https://www.linkedin.com/in/ryanesmores/", label: "Linkedin" },
-  { href: "https://github.com/ryanesmores07", label: "Github" },
+  { href: "https://www.linkedin.com/in/ryanesmores/", label: "LinkedIn" },
+  { href: "https://github.com/ryanesmores07", label: "GitHub" },
 ];
 
 function LocalTime() {
   const [time, setTime] = useState("");
+
   useEffect(() => {
     const update = () => {
       const now = new Date();
@@ -33,33 +34,46 @@ function LocalTime() {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
-        }) + ",  JST"
+        }) + ", JST"
       );
     };
+
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
+
   return <span className="font-mono text-xs text-foreground">{time}</span>;
 }
 
 export const Footer = ({ locale }: FooterProps) => {
   const currentYear = new Date().getFullYear();
+  const copy = {
+    menu: locale === "jp" ? "メニュー" : "Menu",
+    socials: locale === "jp" ? "リンク" : "Links",
+    localTime: locale === "jp" ? "Tokyo Time" : "Tokyo Time",
+    allRights:
+      locale === "jp" ? "無断転載を禁じます。" : "All rights reserved.",
+    scrollToTop: locale === "jp" ? "ページ上部へ戻る" : "Scroll to top",
+    scrollDescription:
+      locale === "jp"
+        ? "ページの先頭へスクロールします"
+        : "Scrolls to the top of the page",
+  };
+
   return (
-    <footer className="bg-muted/30 border-t border-border w-full">
-      {/* Divider */}
-      <div className="border-t border-border w-full mb-8"></div>
-      {/* Main Columns */}
-      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-start gap-12 pb-12">
-        {/* Menu */}
-        <div className="flex-1 min-w-[160px]">
-          <h3 className="font-semibold mb-2 text-foreground">Menu</h3>
+    <footer className="w-full border-t border-border bg-muted/30">
+      <div className="mb-8 w-full border-t border-border" />
+
+      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-12 px-4 pb-12 lg:flex-row">
+        <div className="min-w-[160px] flex-1">
+          <h3 className="mb-2 font-semibold text-foreground">{copy.menu}</h3>
           <ul className="space-y-1">
             {menuLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:underline text-foreground text-sm"
+                  className="text-sm text-foreground hover:underline"
                 >
                   {link.label[locale as "en" | "jp"] || link.label.en}
                 </Link>
@@ -67,9 +81,9 @@ export const Footer = ({ locale }: FooterProps) => {
             ))}
           </ul>
         </div>
-        {/* Socials */}
-        <div className="flex-1 min-w-[160px]">
-          <h3 className="font-semibold mb-2 text-foreground">Socials</h3>
+
+        <div className="min-w-[160px] flex-1">
+          <h3 className="mb-2 font-semibold text-foreground">{copy.socials}</h3>
           <ul className="space-y-1">
             {socialLinks.map((link) => (
               <li key={link.href}>
@@ -77,7 +91,7 @@ export const Footer = ({ locale }: FooterProps) => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline text-foreground text-sm"
+                  className="text-sm text-foreground hover:underline"
                 >
                   {link.label}
                 </a>
@@ -86,32 +100,29 @@ export const Footer = ({ locale }: FooterProps) => {
           </ul>
         </div>
       </div>
-      {/* Bottom Row */}
-      <div className="w-full flex flex-col md:flex-row justify-between items-end max-w-7xl mx-auto px-4 pb-6">
-        {/* Copyright */}
-        <div className="flex-1 flex items-end">
-          <span className="text-2xl md:text-3xl font-bold text-foreground leading-none">
+
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-end justify-between px-4 pb-6 md:flex-row">
+        <div className="flex flex-1 items-end">
+          <span className="text-2xl font-bold leading-none text-foreground md:text-3xl">
             © {currentYear} Ernie Ryan
             <br />
-            <span className="text-base font-normal">All rights reserved.</span>
+            <span className="text-base font-normal">{copy.allRights}</span>
           </span>
         </div>
-        {/* Local Time */}
-        <div className="flex-1 flex flex-col items-center justify-end pb-2">
-          <span className="uppercase text-xs font-semibold text-foreground mb-1">
-            Local Time
+
+        <div className="flex flex-1 flex-col items-center justify-end pb-2">
+          <span className="mb-1 text-xs font-semibold uppercase text-foreground">
+            {copy.localTime}
           </span>
           <LocalTime />
         </div>
-        {/* Scroll to Top */}
-        <div className="flex-1 flex justify-end items-end">
-          <div className="relative group">
+
+        <div className="flex flex-1 items-end justify-end">
+          <div className="group relative">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="rounded-full border border-muted-foreground/40 bg-muted-foreground/30 hover:bg-muted-foreground/80 transition w-16 h-16 flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-muted-foreground group-hover:-translate-y-1 group-active:scale-95"
-              aria-label={
-                locale === "jp" ? "ページトップに戻る" : "Scroll to top"
-              }
+              className="flex h-16 w-16 items-center justify-center rounded-full border border-muted-foreground/40 bg-muted-foreground/30 shadow-lg transition hover:-translate-y-1 hover:bg-muted-foreground/80 focus:outline-none focus:ring-2 focus:ring-muted-foreground focus:ring-offset-2 group-active:scale-95"
+              aria-label={copy.scrollToTop}
               aria-describedby="scroll-top-description"
             >
               <svg
@@ -131,9 +142,7 @@ export const Footer = ({ locale }: FooterProps) => {
                 />
               </svg>
               <span id="scroll-top-description" className="sr-only">
-                {locale === "jp"
-                  ? "ページの最上部にスクロールします"
-                  : "Scrolls to the top of the page"}
+                {copy.scrollDescription}
               </span>
             </button>
           </div>

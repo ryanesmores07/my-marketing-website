@@ -1,55 +1,43 @@
-// Contact configuration - Update these values with your actual contact information
 export const contactConfig = {
-  // Formspree endpoint - Replace with your actual Formspree form ID
   formspreeEndpoint: "https://formspree.io/f/manogljy",
-
-  // Direct messaging contact details
   line: {
-    id: "@g97kZgJz04", // Replace with your actual Line ID
+    id: "@g97kZgJz04",
     url: "https://line.me/ti/p/g97kZgJz04",
-    mobileUrl: "line://ti/p/g97kZgJz04", // Mobile app URL
-    qrCodePath: "/images/Line-QR.JPG", // Add your LINE QR code image here
+    mobileUrl: "line://ti/p/g97kZgJz04",
+    qrCodePath: "/images/Line-QR.JPG",
   },
-
   whatsapp: {
-    number: "818075750507", // Replace with your actual WhatsApp number (with country code, no +)
+    number: "818075750507",
     url: "https://wa.me/818075750507",
   },
-
   email: "mytokyowebdev@ernieryan.dev",
-
-  // Response time promise
-  responseTime: "24 hours",
-
-  // QR Code paths for desktop users
   qrCodes: {
     line: "/images/Line-QR.JPG",
-    whatsapp: "/images/Whatsapp-QR.jpeg", // WhatsApp QR code
+    whatsapp: "/images/Whatsapp-QR.jpeg",
   },
-
-  // Direct message templates
   messageTemplates: {
-    en: "Hi! I'm interested in your web development services.",
-    jp: "こんにちは！Web開発サービスについて興味があります。",
+    en: "Hi! I'm interested in your Shopify development, paid ads, or SEO support.",
+    jp: "こんにちは。Shopify構築、広告運用、SEO支援について相談したいです。",
   },
 };
 
-// Service types for dropdown
 export const serviceTypes = {
   en: [
+    "Paid Ads Management & Performance Marketing",
     "Shopify Development",
-    "Multilingual SEO",
-    "Multilingual Content Creation",
+    "SEO for Ecommerce & Multilingual Sites",
+    "Multilingual Content Writing",
     "Web Design",
     "Custom Web Development",
     "Other",
   ],
   jp: [
-    "Shopify開発",
-    "多言語SEO",
-    "多言語コンテンツ作成",
+    "広告運用・パフォーマンスマーケティング",
+    "Shopify構築",
+    "ECサイト・多言語サイトのSEO",
+    "多言語コンテンツ制作",
     "Webデザイン",
-    "カスタムWeb開発",
+    "Web開発",
     "その他",
   ],
 };

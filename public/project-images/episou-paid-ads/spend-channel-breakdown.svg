@@ -1,0 +1,52 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="boostBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#55D5FF"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="salesBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C16BFF"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#08111D"/>
+  <text x="96" y="118" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Spend By Channel</text>
+  <text x="96" y="164" fill="#94A3B8" font-family="Arial, sans-serif" font-size="26">Month 2, first 10-day window for Episou JP</text>
+
+  <rect x="96" y="212" width="1408" height="592" rx="36" fill="#0E1726" stroke="#243041"/>
+  <text x="152" y="274" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="28" font-weight="700">Budget split</text>
+  <text x="152" y="308" fill="#64748B" font-family="Arial, sans-serif" font-size="20">Channel spend distribution during the purchase-focused window</text>
+
+  <line x1="180" y1="736" x2="940" y2="736" stroke="#243041" stroke-width="2"/>
+
+  <rect x="228" y="448" width="156" height="288" rx="28" fill="url(#boostBar)"/>
+  <rect x="480" y="596" width="156" height="140" rx="28" fill="url(#salesBar)"/>
+  <rect x="732" y="690" width="156" height="46" rx="23" fill="#F59E0B"/>
+
+  <text x="306" y="406" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">JPY 214,237</text>
+  <text x="558" y="560" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">JPY 109,881</text>
+  <text x="810" y="664" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">JPY 29,017</text>
+
+  <text x="306" y="784" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Meta IG Boost</text>
+  <text x="558" y="784" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Meta Sales</text>
+  <text x="810" y="784" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Google Search</text>
+
+  <rect x="1000" y="266" width="424" height="464" rx="28" fill="#111B2B" stroke="#243041"/>
+  <text x="1048" y="334" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">Why it mattered</text>
+
+  <circle cx="1062" cy="396" r="6" fill="#55D5FF"/>
+  <text x="1084" y="404" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">IG Boost carried 66% of spend</text>
+
+  <circle cx="1062" cy="468" r="6" fill="#A855F7"/>
+  <text x="1084" y="460" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">Meta sales campaigns drove</text>
+  <text x="1084" y="492" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">the clearest purchase signal</text>
+
+  <circle cx="1062" cy="554" r="6" fill="#F59E0B"/>
+  <text x="1084" y="546" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">Google Search stayed efficient</text>
+  <text x="1084" y="578" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">and intent-rich</text>
+
+  <rect x="1048" y="640" width="328" height="74" rx="24" fill="#0B1220" stroke="#243041"/>
+  <text x="1080" y="674" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Combined spend</text>
+  <text x="1080" y="702" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">JPY 353,135</text>
+</svg>

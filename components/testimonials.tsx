@@ -1,5 +1,5 @@
-import { Star } from "lucide-react";
 import Link from "next/link";
+import { Star } from "lucide-react";
 
 interface TestimonialProps {
   locale?: string;
@@ -25,12 +25,10 @@ const testimonials: Testimonial[] = [
       en: "Upwork Client",
       jp: "Upworkクライアント",
     },
-
     content: {
-      en: "Ryan is a professional Shopify developer who adheres to agreed upon deadlines and budget without issue. Ryan delivered excellent work exactly to specification and communicated with us frequently over the course of the job. Very much looking forward to working with Ryan again in the near future! Highly recommended.",
-      jp: "ライアンさんは非常にプロフェッショナルなShopify開発者で、納期や予算をきちんと守ってくれました。こちらの要望通りに高品質な成果物を納品してくれただけでなく、進行中も頻繁に連絡を取り合い、安心してプロジェクトを進められました。またぜひ一緒にお仕事したいと思っています。本当におすすめの開発者です！",
+      en: "Ryan is a professional Shopify developer who adheres to agreed upon deadlines and budget without issue. Ryan delivered excellent work exactly to specification and communicated with us frequently over the course of the job. Very much looking forward to working with Ryan again in the near future. Highly recommended.",
+      jp: "Ryanさんは、合意した納期と予算をしっかり守って進めてくれるShopify開発者です。要件どおりの高品質な仕事をしてくれ、進行中のコミュニケーションもとても丁寧でした。近いうちにまたお願いしたいと思っています。自信を持っておすすめできます。",
     },
-
     rating: 5,
   },
   {
@@ -39,12 +37,10 @@ const testimonials: Testimonial[] = [
       en: "Upwork Client",
       jp: "Upworkクライアント",
     },
-
     content: {
       en: "Ernie Ryan is great with his communication. He responds in a timely manner and created a website that I was very pleased with. Great guy to work with.",
-      jp: "エルニー・ライアンさんはコミュニケーションがとてもスムーズで、いつも迅速に返信してくれました。仕上げてくれたウェブサイトも大満足の出来で、一緒に仕事をするのがとても楽しい方でした。",
+      jp: "Ernie Ryanさんはコミュニケーションがとても丁寧で、返信も早く、仕上がったWebサイトにもとても満足しています。一緒に仕事がしやすい方です。",
     },
-
     rating: 5,
   },
   {
@@ -54,121 +50,114 @@ const testimonials: Testimonial[] = [
       jp: "Upworkクライアント",
     },
     content: {
-      en: "Absolutely amazing work, very happy with everything!",
-      jp: "すべてにおいて大満足です！素晴らしい仕事をしていただき、本当にありがとうございました！",
+      en: "Absolutely amazing work, very happy with everything.",
+      jp: "本当に素晴らしい仕事でした。すべてにとても満足しています。",
     },
-
     rating: 5,
   },
 ];
 
 export const Testimonials = ({ locale = "en" }: TestimonialProps) => {
+  const copy = {
+    badge: locale === "jp" ? "クライアントの声" : "Client Feedback",
+    title: locale === "jp" ? "お客様の声" : "What Clients Say",
+    description:
+      locale === "jp"
+        ? "ECサイト構築や海外向けWeb案件でご一緒したクライアントからの声です。"
+        : "Feedback from clients I supported on ecommerce and international web projects.",
+    reviewLabel: locale === "jp" ? "5段階評価" : "5-star feedback",
+    upworkProfile:
+      locale === "jp" ? "Upworkプロフィールを見る" : "View Upwork Profile",
+  };
+
   return (
-    <section id="testimonials" className="py-20 lg:py-28 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-8 lg:mb-16">
-          <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground ring-1 ring-inset ring-border mb-6">
-            <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+    <section id="testimonials" className="bg-muted/30 py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 text-center lg:mb-16">
+          <div className="mb-6 inline-flex items-center rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground ring-1 ring-inset ring-border">
+            <span className="relative mr-2 flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
             </span>
-            {locale === "jp" ? "お客様の声" : "Client Success Stories"}
+            {copy.badge}
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            {locale === "jp" ? "お客様の声" : "Don’t just take my word for it"}
+          <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
+            {copy.title}
           </h2>
 
-          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
-            {locale === "jp"
-              ? "クライアントからの信頼と満足度を証明する実績をご覧ください。"
-              : "See what clients say about working with me on their international projects."}
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-foreground">
+            {copy.description}
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial) => (
             <div
               key={`testimonial-${testimonial.id}`}
-              className="relative bg-gradient-to-br from-card via-card to-card/50 rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 group overflow-hidden backdrop-blur-sm"
+              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card via-card to-card/50 p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
             >
-              {/* Animated Background Elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute left-0 top-0 h-0.5 w-full origin-center scale-x-0 bg-gradient-to-r from-transparent via-primary/60 to-transparent transition-transform duration-700 group-hover:scale-x-100" />
+              <div className="absolute left-0 top-1/4 h-1/2 w-0.5 bg-gradient-to-b from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute right-0 top-1/4 h-1/2 w-0.5 bg-gradient-to-b from-transparent via-primary/50 to-transparent opacity-0 transition-opacity delay-200 duration-500 group-hover:opacity-100" />
 
-              {/* Top Border Animation */}
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/60 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-center"></div>
-
-              {/* Side Accent Lines */}
-              <div className="absolute left-0 top-1/4 w-0.5 h-1/2 bg-gradient-to-b from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute right-0 top-1/4 w-0.5 h-1/2 bg-gradient-to-b from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200"></div>
-
-              {/* Content Container */}
               <div className="relative z-10">
-                {/* Success Header with Glow Effect */}
                 <div className="mb-4">
                   <div className="relative inline-block">
-                    <h4 className="text-primary font-bold text-lg mb-2 relative z-10 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:from-accent group-hover:to-primary transition-all duration-500">
-                      {locale === "jp"
-                        ? "プロジェクト完了！"
-                        : "Completed successfully!"}
+                    <h4 className="relative z-10 mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-lg font-bold text-transparent transition-all duration-500 group-hover:from-accent group-hover:to-primary">
+                      {copy.reviewLabel}
                     </h4>
-                    {/* Glow effect behind text */}
-                    <div className="absolute inset-0 blur-md bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
 
-                  {/* Enhanced Star Rating */}
-                  <div className="flex items-center mb-3 space-x-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <div key={i} className="relative">
-                        <Star
-                          className="w-5 h-5 text-yellow-400 fill-current relative z-10 group-hover:scale-110 transition-transform duration-300"
-                          style={{ transitionDelay: `${i * 50}ms` }}
-                        />
+                  <div className="mb-3 flex items-center space-x-1">
+                    {Array.from({ length: testimonial.rating }, (_, i) => i + 1).map(
+                      (star) => (
                         <div
-                          className="absolute inset-0 w-5 h-5 bg-yellow-400/30 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{ transitionDelay: `${i * 50}ms` }}
-                        ></div>
-                      </div>
-                    ))}
+                          key={`${testimonial.id}-star-${star}`}
+                          className="relative"
+                        >
+                          <Star
+                            className="relative z-10 h-5 w-5 fill-current text-yellow-400 transition-transform duration-300 group-hover:scale-110"
+                            style={{ transitionDelay: `${star * 50}ms` }}
+                          />
+                          <div
+                            className="absolute inset-0 h-5 w-5 bg-yellow-400/30 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                            style={{ transitionDelay: `${star * 50}ms` }}
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
 
-                {/* Enhanced Review Content */}
-                <div className="mb-6 relative">
-                  <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-primary/20 via-accent/30 to-primary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <p className="text-card-foreground leading-relaxed text-sm pl-4 group-hover:text-foreground transition-colors duration-300 relative">
+                <div className="relative mb-6">
+                  <div className="absolute -left-2 top-0 h-full w-1 rounded-full bg-gradient-to-b from-primary/20 via-accent/30 to-primary/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <p className="relative pl-4 text-sm leading-relaxed text-card-foreground transition-colors duration-300 group-hover:text-foreground">
                     {testimonial.content[
                       locale as keyof typeof testimonial.content
                     ] || testimonial.content.en}
                   </p>
                 </div>
 
-                {/* Enhanced Client Info Section */}
-                <div className="border-t border-gradient-to-r from-transparent via-border to-transparent pt-4 mt-auto relative">
-                  {/* Scanning line effect on divider */}
-                  <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 delay-300"></div>
+                <div className="relative mt-auto border-t border-border/60 pt-4">
+                  <div className="absolute left-0 top-0 h-px w-full origin-center scale-x-0 bg-gradient-to-r from-transparent via-primary/50 to-transparent transition-transform delay-300 duration-700 group-hover:scale-x-100" />
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      {/* Client Name with Enhanced Typography */}
-                      <div>
-                        <div className="font-bold text-card-foreground text-sm group-hover:text-primary transition-colors duration-300 relative">
-                          {testimonial.name[
-                            locale as keyof typeof testimonial.name
-                          ] || testimonial.name.en}
-                          {/* Underline effect */}
-                          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                        </div>
+                      <div className="relative text-sm font-bold text-card-foreground transition-colors duration-300 group-hover:text-primary">
+                        {testimonial.name[
+                          locale as keyof typeof testimonial.name
+                        ] || testimonial.name.en}
+                        <div className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
                       </div>
                     </div>
 
-                    {/* Enhanced Upwork Badge */}
-                    <div className="relative group/badge">
-                      <div className="flex items-center text-xs bg-gradient-to-r from-green-50/80 to-green-100/80 dark:from-green-950/50 dark:to-green-900/50 text-green-700 dark:text-green-300 px-3 py-1.5 rounded-full border border-green-200/50 dark:border-green-800/50 backdrop-blur-sm group-hover:border-green-400/50 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/20">
+                    <div className="group/badge relative">
+                      <div className="flex items-center rounded-full border border-green-200/50 bg-gradient-to-r from-green-50/80 to-green-100/80 px-3 py-1.5 text-xs text-green-700 backdrop-blur-sm transition-all duration-300 group-hover:border-green-400/50 group-hover:shadow-lg group-hover:shadow-green-500/20 dark:border-green-800/50 dark:from-green-950/50 dark:to-green-900/50 dark:text-green-300">
                         <svg
-                          className="w-3 h-3 mr-1.5 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300"
+                          className="mr-1.5 h-3 w-3 text-green-600 transition-transform duration-300 group-hover:scale-110 dark:text-green-400"
                           viewBox="0 0 24 24"
                           fill="currentColor"
                         >
@@ -176,59 +165,47 @@ export const Testimonials = ({ locale = "en" }: TestimonialProps) => {
                         </svg>
                         <span className="font-medium">Upwork</span>
                       </div>
-                      {/* Badge glow effect */}
-                      <div className="absolute inset-0 rounded-full bg-green-500/20 blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 rounded-full bg-green-500/20 opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-50" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Accent Line with Animation */}
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent/60 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 delay-100"></div>
-
-              {/* Corner Accent Elements */}
-              <div className="absolute top-2 right-2 w-2 h-2 bg-gradient-to-br from-primary to-accent rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-500 delay-200"></div>
-              <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-gradient-to-br from-accent to-primary rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-500 delay-400"></div>
+              <div className="absolute bottom-0 left-0 h-0.5 w-full origin-center scale-x-0 bg-gradient-to-r from-transparent via-accent/60 to-transparent transition-transform delay-100 duration-700 group-hover:scale-x-100" />
+              <div className="absolute right-2 top-2 h-2 w-2 rounded-full bg-gradient-to-br from-primary to-accent opacity-0 transition-opacity delay-200 duration-500 group-hover:opacity-60" />
+              <div className="absolute bottom-2 left-2 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-accent to-primary opacity-0 transition-opacity delay-400 duration-500 group-hover:opacity-40" />
             </div>
           ))}
         </div>
 
-        {/* Upwork Profile Link */}
-        <div className="text-center mt-12 mb-6">
-          {/* Enhanced Compact CTA Container */}
+        <div className="mb-6 mt-12 text-center">
           <div className="relative inline-block">
-            {/* Animated Background Rings */}
             <div className="absolute inset-0 -m-3">
-              <div className="absolute inset-0 rounded-full border border-primary/20 animate-spin-slow"></div>
-              <div className="absolute inset-1 rounded-full border border-accent/30 animate-spin-reverse-slow"></div>
-              <div className="absolute inset-2 rounded-full border border-primary/10 animate-pulse"></div>
+              <div className="absolute inset-0 animate-spin-slow rounded-full border border-primary/20" />
+              <div className="absolute inset-1 animate-spin-reverse-slow rounded-full border border-accent/30" />
+              <div className="absolute inset-2 animate-pulse rounded-full border border-primary/10" />
             </div>
 
-            {/* Glowing Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-primary/10 to-green-500/10 rounded-lg blur-xl animate-pulse"></div>
+            <div className="absolute inset-0 animate-pulse rounded-lg bg-gradient-to-r from-green-500/10 via-primary/10 to-green-500/10 blur-xl" />
 
-            {/* Compact CTA Button */}
             <Link
               href="https://www.upwork.com/freelancers/~01ef65f6b564926f0f"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:shadow-green-500/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 group backdrop-blur-sm"
+              className="group relative inline-flex items-center rounded-lg bg-gradient-to-r from-green-600 to-green-700 px-4 py-2.5 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:from-green-700 hover:to-green-800 hover:shadow-xl hover:shadow-green-500/30"
             >
-              {/* Scanning Line Effect */}
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-scan transition-opacity duration-300"></div>
+              <div className="absolute left-0 top-0 h-0.5 w-full bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:animate-scan group-hover:opacity-100" />
 
               <svg
-                className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300"
+                className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
                 <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 2.984 0 5.404-2.420 5.404-5.404.001-2.984-2.419-5.403-5.403-5.403z" />
               </svg>
-              <span className="text-sm">
-                {locale === "jp" ? "Upworkで確認" : "View Upwork Profile"}
-              </span>
+              <span className="text-sm">{copy.upworkProfile}</span>
               <svg
-                className="w-3 h-3 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300"
+                className="ml-1.5 h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -241,14 +218,12 @@ export const Testimonials = ({ locale = "en" }: TestimonialProps) => {
                 />
               </svg>
 
-              {/* Bottom Scanning Line */}
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-scan-reverse transition-opacity duration-300"></div>
+              <div className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:animate-scan-reverse group-hover:opacity-100" />
             </Link>
 
-            {/* Floating Tech Elements */}
-            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-60 animate-float"></div>
-            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-accent to-primary rounded-full opacity-40 animate-float-delay"></div>
-            <div className="absolute top-1/2 -right-2 w-1 h-1 bg-gradient-to-br from-primary to-green-500 rounded-full opacity-50 animate-pulse"></div>
+            <div className="absolute -right-1 -top-1 h-2.5 w-2.5 animate-float rounded-full bg-gradient-to-br from-green-400 to-green-600 opacity-60" />
+            <div className="absolute -bottom-1 -left-1 h-2 w-2 animate-float-delay rounded-full bg-gradient-to-br from-accent to-primary opacity-40" />
+            <div className="absolute -right-2 top-1/2 h-1 w-1 animate-pulse rounded-full bg-gradient-to-br from-primary to-green-500 opacity-50" />
           </div>
         </div>
       </div>

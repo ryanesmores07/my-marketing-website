@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/content/projects";
@@ -14,15 +14,14 @@ interface ProjectsSectionProps {
   locale?: "en" | "jp";
 }
 
+const isGraphicAsset = (src: string) => src.toLowerCase().endsWith(".svg");
+
 export const ProjectsSection = ({
   projects,
   locale = "en",
 }: ProjectsSectionProps) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Show all projects on the main page
-  const displayProjects = projects;
 
   const openProjectModal = (project: Project) => {
     setSelectedProject(project);
@@ -34,171 +33,207 @@ export const ProjectsSection = ({
     setSelectedProject(null);
   };
 
+  const copy = {
+    en: {
+      title: "Selected Works",
+      description:
+        "From paid ads management to ecommerce builds, these projects show how I help brands improve traffic quality, conversion flow, and market readiness.",
+      viewProject: "View Project",
+      liveSite: "Live Site",
+      more: "more",
+      noProjects: "No projects found",
+      noProjectsBody: "No projects are currently available to display.",
+      viewLive: "View live site",
+      openDetails: "View project details",
+      primaryMetricLabel: "Featured result",
+    },
+    jp: {
+      title: "実績紹介",
+      description:
+        "広告運用からEC構築まで、流入の質、購入導線、市場対応をどう改善したかが分かる実績をまとめています。",
+      viewProject: "詳細を見る",
+      liveSite: "公開サイトを見る",
+      more: "件",
+      noProjects: "表示できる実績がありません",
+      noProjectsBody: "現在表示できるプロジェクトはありません。",
+      viewLive: "公開サイトを見る",
+      openDetails: "プロジェクト詳細を開く",
+      primaryMetricLabel: "主な成果",
+    },
+  }[locale];
+
   return (
     <>
-      <section className="bg-background">
-        {/* Subtle Divider */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+      <section id="projects" className="bg-background">
+        <div className="mx-auto mb-24 max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-black text-foreground mb-6">
-              {locale === "jp" ? "プロジェクト" : "Selected Works"}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl font-black text-foreground lg:text-5xl">
+              {copy.title}
             </h2>
-            <div className="w-12 h-1 bg-primary rounded-full mx-auto mb-6"></div>
-            <p className="text-lg text-foreground max-w-2xl mx-auto">
-              {locale === "jp"
-                ? "多言語対応のShopifyストアからSEO最適化されたランディングページまで、すべてのプロジェクトはビジネスの成長を目的に設計されています。国内外で成果を出すために制作した実績をご紹介します。"
-                : "From multilingual Shopify stores to SEO-optimized landing pages, each project is built to help businesses grow beyond borders. Here are some of the results-driven solutions I've crafted with international and local impact in mind."}
+            <div className="mx-auto mb-6 h-1 w-12 rounded-full bg-primary" />
+            <p className="mx-auto max-w-3xl text-lg text-foreground">
+              {copy.description}
             </p>
           </div>
 
-          {/* Projects Grid */}
           <div className="space-y-16">
-            {displayProjects.map((project, index) => (
-              <div
-                key={project.id}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
-                }`}
-              >
-                {/* Project Image */}
+            {projects.map((project, index) => {
+              const projectHeroIsGraphic = isGraphicAsset(project.mainImage);
+
+              return (
                 <div
-                  className={`relative ${
-                    index % 2 === 1 ? "lg:col-start-2" : ""
+                  key={project.id}
+                  className={`grid items-center gap-12 lg:grid-cols-2 ${
+                    index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                   }`}
                 >
-                  <div className="relative aspect-video rounded-2xl overflow-hidden border border-border shadow-2xl group">
-                    <Image
-                      src={project.mainImage}
-                      alt={project.title[locale]}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                  <div
+                    className={`relative ${
+                      index % 2 === 1 ? "lg:col-start-2" : ""
+                    }`}
+                  >
+                    <div className="group relative aspect-video overflow-hidden rounded-2xl border border-border shadow-2xl">
+                      <Image
+                        src={project.mainImage}
+                        alt={project.title[locale]}
+                        fill
+                        className={`transition-transform duration-500 group-hover:scale-[1.03] ${
+                          projectHeroIsGraphic
+                            ? "object-contain bg-[#08111d] p-6"
+                            : "object-cover"
+                        }`}
+                      />
 
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="flex gap-4">
-                        <button
-                          onClick={() => openProjectModal(project)}
-                          className="w-12 h-12 bg-background rounded-full flex items-center justify-center shadow-lg hover:bg-primary hover:text-primary-foreground transition-colors"
-                          aria-label={
-                            locale === "jp"
-                              ? "プロジェクト詳細を見る"
-                              : "View project details"
-                          }
-                        >
-                          <ArrowRight className="w-5 h-5" />
-                        </button>
-                        {project.liveUrl && (
-                          <Link
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-12 h-12 bg-background rounded-full flex items-center justify-center shadow-lg hover:bg-primary hover:text-primary-foreground transition-colors"
-                            aria-label={
-                              locale === "jp"
-                                ? "ライブサイトを見る"
-                                : "View live site"
-                            }
+                      <div className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="flex gap-4">
+                          <button
+                            onClick={() => openProjectModal(project)}
+                            className="flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg transition-colors hover:bg-primary hover:text-primary-foreground"
+                            aria-label={copy.openDetails}
                           >
-                            <ExternalLink className="w-5 h-5" />
-                          </Link>
-                        )}
+                            <ArrowRight className="h-5 w-5" />
+                          </button>
+                          {project.liveUrl && (
+                            <Link
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg transition-colors hover:bg-primary hover:text-primary-foreground"
+                              aria-label={copy.viewLive}
+                            >
+                              <ExternalLink className="h-5 w-5" />
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Project Info */}
-                <div
-                  className={`space-y-6 ${
-                    index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
-                  }`}
-                >
-                  {/* Title */}
-                  <h3 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    {project.title[locale]}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed text-lg">
-                    {project.shortDescription[locale]}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full font-medium"
-                      >
-                        {tech}
+                  <div
+                    className={`space-y-6 ${
+                      index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="rounded-full bg-muted px-3 py-1 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                        {project.category}
                       </span>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <span className="px-3 py-1 text-muted-foreground text-sm">
-                        +{project.technologies.length - 4}{" "}
-                        {locale === "jp" ? "他" : "more"}
-                      </span>
-                    )}
-                  </div>
+                      {project.primaryMetric && (
+                        <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                          {project.primaryMetric.value}{" "}
+                          {project.primaryMetric.label[locale]}
+                        </span>
+                      )}
+                    </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-4 pt-4">
-                    <Button onClick={() => openProjectModal(project)}>
-                      {locale === "jp" ? "詳細を見る" : "View Project"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <h3 className="text-3xl font-bold text-foreground lg:text-4xl">
+                      {project.title[locale]}
+                    </h3>
 
-                    {project.liveUrl && (
-                      <Link
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="outline">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          {locale === "jp" ? "ライブサイト" : "Live Site"}
-                        </Button>
-                      </Link>
+                    <p className="text-lg leading-relaxed text-muted-foreground">
+                      {project.shortDescription[locale]}
+                    </p>
+
+                    {project.primaryMetric && (
+                      <div className="rounded-2xl border border-border bg-muted/20 p-5">
+                        <div className="mb-2 text-sm uppercase tracking-[0.16em] text-muted-foreground">
+                          {copy.primaryMetricLabel}
+                        </div>
+                        <div className="mb-2 text-3xl font-black text-foreground">
+                          {project.primaryMetric.value}
+                        </div>
+                        <div className="text-base font-semibold text-foreground">
+                          {project.primaryMetric.label[locale]}
+                        </div>
+                        <div className="mt-1 text-sm text-muted-foreground">
+                          {project.primaryMetric.note[locale]}
+                        </div>
+                      </div>
                     )}
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-full bg-muted px-3 py-1 text-sm font-medium text-muted-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 4 && (
+                        <span className="px-3 py-1 text-sm text-muted-foreground">
+                          +{project.technologies.length - 4} {copy.more}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-4 pt-4">
+                      <Button onClick={() => openProjectModal(project)}>
+                        {copy.viewProject}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+
+                      {project.liveUrl && (
+                        <Link
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            {copy.liveSite}
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Empty State */}
-          {displayProjects.length === 0 && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <div className="w-8 h-8 bg-muted-foreground/20 rounded-lg"></div>
+          {projects.length === 0 && (
+            <div className="py-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+                <div className="h-8 w-8 rounded-lg bg-muted-foreground/20" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">
-                {locale === "jp"
-                  ? "プロジェクトが見つかりません"
-                  : "No projects found"}
+              <h3 className="mb-2 text-lg font-medium text-foreground">
+                {copy.noProjects}
               </h3>
-              <p className="text-muted-foreground">
-                {locale === "jp"
-                  ? "現在、表示するプロジェクトがありません。"
-                  : "No projects are currently available to display."}
-              </p>
+              <p className="text-muted-foreground">{copy.noProjectsBody}</p>
             </div>
           )}
         </div>
 
-        {/* Subtle Divider */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
-          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+        <div className="mx-auto mt-24 max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         </div>
       </section>
 
-      {/* Project Modal */}
       <ProjectModal
         project={selectedProject}
         locale={locale as Locale}
