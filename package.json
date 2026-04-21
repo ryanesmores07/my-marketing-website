@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev",
+    "dev:turbo": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev --turbopack",
+    "build": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next build",
+    "start": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next start",
     "lint": "next lint",
-    "analyze": "ANALYZE=true next build && npx @next/bundle-analyzer .next"
+    "analyze": "ANALYZE=true NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next build && npx @next/bundle-analyzer .next"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
