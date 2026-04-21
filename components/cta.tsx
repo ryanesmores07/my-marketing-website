@@ -41,7 +41,7 @@ const CTA = ({ locale = "en" }: CTAProps) => {
   return (
     <section
       id="cta"
-      className="relative flex min-h-[calc(70vh-100px)] flex-col items-center justify-center bg-background px-4 text-neutral-200 lg:min-h-[calc(100vh-200px)] 2xl:min-h-[60vh]"
+      className="relative flex min-h-[calc(70vh-100px)] flex-col items-center justify-center overflow-hidden bg-background px-4 pb-12 pt-12 text-neutral-200 md:pb-24 lg:min-h-[calc(100vh-200px)] 2xl:min-h-[60vh]"
     >
       <span
         className="mb-2 text-center text-lg tracking-widest text-neutral-600 lg:mb-4"
@@ -69,20 +69,20 @@ const CTA = ({ locale = "en" }: CTAProps) => {
         <ArrowRight className="ml-2 h-5 w-5" />
       </button>
 
-      <div className="absolute bottom-4 left-4 flex max-w-sm flex-col items-start text-xs text-neutral-600">
-        <span>{t.supporting}</span>
-      </div>
+      <div className="mt-10 flex w-full flex-col items-center gap-4 text-center text-xs text-neutral-600 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:w-auto md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+        <span className="max-w-xs md:max-w-sm">{t.supporting}</span>
 
-      <div className="absolute bottom-4 right-4 text-right text-xs text-neutral-600">
-        <span className="block">{t.inquiries}</span>
-        <a
-          href={`mailto:${t.email}`}
-          className="underline underline-offset-2 transition hover:text-neutral-200"
-          tabIndex={0}
-          aria-label={`Email ${t.email}`}
-        >
-          {t.email}
-        </a>
+        <div className="md:text-right">
+          <span className="block">{t.inquiries}</span>
+          <a
+            href={`mailto:${t.email}`}
+            className="underline underline-offset-2 transition hover:text-neutral-200"
+            tabIndex={0}
+            aria-label={`Email ${t.email}`}
+          >
+            {t.email}
+          </a>
+        </div>
       </div>
 
       <ContactModal

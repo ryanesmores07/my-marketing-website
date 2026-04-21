@@ -87,7 +87,7 @@ export const ProjectsSection = ({
               return (
                 <div
                   key={project.id}
-                  className={`grid items-center gap-12 lg:grid-cols-2 ${
+                  className={`grid items-center gap-6 sm:gap-12 lg:grid-cols-2 ${
                     index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                   }`}
                 >

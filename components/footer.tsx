@@ -101,7 +101,7 @@ export const Footer = ({ locale }: FooterProps) => {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-end justify-between px-4 pb-6 md:flex-row">
+      <div className="mx-auto flex w-full max-w-7xl flex-col justify-between px-4 pb-6 md:flex-row">
         <div className="flex flex-1 items-end">
           <span className="text-2xl font-bold leading-none text-foreground md:text-3xl">
             © {currentYear} Ernie Ryan

@@ -62,50 +62,14 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
 
       <div className="relative mx-auto h-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 flex w-full justify-center lg:mb-20">
-          <h1 className="min-h-[4rem] whitespace-nowrap text-center text-[clamp(2rem,16vw,24rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
+          <h1 className="min-h-[4rem] max-w-full whitespace-nowrap text-center text-[clamp(2rem,14vw,24rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
             ERNIE RYAN
           </h1>
         </div>
 
         <div className="mx-auto mb-16 max-w-6xl">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div className="space-y-6">
-              {currentContent.questions.map((question, index) => (
-                <div key={question} className="flex items-start gap-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                    {index + 1}
-                  </div>
-                  <p className="text-lg font-semibold leading-relaxed text-foreground md:text-xl">
-                    {question}
-                  </p>
-                </div>
-              ))}
-
-              <div className="pt-6">
-                <p className="text-base leading-relaxed text-foreground md:text-lg">
-                  {currentContent.description}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-4 pt-8 sm:flex-row">
-                <HeroCTAButton
-                  ctaText={currentContent.ctaText}
-                  locale={locale as "en" | "jp"}
-                />
-                <Link href="#projects">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-2 border-foreground/20 px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:border-foreground/40 hover:bg-foreground/5 sm:w-auto"
-                  >
-                    {locale === "jp" ? "実績を見る" : "View my work"}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center lg:justify-end">
+            <div className="relative flex items-center justify-center lg:order-2 lg:justify-end">
               <div className="relative z-10 h-80 w-80 lg:h-96 lg:w-96">
                 <div
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary opacity-75 motion-safe:animate-spin will-change-transform"
@@ -138,6 +102,42 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-accent/20 mix-blend-overlay" />
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="space-y-6 lg:order-1">
+              {currentContent.questions.map((question, index) => (
+                <div key={question} className="flex items-start gap-4">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                    {index + 1}
+                  </div>
+                  <p className="text-lg font-semibold leading-relaxed text-foreground md:text-xl">
+                    {question}
+                  </p>
+                </div>
+              ))}
+
+              <div className="pt-6">
+                <p className="text-base leading-relaxed text-foreground md:text-lg">
+                  {currentContent.description}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4 pt-8 sm:flex-row">
+                <HeroCTAButton
+                  ctaText={currentContent.ctaText}
+                  locale={locale as "en" | "jp"}
+                />
+                <Link href="#projects">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full border-2 border-foreground/20 px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:border-foreground/40 hover:bg-foreground/5 sm:w-auto"
+                  >
+                    {locale === "jp" ? "実績を見る" : "View my work"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
