@@ -10,8 +10,8 @@ export const Navigation = ({ locale }: NavigationProps) => {
   const navigationItems = [
     { href: "#hero", label: locale === "jp" ? "ホーム" : "Home" },
     { href: "#services", label: locale === "jp" ? "サービス" : "Services" },
-    { href: "#projects", label: locale === "jp" ? "プロジェクト" : "Projects" },
-    { href: "#about", label: locale === "jp" ? "概要" : "About" },
+    { href: "#projects", label: locale === "jp" ? "実績" : "Projects" },
+    { href: "#about", label: locale === "jp" ? "プロフィール" : "About" },
     {
       href: "#testimonials",
       label: locale === "jp" ? "お客様の声" : "Testimonials",
@@ -20,21 +20,19 @@ export const Navigation = ({ locale }: NavigationProps) => {
 
   return (
     <>
-      <nav className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-md bg-background/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="shrink-0">
               <Link
                 href={`/${locale}`}
-                className="text-xl font-bold text-foreground hover:text-primary transition-colors"
+                className="text-xl font-bold text-foreground transition-colors hover:text-primary"
                 prefetch={false}
               >
                 ernieryan.dev
               </Link>
             </div>
 
-            {/* Pass navigation items and locale to client component for interactivity */}
             <NavigationClient
               navigationItems={navigationItems}
               locale={locale}

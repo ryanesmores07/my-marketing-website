@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X, Globe } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { NavCTAButton } from "@/components/nav-cta-button";
+import { useActiveSection } from "@/lib/use-active-section";
 
 interface NavigationItem {
   href: string;
@@ -23,61 +24,120 @@ interface NavigationClientProps {
   locale: string;
 }
 
+const SCROLL_RESTORE_KEY = "lang-swap-scrollY";
+
 export const NavigationClient = ({
   navigationItems,
   locale,
 }: NavigationClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const sectionIds = useMemo(
+    () => navigationItems.map((item) => item.href.replace(/^#/, "")),
+    [navigationItems]
+  );
+  const activeSection = useActiveSection(sectionIds);
+
+  const copy = {
+    language: locale === "jp" ? "言語" : "Language",
+    theme: locale === "jp" ? "テーマ" : "Theme",
+    toggleMenu: locale === "jp" ? "メニューを開閉" : "Toggle menu",
+    changeLanguage: locale === "jp" ? "言語を変更" : "Change language",
+  };
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   const handleScrollToSection = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleLanguageSwitch = (nextLocale: string) => {
+    if (typeof window === "undefined" || nextLocale === locale) return;
+
+    try {
+      sessionStorage.setItem(
+        SCROLL_RESTORE_KEY,
+        JSON.stringify({
+          y: window.scrollY,
+          section: activeSection,
+          ts: Date.now(),
+        })
+      );
+      window.localStorage.setItem("preferredLocale", nextLocale);
+    } catch {
+      // Storage access can fail in private mode or restricted environments.
+    }
+  };
+
+  const localeHref = (nextLocale: string) =>
+    activeSection ? `/${nextLocale}#${activeSection}` : `/${nextLocale}`;
+
+  const navLinkClass = (href: string, base: string, activeColor: string) => {
+    const id = href.replace(/^#/, "");
+    return `${base} ${
+      id === activeSection ? activeColor : "text-muted-foreground"
+    }`;
+  };
+
   return (
     <>
-      {/* Desktop Navigation */}
       <div className="hidden md:block">
         <div className="ml-10 flex items-baseline space-x-4">
-          {navigationItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleScrollToSection(item.href);
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navigationItems.map((item) => {
+            const id = item.href.replace(/^#/, "");
+            const isActive = id === activeSection;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                className={navLinkClass(
+                  item.href,
+                  "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                  "text-foreground"
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollToSection(item.href);
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
-      {/* Language Switcher, Theme Switcher & CTA */}
-      <div className="hidden md:flex items-center space-x-3">
+      <div className="hidden items-center space-x-3 md:flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
               size="sm"
-              aria-label={locale === "jp" ? "言語を変更" : "Change language"}
+              aria-label={copy.changeLanguage}
             >
-              <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
+              <Globe className="mr-2 h-4 w-4" aria-hidden="true" />
               {locale.toUpperCase()}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
-              <Link href="/en" lang="en">
+              <Link
+                href={localeHref("en")}
+                lang="en"
+                onClick={() => handleLanguageSwitch("en")}
+              >
                 English
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/jp" lang="ja">
+              <Link
+                href={localeHref("jp")}
+                lang="ja"
+                onClick={() => handleLanguageSwitch("jp")}
+              >
                 日本語
               </Link>
             </DropdownMenuItem>
@@ -89,61 +149,70 @@ export const NavigationClient = ({
         <NavCTAButton locale={locale} />
       </div>
 
-      {/* Mobile menu button */}
       <div className="md:hidden">
         <Button
           variant="ghost"
           size="sm"
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label={copy.toggleMenu}
         >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border z-50">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsMenuOpen(false);
-                  handleScrollToSection(item.href);
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
+        <div className="absolute left-0 right-0 top-16 z-50 border-b border-border bg-background md:hidden">
+          <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+            {navigationItems.map((item) => {
+              const id = item.href.replace(/^#/, "");
+              const isActive = id === activeSection;
 
-            {/* Mobile Language Switcher & Theme */}
-            <div className="pt-4 pb-2 border-t border-border mt-4">
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={navLinkClass(
+                    item.href,
+                    "block rounded-md px-3 py-2 text-base font-medium transition-colors hover:text-foreground",
+                    "text-foreground"
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMenuOpen(false);
+                    handleScrollToSection(item.href);
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+
+            <div className="mt-4 border-t border-border pb-2 pt-4">
               <div className="flex items-center justify-between px-3 py-2">
-                <span className="text-muted-foreground text-sm font-medium">
-                  {locale === "jp" ? "言語" : "Language"}
+                <span className="text-sm font-medium text-muted-foreground">
+                  {copy.language}
                 </span>
                 <div className="flex space-x-2">
                   <Link
-                    href="/en"
+                    href={localeHref("en")}
                     lang="en"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    onClick={() => {
+                      handleLanguageSwitch("en");
+                      setIsMenuOpen(false);
+                    }}
                   >
                     EN
                   </Link>
                   <Link
-                    href="/jp"
+                    href={localeHref("jp")}
                     lang="ja"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    onClick={() => {
+                      handleLanguageSwitch("jp");
+                      setIsMenuOpen(false);
+                    }}
                   >
                     JP
                   </Link>
@@ -151,8 +220,8 @@ export const NavigationClient = ({
               </div>
 
               <div className="flex items-center justify-between px-3 py-2">
-                <span className="text-muted-foreground text-sm font-medium">
-                  Theme
+                <span className="text-sm font-medium text-muted-foreground">
+                  {copy.theme}
                 </span>
                 <ThemeSwitcher />
               </div>

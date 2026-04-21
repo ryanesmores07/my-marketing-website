@@ -21,7 +21,7 @@ export const ServicesCTAButton = ({ locale }: ServicesCTAButtonProps) => {
     <>
       <Button
         size="lg"
-        className="relative px-8 py-4 text-white rounded-full font-semibold text-base overflow-hidden transition-all duration-200 hover:scale-102 hover:shadow-lg"
+        className="relative overflow-hidden rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-200 hover:scale-102 hover:shadow-lg"
         style={{
           background:
             "linear-gradient(90deg, #3b82f6 0%, #06b6d4 50%, #3b82f6 100%)",
@@ -31,14 +31,12 @@ export const ServicesCTAButton = ({ locale }: ServicesCTAButtonProps) => {
         }}
         onClick={handleClick}
       >
-        {/* Simple dark overlay for better text contrast */}
-        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-black/10" />
 
-        {/* Text content with relative positioning */}
         <span className="relative z-10 flex items-center">
           {locale === "jp"
-            ? "今すぐ相談する"
-            : "Tell me more about your project"}
+            ? "プロジェクトについて相談する"
+            : "Tell me about your project"}
           <ArrowRight className="ml-2 h-4 w-4" />
         </span>
       </Button>

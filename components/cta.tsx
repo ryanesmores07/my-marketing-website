@@ -8,142 +8,83 @@ interface CTAProps {
   locale?: "en" | "jp";
 }
 
-const getCurrentMonthYear = (locale: string = "en") => {
-  const months: Record<"en" | "jp", string[]> = {
-    en: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
-    jp: [
-      "1月",
-      "2月",
-      "3月",
-      "4月",
-      "5月",
-      "6月",
-      "7月",
-      "8月",
-      "9月",
-      "10月",
-      "11月",
-      "12月",
-    ],
-  };
-  const now = new Date();
-  const year = now.getFullYear().toString().slice(-2);
-  const isSupportedLocale = (l: string): l is "en" | "jp" =>
-    l === "en" || l === "jp";
-  const monthList = isSupportedLocale(locale) ? months[locale] : months["en"];
-  return { month: monthList[now.getMonth()], year };
-};
-
 const CTA = ({ locale = "en" }: CTAProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { month, year } = getCurrentMonthYear(locale);
+
   const content = {
     en: {
-      subtitle: "(Need an unfair advantage?)",
-      heading: "LET'S MAKE IT HAPPEN",
+      subtitle: "Need help with build, ads, or SEO?",
+      headingLine1: "LET'S TALK",
+      headingLine2: "ABOUT WHAT'S NEXT",
+      body:
+        "Tell me what you are building, improving, or trying to fix. I can help turn it into a clear next step.",
       button: "GET IN TOUCH",
-      working: "Working Globally",
-      available: `Available ${month} '${year}`,
-      inquiries: "FOR FURTHER INQUIRIES",
+      supporting: "Based in Tokyo, supporting ecommerce brands in Japan and abroad.",
+      inquiries: "Direct email",
       email: "mytokyowebdev@ernieryan.dev",
     },
     jp: {
-      subtitle: "（他社にない強みが必要ですか？）",
-      heading: "一緒に実現しましょう",
+      subtitle: "構築・広告・SEOの相談はこちら",
+      headingLine1: "まずは",
+      headingLine2: "ご相談ください",
+      body:
+        "新規制作、改善施策、広告運用の見直しなど、今進めたいことを気軽にご相談ください。",
       button: "お問い合わせ",
-      working: "世界中で対応",
-      available: `${month} '${year} 受付中`,
-      inquiries: "お問い合わせ先",
+      supporting: "東京を拠点に、日本国内・海外向けのECブランドを支援しています。",
+      inquiries: "メールでのご連絡",
       email: "mytokyowebdev@ernieryan.dev",
     },
   };
+
   const t = content[locale] || content.en;
 
   return (
     <section
       id="cta"
-      className="relative min-h-[calc(70vh-100px)] lg:min-h-[calc(100vh-200px)] 2xl:min-h-[60vh] flex flex-col justify-center items-center bg-background text-neutral-200 px-4"
+      className="relative flex min-h-[calc(70vh-100px)] flex-col items-center justify-center overflow-hidden bg-background px-4 pb-12 pt-12 text-neutral-200 md:pb-24 lg:min-h-[calc(100vh-200px)] 2xl:min-h-[60vh]"
     >
-      {/* Subtitle */}
       <span
-        className="mb-2 lg:mb-4 text-lg tracking-widest text-neutral-600 text-center"
+        className="mb-2 text-center text-lg tracking-widest text-neutral-600 lg:mb-4"
         aria-label={t.subtitle}
       >
         {t.subtitle}
       </span>
-      {/* Main Heading */}
-      <h2 className="text-6xl md:text-8xl lg:text-7xl xl:text-8xl font-bold text-center leading-none mb-6 lg:mb-8 text-foreground">
-        {t.heading.split(" ").map((word, i) => (
-          <React.Fragment key={`word-${i}-${word}`}>
-            {word}
-            {i === 1 ? <br /> : " "}
-          </React.Fragment>
-        ))}
+
+      <h2 className="mb-6 text-center text-6xl font-bold leading-none text-foreground md:text-8xl lg:mb-8 lg:text-7xl xl:text-8xl">
+        <span className="block">{t.headingLine1}</span>
+        <span className="block">{t.headingLine2}</span>
       </h2>
-      {/* CTA Button */}
+
+      <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed text-muted-foreground md:text-lg">
+        {t.body}
+      </p>
+
       <button
         onClick={() => setIsModalOpen(true)}
-        className="mt-2 lg:mt-4 px-14 py-6 rounded-full bg-neutral-800 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600 flex items-center"
+        className="mt-2 flex items-center rounded-full bg-neutral-800 px-14 py-6 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2"
         tabIndex={0}
         aria-label={t.button}
       >
         {t.button}
         <ArrowRight className="ml-2 h-5 w-5" />
       </button>
-      {/* Bottom Left: Working Globally & Available Date */}
-      <div className="absolute left-4 bottom-4 flex flex-col items-start text-xs text-neutral-600">
-        <span className="mb-0.5 flex items-center gap-1">
-          <svg
-            width="16"
-            height="16"
-            fill="none"
-            viewBox="0 0 16 16"
-            className="inline-block mr-1"
+
+      <div className="mt-10 flex w-full flex-col items-center gap-4 text-center text-xs text-neutral-600 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:w-auto md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+        <span className="max-w-xs md:max-w-sm">{t.supporting}</span>
+
+        <div className="md:text-right">
+          <span className="block">{t.inquiries}</span>
+          <a
+            href={`mailto:${t.email}`}
+            className="underline underline-offset-2 transition hover:text-neutral-200"
+            tabIndex={0}
+            aria-label={`Email ${t.email}`}
           >
-            <circle
-              cx="8"
-              cy="8"
-              r="7"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <path d="M8 1v14M1 8h14" stroke="currentColor" strokeWidth="1.2" />
-          </svg>
-          {t.working}
-        </span>
-        <span className="opacity-80">
-          {locale === "jp"
-            ? `${month} '${year} 受付中`
-            : `Available ${month} '${year}`}
-        </span>
-      </div>
-      {/* Bottom Right: Contact Email */}
-      <div className="absolute right-4 bottom-4 text-xs text-neutral-600 text-right">
-        <span className="block">{t.inquiries}</span>
-        <a
-          href={`mailto:${t.email}`}
-          className="underline underline-offset-2 hover:text-neutral-200 transition"
-          tabIndex={0}
-          aria-label={`Email ${t.email}`}
-        >
-          ↳ {t.email}
-        </a>
+            {t.email}
+          </a>
+        </div>
       </div>
 
-      {/* Contact Modal */}
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

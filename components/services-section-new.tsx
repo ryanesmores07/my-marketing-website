@@ -1,11 +1,10 @@
-import { services } from "@/content/services";
-import Image from "next/image";
-import { ServicesCTAButton } from "@/components/services-cta-button";
 import React from "react";
+import Image from "next/image";
+import { services } from "@/content/services";
+import { ServicesCTAButton } from "@/components/services-cta-button";
 
-// ShinyText component for subService titles with light/dark mode support
 const ShinyText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="inline-block text-foreground dark:text-[#b5b5b5a4] shiny-text animate-shine">
+  <span className="inline-block animate-shine text-foreground shiny-text dark:text-[#b5b5b5a4]">
     {children}
   </span>
 );
@@ -15,74 +14,86 @@ interface ServicesSectionProps {
 }
 
 export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
+  const copy = {
+    en: {
+      badge: "Services",
+      title: "How I Help Ecommerce Brands Grow",
+      description:
+        "I combine web development, paid media, and multilingual growth support so you can launch faster, market smarter, and improve with fewer handoffs.",
+      ctaTitle: "Need a stronger store, sharper traffic, or both?",
+      ctaBody:
+        "Whether you are building from scratch, improving conversion paths, or trying to make paid spend work harder, I can help connect strategy, execution, and reporting in one workflow.",
+      ctaImageAlt: "Abstract globe representing connected ecommerce operations",
+    },
+    jp: {
+      badge: "サービス",
+      title: "ECブランドの成長を、構築と集客の両面から支援します",
+      description:
+        "Shopify構築、広告運用、多言語SEOを横断して、立ち上げから改善まで一気通貫で対応します。",
+      ctaTitle: "サイト改善も集客改善も、まとめて進めたい方へ",
+      ctaBody:
+        "新規構築、CV導線の見直し、広告運用の立て直しまで、分断しやすい作業をひとつの流れで支援します。",
+      ctaImageAlt: "連携したEC運用を表現した抽象的なグラフィック",
+    },
+  }[locale];
+
   return (
-    <section id="services" className="pt-20 lg:py-28 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground ring-1 ring-inset ring-border mb-6">
-            <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+    <section id="services" className="bg-background pt-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <div className="mb-6 inline-flex items-center rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground ring-1 ring-inset ring-border">
+            <span className="relative mr-2 flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
             </span>
-            {locale === "jp" ? "サービス" : "Services"}
+            {copy.badge}
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            {locale === "jp" ? "専門サービス" : "How I Can Help You"}
+          <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
+            {copy.title}
           </h2>
 
-          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
-            {locale === "jp"
-              ? "日本と世界を繋ぐクロスボーダーマーケティングプロジェクトの実績をご覧ください。"
-              : "Explore my portfolio of cross-border marketing projects connecting Japan with the global market."}
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-foreground">
+            {copy.description}
           </p>
         </div>
 
-        {/* Services Grid */}
         <div className="space-y-16">
           {services.map((service) => (
             <div
               key={service.id}
-              className="border-b border-border last:border-b-0 pb-16 last:pb-0"
+              className="border-b border-border pb-16 last:border-b-0 last:pb-0"
             >
-              <div className="grid lg:grid-cols-2 gap-12 items-start">
-                {/* Left Side - Service Number & Title */}
+              <div className="grid items-start gap-12 lg:grid-cols-2">
                 <div className="space-y-6">
                   <div className="flex items-start gap-6">
-                    {/* Large Number */}
-                    <div className="text-6xl lg:text-8xl font-black text-muted-foreground/20 leading-none">
+                    <div className="text-6xl font-black leading-none text-muted-foreground/20 lg:text-8xl">
                       ({service.number})
                     </div>
 
-                    {/* Service Title */}
                     <div className="flex-1 pt-2">
-                      <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                      <h3 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">
                         {service.title[locale]}
                       </h3>
 
-                      {/* Description */}
-                      <p className="text-muted-foreground leading-relaxed text-lg">
+                      <p className="text-lg leading-relaxed text-muted-foreground">
                         {service.description[locale]}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Right Side - Sub Services */}
                 <div className="space-y-4">
                   {service.subServices.map((subService) => (
                     <div
                       key={`${service.id}-${subService.number}`}
-                      className="group flex items-center gap-4 p-4 rounded-lg border border-border transition-all duration-300"
+                      className="group grid min-h-[72px] grid-cols-[2.25rem_1fr] items-center gap-4 rounded-lg border border-border p-4 transition-all duration-300"
                     >
-                      {/* Sub Service Number */}
-                      <div className="flex-shrink-0 w-8 h-8 bg-muted text-muted-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-sm font-bold text-muted-foreground">
                         {subService.number}
                       </div>
 
-                      {/* Sub Service Title with darker text in light mode */}
-                      <h4 className="text-lg font-semibold">
+                      <h4 className="text-lg font-semibold leading-snug">
                         <ShinyText>{subService.title[locale]}</ShinyText>
                       </h4>
                     </div>
@@ -93,118 +104,104 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="relative lg:pt-32 pt-10 pb-20 overflow-hidden">
-          {/* Primary background with strong fade */}
+        <div className="relative overflow-hidden pb-20 pt-10 lg:pt-32">
           <div
             className="absolute inset-0"
             style={{
               background: `
-                linear-gradient(135deg, 
-                  transparent 0%, 
-                  transparent 15%, 
-                  rgba(0, 0, 0, 0.3) 30%, 
-                  rgba(0, 0, 0, 0.8) 60%, 
+                linear-gradient(135deg,
+                  transparent 0%,
+                  transparent 15%,
+                  rgba(0, 0, 0, 0.3) 30%,
+                  rgba(0, 0, 0, 0.8) 60%,
                   rgba(0, 0, 0, 0.95) 100%
                 ),
-                linear-gradient(45deg, 
-                  hsl(var(--background)) 0%, 
-                  transparent 25%, 
-                  transparent 75%, 
+                linear-gradient(45deg,
+                  hsl(var(--background)) 0%,
+                  transparent 25%,
+                  transparent 75%,
                   hsl(var(--background)) 100%
                 )
               `,
             }}
-          ></div>
+          />
 
-          {/* Top edge fade */}
           <div
-            className="absolute top-0 left-0 right-0 h-32"
+            className="absolute left-0 right-0 top-0 h-32"
             style={{
-              background: `linear-gradient(to bottom, 
-                hsl(var(--background)) 0%, 
-                hsl(var(--background) / 0.8) 20%, 
+              background: `linear-gradient(to bottom,
+                hsl(var(--background)) 0%,
+                hsl(var(--background) / 0.8) 20%,
                 transparent 100%
               )`,
             }}
-          ></div>
+          />
 
-          {/* Side edge fades */}
           <div
             className="absolute inset-y-0 left-0 w-32"
             style={{
-              background: `linear-gradient(to right, 
-                hsl(var(--background)) 0%, 
-                hsl(var(--background) / 0.6) 40%, 
+              background: `linear-gradient(to right,
+                hsl(var(--background)) 0%,
+                hsl(var(--background) / 0.6) 40%,
                 transparent 100%
               )`,
             }}
-          ></div>
+          />
           <div
             className="absolute inset-y-0 right-0 w-32"
             style={{
-              background: `linear-gradient(to left, 
-                hsl(var(--background)) 0%, 
-                hsl(var(--background) / 0.6) 40%, 
+              background: `linear-gradient(to left,
+                hsl(var(--background)) 0%,
+                hsl(var(--background) / 0.6) 40%,
                 transparent 100%
               )`,
             }}
-          ></div>
+          />
 
-          {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-3">
             <div
               className="absolute inset-0"
               style={{
                 backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
-              `,
+                  linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
+                `,
                 backgroundSize: "60px 60px",
               }}
-            ></div>
+            />
           </div>
 
-          <div className="relative flex items-center justify-between max-w-6xl mx-auto min-h-[400px] px-4">
-            {/* Left side - Text content */}
-            <div className="flex-1 space-y-8 max-w-2xl">
-              <h3 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                {locale === "jp"
-                  ? "お悩みやご相談、いつでもお気軽に！"
-                  : "Got a project in mind or just a few questions?"}
+          <div className="relative mx-auto flex min-h-[400px] max-w-6xl items-center justify-between px-4">
+            <div className="max-w-2xl flex-1 space-y-8">
+              <h3 className="text-4xl font-bold leading-tight text-foreground lg:text-5xl">
+                {copy.ctaTitle}
               </h3>
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-                {locale === "jp"
-                  ? "24時間いつでも対応可能。返信も迅速です。サイトの立ち上げ、スケールアップ、日本市場へのローカライズなど、あなたの課題をぜひお聞かせください。一緒に最適な解決策を考えましょう。"
-                  : "I'm available 24/7 and always quick to reply. Whether you need help launching, scaling, or localizing your website, I'd love to hear what challenges you're facing—and how I can help."}
+              <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+                {copy.ctaBody}
               </p>
 
               <ServicesCTAButton locale={locale} />
             </div>
 
-            {/* Right side - Futuristic globe image */}
-            <div className="flex-shrink-0 ml-12 relative hidden lg:block">
-              <div className="w-96 h-96 relative flex items-center justify-center">
-                {/* Glow effect behind the globe */}
-                <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
-                <div className="absolute inset-0 bg-blue-400/5 rounded-full blur-2xl animate-pulse"></div>
+            <div className="relative ml-12 hidden shrink-0 lg:block">
+              <div className="relative flex h-96 w-96 items-center justify-center">
+                <div className="absolute inset-0 animate-pulse rounded-full bg-blue-500/10 blur-xl" />
+                <div className="absolute inset-0 animate-pulse rounded-full bg-blue-400/5 blur-2xl" />
 
-                {/* Globe image */}
                 <Image
                   src="/images/cta-section-image.png"
-                  alt="Global connectivity and digital transformation"
+                  alt={copy.ctaImageAlt}
                   width={320}
                   height={320}
-                  className="w-80 h-80 object-contain relative z-10 drop-shadow-2xl"
+                  className="relative z-10 h-80 w-80 object-contain drop-shadow-2xl"
                   priority
                 />
 
-                {/* Floating particles around the globe */}
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-60"></div>
-                <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse opacity-80"></div>
-                <div className="absolute top-1/2 left-1/6 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping opacity-40"></div>
-                <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-blue-400 rounded-full animate-pulse opacity-60"></div>
+                <div className="absolute left-1/4 top-1/4 h-2 w-2 animate-ping rounded-full bg-blue-400 opacity-60" />
+                <div className="absolute right-1/4 top-3/4 h-1 w-1 animate-pulse rounded-full bg-blue-300 opacity-80" />
+                <div className="absolute left-1/6 top-1/2 h-1.5 w-1.5 animate-ping rounded-full bg-blue-500 opacity-40" />
+                <div className="absolute bottom-1/4 right-1/3 h-1 w-1 animate-pulse rounded-full bg-blue-400 opacity-60" />
               </div>
             </div>
           </div>

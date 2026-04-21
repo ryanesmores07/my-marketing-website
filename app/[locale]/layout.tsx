@@ -1,11 +1,44 @@
-import { i18n, type Locale } from "@/i18n-config";
+import type { Metadata } from "next";
+import Script from "next/script";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { LocaleProvider } from "@/components/locale-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ErrorBoundary } from "@/components/error-boundary";
-import type { Metadata } from "next";
-import Script from "next/script";
+import { i18n, type Locale } from "@/i18n-config";
+
+const baseUrl = "https://ernieryan.dev";
+
+const localizedMetadata = {
+  en: {
+    title:
+      "Ernie Ryan | Shopify Development, Paid Ads & SEO for Ecommerce Brands",
+    description:
+      "Bilingual freelance partner in Tokyo helping ecommerce brands improve Shopify storefronts, paid ads performance, and multilingual SEO across Japan and international markets.",
+    keywords: [
+      "Shopify developer Japan",
+      "paid ads freelancer Tokyo",
+      "Google Ads ecommerce",
+      "Meta Ads ecommerce",
+      "multilingual SEO",
+      "cross-border ecommerce",
+    ],
+  },
+  jp: {
+    title: "Ernie Ryan | Shopify構築・広告運用・SEO支援",
+    description:
+      "東京を拠点に、Shopify構築、広告運用、日英対応SEOを通じて、日本市場と海外市場の両方でECブランドの成長を支援するバイリンガルのフリーランスパートナーです。",
+    keywords: [
+      "Shopify構築",
+      "EC広告運用",
+      "Google広告運用",
+      "Meta広告運用",
+      "多言語SEO",
+      "越境EC支援",
+      "東京 フリーランス マーケティング",
+    ],
+  },
+} as const;
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ locale }));
@@ -17,10 +50,12 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-
-  const baseUrl = "https://ernieryan.dev";
+  const meta = localizedMetadata[locale];
 
   return {
+    title: meta.title,
+    description: meta.description,
+    keywords: [...meta.keywords],
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {
@@ -28,15 +63,31 @@ export async function generateMetadata({
         ja: `${baseUrl}/jp`,
       },
     },
-    // Add hreflang tags for better multilingual SEO
-    other: {
-      "hreflang-en": `${baseUrl}/en`,
-      "hreflang-ja": `${baseUrl}/jp`,
-      "hreflang-x-default": `${baseUrl}/en`,
-    },
     openGraph: {
+      type: "website",
       locale: locale === "jp" ? "ja_JP" : "en_US",
       alternateLocale: locale === "jp" ? "en_US" : "ja_JP",
+      url: `${baseUrl}/${locale}`,
+      siteName: "Ernie Ryan",
+      title: meta.title,
+      description: meta.description,
+      images: [
+        {
+          url: "/images/ernieryan-main-photo.png",
+          width: 1200,
+          height: 1200,
+          alt:
+            locale === "jp"
+              ? "Ernie Ryan - Shopify構築・広告運用・SEO支援"
+              : "Ernie Ryan - Shopify development, paid ads, and SEO support",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/images/ernieryan-main-photo.png"],
     },
   };
 }
@@ -49,93 +100,97 @@ export default async function RootLayout({
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
+  const description = localizedMetadata[locale].description;
 
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Ernie Ryan",
-    jobTitle: "Bilingual Web Developer & SEO Expert",
-    url: "https://ernieryan.dev",
-    sameAs: [
-      "https://www.linkedin.com/in/ryanesmores/",
-      "https://github.com/ryanesmores07",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${baseUrl}/#website`,
+        url: baseUrl,
+        name: "Ernie Ryan",
+        description,
+        inLanguage: locale === "jp" ? "ja-JP" : "en-US",
+      },
+      {
+        "@type": "Person",
+        "@id": `${baseUrl}/#person`,
+        name: "Ernie Ryan",
+        url: baseUrl,
+        image: `${baseUrl}/images/ernieryan-main-photo.png`,
+        sameAs: [
+          "https://www.linkedin.com/in/ryanesmores/",
+          "https://github.com/ryanesmores07",
+        ],
+        jobTitle:
+          locale === "jp"
+            ? "Shopify構築と広告運用を支援するバイリンガルパートナー"
+            : "Bilingual Shopify Development and Performance Marketing Partner",
+        description,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Tokyo",
+          addressCountry: "JP",
+        },
+        knowsLanguage: ["English", "Japanese"],
+        knowsAbout: [
+          "Shopify Development",
+          "Paid Ads Management",
+          "Google Ads",
+          "Meta Ads",
+          "Multilingual SEO",
+          "Cross-border Ecommerce",
+        ],
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${baseUrl}/#service`,
+        name: "Ernie Ryan",
+        url: baseUrl,
+        image: `${baseUrl}/images/ernieryan-main-photo.png`,
+        description,
+        founder: {
+          "@id": `${baseUrl}/#person`,
+        },
+        sameAs: [
+          "https://www.linkedin.com/in/ryanesmores/",
+          "https://github.com/ryanesmores07",
+        ],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Tokyo",
+          addressCountry: "JP",
+        },
+        serviceType: [
+          "Shopify Development",
+          "Paid Ads Management",
+          "Multilingual SEO",
+          "Bilingual Ecommerce Support",
+        ],
+        availableLanguage: ["English", "Japanese"],
+      },
     ],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Tokyo",
-      addressCountry: "JP",
-    },
-    knowsLanguage: ["en", "ja"],
-    description:
-      locale === "jp"
-        ? "東京を拠点にShopifyと多言語SEOを専門とするバイリンガルのフリーランスWebデベロッパー"
-        : "Bilingual web developer based in Tokyo specializing in Shopify and multilingual SEO strategies",
-    image: "https://ernieryan.dev/images/ernieryan-main-photo.jpg",
-    worksFor: {
-      "@type": "Organization",
-      name: "Ernie Ryan Web Development",
-    },
-    knowsAbout: [
-      "Shopify Development",
-      "Multilingual SEO",
-      "E-commerce Strategy",
-      "Cross-border Commerce",
-      "Web Design",
-      "User Experience",
-    ],
-    availableLanguage: ["English", "Japanese"],
-  };
-
-  const organizationJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Ernie Ryan Web Development",
-    url: "https://ernieryan.dev",
-    logo: "https://ernieryan.dev/images/ernieryan-main-photo.jpg",
-    sameAs: [
-      "https://www.linkedin.com/in/ryanesmores/",
-      "https://github.com/ryanesmores07",
-    ],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Tokyo",
-      addressCountry: "JP",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "customer service",
-      availableLanguage: ["English", "Japanese"],
-    },
-    description:
-      locale === "jp"
-        ? "東京を拠点にShopifyと多言語SEOを専門とするWeb開発サービス"
-        : "Web development services specializing in Shopify and multilingual SEO based in Tokyo",
   };
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale === "jp" ? "ja" : "en"} suppressHydrationWarning>
       <head>
         <Script
           id="structured-data"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Script
-          id="organization-structured-data"
-          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
+            __html: JSON.stringify(structuredData),
           }}
         />
       </head>
       <body>
-        {/* Skip link for accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50"
+          className="sr-only z-50 rounded bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4"
         >
           {locale === "jp"
-            ? "メインコンテンツにスキップ"
+            ? "メインコンテンツへ移動"
             : "Skip to main content"}
         </a>
         <LocaleProvider locale={locale}>

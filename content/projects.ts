@@ -11,6 +11,18 @@ export interface ProjectScreenshot {
   };
 }
 
+export interface ProjectProofStat {
+  value: string;
+  label: {
+    en: string;
+    jp: string;
+  };
+  note: {
+    en: string;
+    jp: string;
+  };
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -33,7 +45,10 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
-  completedAt: string; // ISO date string
+  featuredRank?: number;
+  completedAt: string;
+  primaryMetric?: ProjectProofStat;
+  proofStats?: ProjectProofStat[];
   screenshots: ProjectScreenshot[];
   features: {
     en: string[];
@@ -55,20 +70,173 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "1",
-    client: "episou",
-    slug: "suitcase-shopify-store",
+    id: "episou-paid-ads",
+    client: "Episou",
+    slug: "episou-paid-ads-management",
     title: {
-      en: "Suitcase Shopify Store",
-      jp: "スーツケースのShopifyストア",
+      en: "Episou JP Paid Ads Management",
+      jp: "Episou JP 広告運用",
     },
     shortDescription: {
-      en: "A Shopify ecommerce solution tailored for seamless global sales with multi-language and multi-currency support.",
-      jp: "多言語・多通貨対応のグローバルな販売を可能にしたShopifyオンラインストア。",
+      en: "Paid media support for Episou JP across Meta Ads and Google Ads, focused on conversion efficiency, funnel quality, and mobile-first performance.",
+      jp: "Episou JP向けに、Meta広告とGoogle広告を横断しながら、CV効率、ファネルの質、モバイル前提の改善に取り組んだ広告運用案件です。",
     },
     description: {
-      en: "This client sells premium suitcases primarily in Japan but needed a seamless solution to expand to the US without the complexities and costs of managing two separate Shopify stores. We built a single, powerful Shopify store with geolocation-based subdirectories, allowing customers to be automatically directed to their localized version of the store. Integrated multi-currency checkout (JPY/USD) and robust SEO optimization ensured a strong market presence in both countries.",
-      jp: "クライアントは主に日本市場向けに高級スーツケースを販売していますが、米国市場にも進出したいという要望がありました。2つのShopifyストアを別々に運用するコストや手間を避けるため、1つのShopifyストア内で位置情報に基づいたサブディレクトリを使用することを提案。顧客がアクセスする場所に応じて自動的に日本または米国向けのページにリダイレクトされます。多通貨決済（円/ドル）とSEO対策を徹底し、両国市場で強力なオンラインプレゼンスを確立しました。",
+      en: "Episou needed a paid media setup that could connect creative testing, search intent, weekly reporting, and conversion-focused optimization without wasting budget. I supported the account across Meta Ads and Google Ads, translated performance data into action, and focused spend on the parts of the funnel that were producing the clearest purchase signals. The strongest return came from Meta mid-funnel and bottom-funnel campaigns, while Google Search added efficient, intent-rich traffic that supported demand already building around the brand.",
+      jp: "Episouでは、クリエイティブ検証、検索意図、週次レポート、CV改善を分断せずに回せる広告運用体制が必要でした。Meta広告とGoogle広告の両方を見ながら、数字を次の打ち手に落とし込み、購入につながるシグナルが強いファネルに予算を寄せていきました。成果が特に明確だったのはMetaのMOFとBOFで、Google Searchは意図の強い流入を効率よく補完する役割を果たしました。",
+    },
+    mainImage: "/project-images/episou-paid-ads/hero.svg",
+    category: "paid media",
+    technologies: [
+      "Meta Ads",
+      "Google Ads",
+      "Performance Reporting",
+      "Creative Testing",
+      "GA4",
+    ],
+    featured: true,
+    featuredRank: 1,
+    completedAt: "2026-04-20",
+    proofStats: [
+      {
+        value: "JPY 353,135",
+        label: {
+          en: "combined Meta + Google spend",
+          jp: "Meta + Google 合計広告費",
+        },
+        note: {
+          en: "Month 2, Apr 10-19, 2026",
+          jp: "2026年4月10日〜19日（Month 2）",
+        },
+      },
+      {
+        value: "150",
+        label: {
+          en: "Google Search clicks",
+          jp: "Google Search クリック数",
+        },
+        note: {
+          en: "Average CPC approx. JPY 193",
+          jp: "平均CPC 約193円",
+        },
+      },
+      {
+        value: "76%",
+        label: {
+          en: "mobile traffic share",
+          jp: "モバイル流入比率",
+        },
+        note: {
+          en: "The landing experience needed to stay mobile-first",
+          jp: "遷移先体験はモバイル前提で考える必要がありました",
+        },
+      },
+      {
+        value: "61 / 29",
+        label: {
+          en: "trial add-to-carts / checkouts",
+          jp: "テスト期間のATC / Checkout",
+        },
+        note: {
+          en: "Lower-funnel movement was already visible before Month 2 optimization",
+          jp: "Month 2の最適化前から下層ファネルの動きが見えていました",
+        },
+      },
+    ],
+    screenshots: [
+      {
+        id: "1",
+        image: "/project-images/episou-paid-ads/spend-channel-breakdown-v2.svg",
+        subtitle: {
+          en: "Spend breakdown by channel",
+          jp: "媒体別の広告費配分",
+        },
+        description: {
+          en: "This view shows how budget was distributed across Instagram boosts, Meta sales campaigns, and Google Search during the first 10 days of Month 2.",
+          jp: "Month 2の最初の10日間で、Instagramブースト、Metaのセールスキャンペーン、Google Searchにどう予算を配分していたかを整理した図です。",
+        },
+      },
+      {
+        id: "2",
+        image: "/project-images/episou-paid-ads/funnel-performance.svg",
+        subtitle: {
+          en: "Funnel performance snapshot",
+          jp: "ファネル別の成果整理",
+        },
+        description: {
+          en: "The clearest purchase signals came from mid-funnel and bottom-funnel campaigns, while top-funnel activity kept supporting future demand.",
+          jp: "購入シグナルが最も明確だったのはMOFとBOFで、TOFは将来の需要形成を支える役割を担っていました。",
+        },
+      },
+      {
+        id: "3",
+        image: "/project-images/episou-paid-ads/search-device-insights-v2.svg",
+        subtitle: {
+          en: "Search intent and device mix",
+          jp: "検索意図とデバイス比率",
+        },
+        description: {
+          en: "Google Search remained efficient, and device data made it clear that the post-click experience had to stay mobile-first.",
+          jp: "Google Searchは効率を維持しており、デバイス比率からも遷移後の体験をモバイル前提で整える必要があることが分かりました。",
+        },
+      },
+    ],
+    features: {
+      en: [
+        "Meta Ads and Google Ads support under one operating view",
+        "Creative testing tied to actual funnel performance",
+        "Weekly reporting turned into budget and campaign decisions",
+        "Search keyword insights used to strengthen commercial intent",
+        "Mobile-first review based on real traffic behavior",
+        "Evidence-based optimization instead of vanity reporting",
+      ],
+      jp: [
+        "Meta広告とGoogle広告を横断した一体運用",
+        "ファネル実績とつながったクリエイティブ検証",
+        "週次レポートをもとにした予算・配信判断",
+        "検索キーワードから商談意図を補強",
+        "実際の流入データに基づくモバイル前提の改善",
+        "見栄えではなく根拠を重視した最適化",
+      ],
+    },
+    challenges: {
+      en: "The account needed stronger structure so budget could move toward the parts of the funnel actually producing efficient outcomes instead of being spread too broadly across awareness activity.",
+      jp: "認知寄りの配信に広く予算を散らすのではなく、実際に効率よく成果が出ているファネルへ寄せていける運用体制が必要でした。",
+    },
+    solution: {
+      en: "I used weekly reporting, funnel-level interpretation, and channel-by-channel comparisons to identify where the account was efficient, where spend was leaking, and what should be protected or rebalanced next.",
+      jp: "週次レポート、ファネル単位の解釈、媒体別比較を組み合わせて、効率が出ている箇所、無駄が出ている箇所、次に守るべき予算と見直すべき配信を整理しました。",
+    },
+    results: {
+      en: [
+        "6 confirmed purchases during the first 10 days of Month 2",
+        "Meta MOF and BOF returned ROAS 3.42 and 3.80 respectively",
+        "Google Search delivered 150 clicks at an efficient approx. JPY 193 CPC",
+        "Mobile represented 76% of total clicks",
+      ],
+      jp: [
+        "Month 2の最初の10日間で購入6件を確認",
+        "MetaのMOF / BOFでROAS 3.42 / 3.80を記録",
+        "Google Searchで150クリック、平均CPCは約193円",
+        "全クリックの76%がモバイル経由でした",
+      ],
+    },
+  },
+  {
+    id: "episou-shopify-store",
+    client: "Episou",
+    slug: "episou-shopify-store",
+    title: {
+      en: "Episou Shopify Store",
+      jp: "Episou Shopifyストア構築",
+    },
+    shortDescription: {
+      en: "A bilingual, location-aware Shopify storefront built so Episou could serve Japan and overseas customers from one store.",
+      jp: "日本向けと海外向けの両方に対応できるよう、ひとつのShopifyストアで運用できる体制を整えた案件です。",
+    },
+    description: {
+      en: "Episou needed one ecommerce storefront that could support both Japanese and international customers without the operational burden of managing separate stores. I built a Shopify setup with geolocation-aware routing, localized content, and multi-currency support so the brand could present the right buying context while keeping operations simpler behind the scenes.",
+      jp: "Episouでは、日本向けと海外向けでストアを分けずに運用しながら、それぞれに合った購入体験を届ける必要がありました。そこで、位置情報に応じた出し分け、ローカライズされたコンテンツ、多通貨対応を組み合わせ、フロントでは自然に見えつつ、運用側は複雑になりすぎないShopify構成を整えました。",
     },
     mainImage: "/project-images/episou/suitcase-project-hero-image.png",
     category: "ecommerce",
@@ -76,109 +244,311 @@ export const projects: Project[] = [
       "Shopify",
       "Geolocation",
       "Multi-currency",
-      "SEO Optimization",
+      "Localization",
     ],
     liveUrl: "https://www.episou.com/",
     featured: true,
+    featuredRank: 2,
     completedAt: "2025-05-15",
     screenshots: [
       {
         id: "1",
         image: "/project-images/episou/product-detail-page.png",
         subtitle: {
-          en: "Localized Product Page",
-          jp: "ローカライズされた商品ページ",
+          en: "Localized product page",
+          jp: "ローカライズした商品ページ",
         },
         description: {
-          en: "Clean, responsive product pages designed to appeal to both Japanese and American audiences with automatic language and currency adjustment.",
-          jp: "日本とアメリカの両市場に対応するために、言語と通貨が自動調整されるレスポンシブでクリーンな商品ページデザイン。",
+          en: "Product messaging and purchase context were adjusted for local shoppers without splitting the store into separate builds.",
+          jp: "ストアを分けずに、地域ごとの見せ方や購入文脈を商品ページ上で自然に調整しました。",
         },
       },
       {
         id: "2",
         image: "/project-images/episou/brand-page.png",
         subtitle: {
-          en: "Brand Story Page",
+          en: "Brand story page",
           jp: "ブランドストーリーページ",
         },
         description: {
-          en: "Compelling brand narrative page showcasing the artisan heritage and craftsmanship behind Episou suitcases with elegant visual storytelling.",
-          jp: "Episouスーツケースの職人の伝統と技術を美しいビジュアルストーリーテリングで紹介する魅力的なブランドナラティブページ。",
+          en: "The brand page helped explain the product line clearly while supporting trust for first-time visitors.",
+          jp: "初回訪問でもブランド背景が伝わるよう、世界観と情報整理のバランスを意識して設計しました。",
         },
       },
       {
         id: "3",
         image: "/project-images/episou/product-list-page.png",
         subtitle: {
-          en: "Product Listing Page",
+          en: "Product listing page",
           jp: "商品一覧ページ",
         },
         description: {
-          en: "Clean and organized product catalog with filtering options, showcasing the complete range of premium suitcases with intuitive navigation.",
-          jp: "フィルタリング機能付きの整理されたプレミアムスーツケースの商品カタログで、直感的なナビゲーションを提供。",
+          en: "Browsing was designed to stay clear and easy across multiple product types and regions.",
+          jp: "複数の商材や地域にまたがっても、商品を迷わず探せる一覧導線を意識しました。",
         },
       },
     ],
     features: {
       en: [
-        "Multi-language store (Japanese, English)",
-        "Multi-currency checkout (JPY, USD)",
-        "Automatic geolocation detection for seamless user experience",
-        "Shopify App Integration",
-        "Integrated Shopify Payments",
-        "Comprehensive SEO optimization targeting both Japanese and US markets",
+        "Single-store operation for JP and overseas customers",
+        "Localization-aware content structure",
+        "Geolocation-based experience adjustments",
+        "Multi-currency purchase support",
+        "Cleaner brand and product storytelling",
+        "Operationally simpler Shopify setup",
       ],
       jp: [
-        "多言語オンラインストア（日英対応）",
-        "多通貨決済（日本円・米ドル）",
-        "位置情報に基づく自動リダイレクトによるシームレスな体験",
-        "Shopifyアプリ統合",
-        "Shopifyペイメント統合",
-        "日本市場・米国市場向けの徹底したSEO対策",
+        "日本向け・海外向けを一元運用できる設計",
+        "ローカライズしやすいコンテンツ構成",
+        "地域に応じた見せ方の切り替え",
+        "多通貨での購入サポート",
+        "ブランドと商品情報の整理",
+        "運用負荷を抑えたShopify構成",
       ],
     },
     challenges: {
-      en: "The client faced complexity, high costs, and inefficient management by maintaining separate Shopify stores for Japan and the US markets.",
-      jp: "日本市場と米国市場向けに別々のShopifyストアを運用することによる複雑さ、コスト高、管理非効率化が課題でした。",
+      en: "The brand needed to support customers in different markets without taking on the cost and complexity of running multiple Shopify stores.",
+      jp: "複数市場に対応しながら、ストアを複数持つことによる運用負荷やコストは避けたいという前提がありました。",
     },
     solution: {
-      en: "Created a unified Shopify store leveraging geolocation-based subdirectories, multi-currency checkout, and targeted SEO strategies to streamline operations and reduce costs significantly.",
-      jp: "位置情報ベースのサブディレクトリ、多通貨決済、ターゲットに合わせたSEO戦略を活用し、統一されたShopifyストアを構築。運営効率の向上と大幅なコスト削減を実現しました。",
+      en: "I designed a single Shopify architecture that handled localization, region-aware messaging, and purchasing context in one storefront.",
+      jp: "ひとつのShopifyストアの中で、地域別の見せ方、言語、購入文脈を整理できる構成にしました。",
     },
     results: {
       en: [
-        "Dramatic reduction in operational complexity and costs",
-        "Improved customer experience with automatic localization",
-        "Increased visibility and sales growth through targeted SEO",
+        "Reduced operational complexity",
+        "Created a clearer buying experience across regions",
+        "Built a stronger foundation for cross-border ecommerce",
       ],
       jp: [
-        "運営の複雑さとコストを劇的に削減",
-        "自動ローカライゼーションによる顧客体験の向上",
-        "ターゲットを絞ったSEO対策による認知度向上と売上成長",
+        "運用の複雑さを抑えられた",
+        "地域ごとに分かりやすい購入体験を整えられた",
+        "越境ECを進めやすい土台を作れた",
       ],
     },
   },
   {
-    id: "2",
-    slug: "gourmet-wordpress-landing-page",
-    client: "nisabakri",
+    id: "mizu-japan-homeware",
+    client: "Mizu Japan",
+    slug: "japanese-homeware-shopify-store",
     title: {
-      en: "Malaysian Gourmet WordPress Landing Page",
-      jp: "マレーシアのグルメのWordPressランディングページ",
+      en: "Japanese Homeware and Ceramics Shopify Store",
+      jp: "和食器・ホームウェアのShopifyストア",
     },
     shortDescription: {
-      en: "A WordPress landing page designed for gourmet recipes, product showcases, and brand lead generation, redirecting visitors seamlessly to an external Shopify store.",
-      jp: "グルメレシピ、商品紹介、ブランドリード獲得を目的としたWordPressランディングページ。外部Shopifyストアへシームレスに誘導します。",
+      en: "A refined Shopify storefront for handmade ceramics and homeware, designed for clear browsing and a more editorial product presentation.",
+      jp: "手仕事の器やホームウェアを扱うブランド向けに、見やすさと世界観の両立を意識して整えたShopifyストアです。",
     },
     description: {
-      en: "An SEO-friendly WordPress landing page strategically created to showcase gourmet recipes, premium culinary products, and to enhance brand visibility. Acting as a powerful lead-generation tool, the site effectively redirects visitors to an external Shopify store through clearly positioned Call-To-Action buttons. This setup simplifies content management, strengthens the brand’s digital presence, and maximizes visitor conversion.",
-      jp: "グルメレシピ、高級料理商品を紹介し、ブランド認知度を高めるため戦略的に構築されたSEOに強いWordPressのランディングページです。効果的なリード獲得ツールとして機能し、明確に配置されたCTAボタンを通じて訪問者を外部のShopifyストアへ誘導します。この仕組みにより、コンテンツ管理が簡素化され、ブランドのデジタルプレゼンスと訪問者のコンバージョンを最大化しています。",
+      en: "This project focused on translating a handmade product line into a calm, easy-to-browse ecommerce experience. I supported the client from early planning through launch, shaping product presentation, content structure, and user flow so the storefront felt clear, trustworthy, and aligned with the brand.",
+      jp: "この案件では、手仕事の商品ラインを、落ち着いた雰囲気のまま見やすいEC体験に落とし込むことを重視しました。企画段階から公開まで伴走しながら、商品ページ、情報設計、回遊導線を整え、ブランドらしさと使いやすさの両方が伝わるストアに仕上げました。",
+    },
+    mainImage: "/project-images/mizu-japan/japanese-homeware-about-page.png",
+    category: "ecommerce",
+    technologies: ["Shopify", "Online Consultation", "SEO"],
+    liveUrl: "https://mizu-japan.com/",
+    featured: true,
+    featuredRank: 3,
+    completedAt: "2024-02-14",
+    screenshots: [
+      {
+        id: "1",
+        image: "/project-images/mizu-japan/japanese-homeware-product-detail.png",
+        subtitle: {
+          en: "Elegant product detail page",
+          jp: "商品詳細ページ",
+        },
+        description: {
+          en: "The detail template was designed to support both storytelling and purchase clarity.",
+          jp: "商品の背景を伝えつつ、購入判断に必要な情報も見やすく整理した詳細ページです。",
+        },
+      },
+      {
+        id: "2",
+        image: "/project-images/mizu-japan/japanese-homeware-product-page.png",
+        subtitle: {
+          en: "Clean product showcase",
+          jp: "商品訴求ページ",
+        },
+        description: {
+          en: "The visual presentation stays calm while still making products easy to compare and explore.",
+          jp: "落ち着いた見せ方を保ちながら、商品を比較しやすく、見て回りやすい構成にしました。",
+        },
+      },
+      {
+        id: "3",
+        image: "/project-images/mizu-japan/japanese-homeware-product-filter.png",
+        subtitle: {
+          en: "User-friendly filters",
+          jp: "絞り込み導線",
+        },
+        description: {
+          en: "Filtering made it easier to navigate a wider product range without losing the brand feel.",
+          jp: "点数の多い商品群でもブランドの雰囲気を崩さずに探しやすくするため、絞り込み導線を整理しました。",
+        },
+      },
+    ],
+    features: {
+      en: [
+        "Editorial-style product presentation",
+        "Consultative launch support",
+        "Shopify storefront build",
+        "Search-friendly site structure",
+        "Clear product filtering",
+        "Simple browsing flow",
+      ],
+      jp: [
+        "世界観を活かした商品訴求設計",
+        "企画段階からの伴走支援",
+        "Shopifyストア構築",
+        "検索性を意識したサイト構成",
+        "分かりやすい絞り込み導線",
+        "迷いにくい回遊設計",
+      ],
+    },
+    challenges: {
+      en: "The client needed a polished online store but also needed hands-on guidance from concept to launch.",
+      jp: "ストアをきれいに作るだけでなく、企画から公開まで伴走できる相手が必要でした。",
+    },
+    solution: {
+      en: "I combined strategic guidance, product presentation planning, and Shopify execution into one delivery flow.",
+      jp: "方向性の整理、商品の見せ方、Shopifyでの実装までをひとつの流れで進めました。",
+    },
+    results: {
+      en: [
+        "Created a clearer ecommerce presence",
+        "Improved browsing across the catalog",
+        "Gave the brand a stronger launch foundation",
+      ],
+      jp: [
+        "ブランドの見え方がより明確になった",
+        "商品一覧の見やすさが向上した",
+        "公開後の運用を進めやすい土台ができた",
+      ],
+    },
+  },
+  {
+    id: "lush-party-store",
+    client: "Lush Party Studio",
+    slug: "lush-party-shopify-store",
+    title: {
+      en: "Shopify Store for Premium Party Props and Event Goods",
+      jp: "パーティーグッズ向けShopifyストア",
+    },
+    shortDescription: {
+      en: "A conversion-minded Shopify store for party props with clearer product discovery and a smoother buying flow.",
+      jp: "商品を探しやすく、購入まで進みやすい導線を意識して整えた、パーティーグッズ向けShopifyストアです。",
+    },
+    description: {
+      en: "The category was visually busy, so the main goal was to make the shopping experience feel more organized and commercially clear. I simplified the information architecture, product presentation, and collection flow so shoppers could understand the offer faster and move toward purchase with less friction.",
+      jp: "視覚情報が多くなりやすいカテゴリだったため、まずは買い物体験を整理して分かりやすくすることを優先しました。情報設計、商品ページ、コレクション導線を見直し、何を売っているのか、どこから見ればよいのかが伝わりやすい構成にしました。",
+    },
+    mainImage: "/project-images/lush-party/party-props-shopify-home-page.png",
+    category: "ecommerce",
+    technologies: ["Shopify", "SEO", "UX/UI Design"],
+    liveUrl: "https://www.lushpartystudio.com/",
+    featured: true,
+    featuredRank: 4,
+    completedAt: "2023-07-01",
+    screenshots: [
+      {
+        id: "1",
+        image: "/project-images/lush-party/party-props-shopify-product-list-page.png",
+        subtitle: {
+          en: "Organized product listings",
+          jp: "整理された商品一覧",
+        },
+        description: {
+          en: "The listing layout was cleaned up so visitors could compare options faster.",
+          jp: "一覧レイアウトを整理し、複数の商品を見比べやすくしました。",
+        },
+      },
+      {
+        id: "2",
+        image: "/project-images/lush-party/party-props-shopify-product-detail-page.png",
+        subtitle: {
+          en: "Conversion-focused product page",
+          jp: "購入導線を意識した商品ページ",
+        },
+        description: {
+          en: "The product page balances context, visuals, and a clearer path to purchase.",
+          jp: "商品の魅力と必要な情報を両立しながら、購入までの導線を分かりやすく整理しました。",
+        },
+      },
+      {
+        id: "3",
+        image: "/project-images/lush-party/party-props-shopify-collections-page.png",
+        subtitle: {
+          en: "Collection-led browsing",
+          jp: "コレクション中心の回遊",
+        },
+        description: {
+          en: "Collection structure helped simplify discovery across a broad product range.",
+          jp: "幅広い商品群の中でも目的の商品にたどり着きやすいよう、コレクション導線を整理しました。",
+        },
+      },
+    ],
+    features: {
+      en: [
+        "Clearer product discovery",
+        "Conversion-minded UX",
+        "Responsive Shopify experience",
+        "Search-friendly structure",
+        "Better product presentation",
+        "Merchant-friendly backend flow",
+      ],
+      jp: [
+        "商品を探しやすい構成",
+        "CVを意識したUX設計",
+        "レスポンシブなShopify体験",
+        "検索性を意識したサイト構成",
+        "伝わりやすい商品訴求",
+        "運用しやすい管理設計",
+      ],
+    },
+    challenges: {
+      en: "The catalog had to stay flexible while still feeling easy to browse and quicker to shop.",
+      jp: "商品数や見せ方の自由度を保ちながらも、回遊しやすく、買いやすい体験に整える必要がありました。",
+    },
+    solution: {
+      en: "I simplified the information architecture and purchasing flow so the store felt more organized and easier to use.",
+      jp: "情報設計と購入導線を見直し、見た目の楽しさを残しながらも使いやすいストアに整えました。",
+    },
+    results: {
+      en: [
+        "Improved product clarity",
+        "Made the store easier to browse",
+        "Strengthened the path toward purchase",
+      ],
+      jp: [
+        "商品の分かりやすさが向上した",
+        "ストア全体の回遊がしやすくなった",
+        "購入までの流れを整理できた",
+      ],
+    },
+  },
+  {
+    id: "nisa-bakri-wordpress",
+    client: "Nisa Bakri",
+    slug: "gourmet-wordpress-landing-page",
+    title: {
+      en: "Malaysian Gourmet WordPress Landing Page",
+      jp: "マレーシア食品ブランドのWordPress LP",
+    },
+    shortDescription: {
+      en: "An SEO-friendly WordPress landing page built to support brand discovery, content publishing, and traffic handoff into Shopify.",
+      jp: "ブランド認知、コンテンツ発信、Shopifyへの導線設計を目的に作成した、SEOを意識したWordPressランディングページです。",
+    },
+    description: {
+      en: "This project used WordPress as a flexible content layer for recipes, brand storytelling, and product discovery, while Shopify remained the commercial destination. The site was built to attract organic traffic, explain the brand clearly, and move visitors into the ecommerce flow without making content operations too heavy.",
+      jp: "この案件では、レシピ、ブランド紹介、商品理解を支えるコンテンツ基盤としてWordPressを使い、購入先はShopifyへつなぐ構成にしました。検索流入を取り込みつつ、ブランドの説明と商品導線を整理し、運用が重くなりすぎない形で回せるLPに仕上げています。",
     },
     mainImage: "/project-images/nisabakri/gourmet-wordpress-home-page.png",
     category: "landing page",
     technologies: ["WordPress", "Shopify Integration", "SEO"],
     liveUrl: "https://nisabakri.com/",
     featured: true,
+    featuredRank: 5,
     completedAt: "2024-01-01",
     screenshots: [
       {
@@ -186,278 +556,75 @@ export const projects: Project[] = [
         image:
           "/project-images/nisabakri/gourmet-wordpress-product-about-page.png",
         subtitle: {
-          en: "Detailed Product and Brand Story Page",
-          jp: "詳細な商品とブランドストーリーページ",
+          en: "Detailed brand story page",
+          jp: "ブランドストーリーページ",
         },
         description: {
-          en: "An informative page highlighting gourmet product details, ingredients, and the unique story behind the Nisa Bakri brand, optimized for search engines and audience engagement.",
-          jp: "グルメ製品の詳細、原材料、Nisa Bakriブランドの背景にあるユニークなストーリーを紹介するSEO最適化された情報ページです。",
+          en: "Long-form brand and product context helped the site work as both editorial content and a bridge into commerce.",
+          jp: "ブランド背景と商品文脈を丁寧に伝えることで、読み物としても購入導線としても機能するページにしました。",
         },
       },
       {
         id: "2",
         image: "/project-images/nisabakri/gourmet-wordpress-products-page.png",
         subtitle: {
-          en: "Showcase of Gourmet Products",
-          jp: "グルメ商品のショーケース",
+          en: "Product showcase page",
+          jp: "商品紹介ページ",
         },
         description: {
-          en: "A visually rich product showcase designed to attract customers, presenting gourmet selections clearly with easy navigation to the online store.",
-          jp: "顧客の目を引く視覚的に豊かな商品ショーケースで、オンラインストアへのナビゲーションも簡単に行えます。",
+          en: "Products were organized so visitors could understand the offer quickly and move toward Shopify at the right moment.",
+          jp: "何を扱っているブランドなのかがすぐ伝わり、適切なタイミングでShopifyへ移動できるように設計しました。",
         },
       },
       {
         id: "3",
         image: "/project-images/nisabakri/gourmet-wordpress-recipes-page.png",
         subtitle: {
-          en: "Inspirational Recipe Collection",
-          jp: "インスピレーションを与えるレシピコレクション",
+          en: "SEO recipe content page",
+          jp: "SEO向けレシピページ",
         },
         description: {
-          en: "SEO-friendly recipes page offering a diverse collection of gourmet recipes to inspire visitors and encourage repeat visits.",
-          jp: "訪問者にインスピレーションを与え、再訪を促す、多様なグルメレシピを揃えたSEOフレンドリーなページです。",
+          en: "Recipe content created a repeatable organic entry point while reinforcing the brand story.",
+          jp: "レシピ記事を継続的な検索流入の入口として活用しながら、ブランド理解も深められるようにしました。",
         },
       },
     ],
     features: {
       en: [
-        "Strategically placed CTAs redirecting visitors seamlessly to an external Shopify store",
-        "SEO-focused landing pages designed to boost organic traffic",
-        "Responsive, visually appealing design optimized for all devices",
-        "Clear and engaging content structure to enhance user experience",
-        "Streamlined content management for easy updates",
-        "WordPress plugin integration",
+        "SEO-friendly content layer",
+        "Shopify traffic handoff",
+        "Brand storytelling pages",
+        "Recipe-led discovery strategy",
+        "Flexible CMS workflow",
+        "Clear CTA structure",
       ],
       jp: [
-        "外部のShopifyストアへシームレスに誘導する戦略的なCTA配置",
-        "オーガニックトラフィックを促進するSEO中心のランディングページ",
-        "すべてのデバイス向けに最適化されたレスポンシブで魅力的なデザイン",
-        "ユーザー体験を向上させる明確で魅力的なコンテンツ構造",
-        "簡単に更新できる効率化されたコンテンツ管理",
-        "WordPressプラグイン統合",
+        "SEOを意識したコンテンツ基盤",
+        "Shopifyへの自然な導線設計",
+        "ブランド理解を深める紹介ページ",
+        "レシピ起点の流入設計",
+        "更新しやすいCMS運用",
+        "分かりやすいCTA設計",
       ],
     },
     challenges: {
-      en: "The client required a centralized WordPress platform to showcase gourmet recipes, brand storytelling, and products, efficiently redirecting visitors to their external Shopify store.",
-      jp: "クライアントは、グルメレシピ、ブランドストーリー、商品を紹介するWordPressプラットフォームを必要とし、訪問者を効率的に外部Shopifyストアに誘導したいと考えていました。",
+      en: "The client needed a content site that could attract organic traffic while still guiding visitors into ecommerce effectively.",
+      jp: "検索流入を取り込みながら、EC導線にもきちんとつなげられるコンテンツサイトが必要でした。",
     },
     solution: {
-      en: "Created an SEO-friendly WordPress landing page featuring strategically placed CTAs that seamlessly redirect visitors to the external Shopify store, effectively simplifying management and enhancing user experience.",
-      jp: "SEOに強いWordPressランディングページを構築し、訪問者を外部Shopifyストアへシームレスに誘導する戦略的なCTAを配置しました。これにより管理が簡素化され、ユーザー体験も向上しました。",
+      en: "I used WordPress as the content layer, then structured pages and CTAs so visitors could move into Shopify naturally.",
+      jp: "WordPressを情報発信の土台にしつつ、ページ構成とCTA設計によってShopifyへ自然に移動できる流れを作りました。",
     },
     results: {
       en: [
-        "Improved organic search rankings and increased site traffic",
-        "Higher user engagement and successful redirection to Shopify store",
-        "Simplified website and product management processes",
+        "Created an SEO-ready content platform",
+        "Improved clarity around the brand offer",
+        "Built a cleaner bridge into Shopify",
       ],
       jp: [
-        "検索ランキング向上とサイトトラフィックの増加",
-        "ユーザーのエンゲージメント向上とShopifyストアへの効果的な誘導",
-        "ウェブサイトおよび製品管理プロセスの効率化",
-      ],
-    },
-  },
-  {
-    id: "3",
-    slug: "japanese-homeware-shopify-store",
-    client: "Mizu Japan",
-    title: {
-      en: "Japanese Homeware and Ceramics Shopify Store",
-      jp: "洗練された日本のホームウェアと陶器のShopifyストア",
-    },
-    shortDescription: {
-      en: "A Shopify store showcasing handmade Japanese ceramics and homeware with an elegant, easy-to-navigate design.",
-      jp: "手作りの日本製陶器やホームウェアを洗練されたデザインで紹介する、ナビゲーションが容易なShopifyストアです。",
-    },
-    description: {
-      en: "An elegant Shopify-based online store designed to showcase and sell beautiful, handmade Japanese ceramics and homeware. Founded by a Turkish-Japanese couple passionate about artisanal goods, the store combines refined aesthetics with user-friendly navigation, making shopping enjoyable for all visitors. We offered free online consultations to guide these first-time business owners through their web development journey, from initial ideas and inspirations to a fully realized online store.",
-      jp: "美しい手作りの日本製陶器やホームウェアを販売するための洗練されたShopifyオンラインストアです。トルコ人と日本人のご夫婦が情熱を注ぐ職人技の商品を紹介しており、洗練された美学と使いやすいナビゲーションを組み合わせることで、どなたでも快適にお買い物いただけます。初めてオンラインショップを始める方にも、無料オンライン相談でご要望やインスピレーションを丁寧にヒアリングし、それを実現するまで手厚くサポートしました。",
-    },
-    mainImage: "/project-images/mizu-japan/japanese-homeware-about-page.png",
-    category: "ecommerce",
-    technologies: ["Shopify", "Online Consultation", "SEO"],
-    liveUrl: "https://mizu-japan.com/",
-    featured: true,
-    completedAt: "2024-02-14",
-    screenshots: [
-      {
-        id: "1",
-        image:
-          "/project-images/mizu-japan/japanese-homeware-product-detail.png",
-        subtitle: {
-          en: "Elegant Product Detail Page",
-          jp: "洗練された商品詳細ページ",
-        },
-        description: {
-          en: "Clearly displayed product details with beautifully presented images and descriptions, designed for maximum engagement and conversions.",
-          jp: "美しく提示された画像と説明で商品詳細を明確に表示し、最大限のエンゲージメントとコンバージョンを実現します。",
-        },
-      },
-      {
-        id: "2",
-        image: "/project-images/mizu-japan/japanese-homeware-product-page.png",
-        subtitle: {
-          en: "Clean Product Showcase Page",
-          jp: "クリーンな商品一覧ページ",
-        },
-        description: {
-          en: "An organized, visually appealing showcase page allowing visitors to browse handmade Japanese ceramics effortlessly.",
-          jp: "手作りの日本製陶器を手軽に閲覧できる、整理され視覚的に魅力的な商品一覧ページです。",
-        },
-      },
-      {
-        id: "3",
-        image:
-          "/project-images/mizu-japan/japanese-homeware-product-filter.png",
-        subtitle: {
-          en: "User-Friendly Product Filters",
-          jp: "ユーザーフレンドリーな商品フィルター",
-        },
-        description: {
-          en: "Easy-to-use filters help visitors quickly find products according to their preferences, enhancing overall user experience and sales potential.",
-          jp: "使いやすいフィルター機能により、訪問者が希望する商品を素早く見つけられ、ユーザー体験と売上向上に貢献します。",
-        },
-      },
-    ],
-    features: {
-      en: [
-        "Elegant, minimalistic design appealing to visitors and easy to navigate",
-        "Shopify-powered store optimized for seamless transactions",
-        "Free online consultations for startups and non-technical business owners",
-        "Effective product filters enhancing shopping experience",
-        "SEO best practices applied to maximize visibility",
-        "Shopify App Integration",
-      ],
-      jp: [
-        "訪問者を魅了しナビゲーションが容易な、洗練されたミニマリストデザイン",
-        "シームレスな取引が可能なShopifyストア",
-        "スタートアップや技術に詳しくない経営者向けの無料オンライン相談",
-        "快適なショッピング体験を提供する効果的な商品フィルター",
-        "視認性を最大化するためのSEOベストプラクティスの適用",
-        "Shopifyアプリ統合",
-      ],
-    },
-    challenges: {
-      en: "The client, a couple passionate about handmade Japanese ceramics, needed an elegant online store but lacked technical experience. They required guidance from initial concepts to final execution.",
-      jp: "手作りの日本製陶器に情熱を注ぐクライアントは、洗練されたオンラインストアを求めていましたが、技術的経験がありませんでした。そのため、初期コンセプトから最終実行までの丁寧なガイダンスが必要でした。",
-    },
-    solution: {
-      en: "Provided comprehensive support with free online consultations, gathering inspirations, clarifying client needs, and delivering a beautifully designed Shopify store that reflects their brand’s elegance.",
-      jp: "無料オンライン相談で包括的なサポートを提供し、インスピレーション収集、ニーズ明確化を経て、ブランドの洗練されたイメージを反映した美しいShopifyストアを構築しました。",
-    },
-    results: {
-      en: [
-        "A visually attractive, user-friendly e-commerce site encouraging purchases",
-        "Empowered non-technical clients with confidence in their online presence",
-        "Increased online visibility through effective SEO practices",
-      ],
-      jp: [
-        "視覚的に魅力的でユーザーフレンドリーなeコマースサイトが購入を促進",
-        "技術に詳しくないクライアントにもオンラインでの自信を提供",
-        "効果的なSEO施策によりオンラインでの認知度が向上",
-      ],
-    },
-  },
-  {
-    id: "4",
-    slug: "lush-party-shopify-store",
-    client: "Lush Party Studio",
-    title: {
-      en: "Shopify Store for Premium Party Props and Event Goods",
-      jp: "プレミアムパーティープロップス・イベント用品のためのShopifyストア",
-    },
-    shortDescription: {
-      en: "An engaging Shopify store offering custom and ready-made party props designed for easy browsing and seamless purchasing experiences.",
-      jp: "カスタムおよび既製のパーティープロップスを提供する、簡単に閲覧できシームレスな購入体験を可能にしたShopifyストアです。",
-    },
-    description: {
-      en: "We developed a user-friendly Shopify e-commerce platform tailored specifically for a US-based business selling premium party props and event accessories. This store features intuitive navigation, attractive product showcases, and clear pathways to customized props, making shopping effortless. Whether businesses are seeking unique, personalized props or themed sets, our Shopify solution makes it easy to explore options and complete transactions smoothly. Designed to captivate both experienced shoppers and first-time visitors alike, the website emphasizes clarity, user experience, and effective conversions.",
-      jp: "米国を拠点とする企業向けに、高品質のパーティープロップスやイベント用品を販売するユーザーフレンドリーなShopifyストアを構築しました。このストアは直感的なナビゲーション、美しい商品紹介、カスタマイズプロップスへの明確な動線を備え、購入が簡単です。カスタムプロップスやテーマ別のセットを求める企業にとって、選択肢の閲覧と円滑な購入が可能なプラットフォームとなっています。オンラインストアの利用に慣れている方にも初めての訪問者にも魅力的で、わかりやすさ、ユーザー体験、コンバージョンを重視したデザインになっています。",
-    },
-    mainImage: "/project-images/lush-party/party-props-shopify-home-page.png",
-    category: "ecommerce",
-    technologies: ["Shopify", "SEO", "UX/UI Design"],
-    liveUrl: "https://www.lushpartystudio.com/",
-    featured: true,
-    completedAt: "2023-07-01",
-    screenshots: [
-      {
-        id: "1",
-        image:
-          "/project-images/lush-party/party-props-shopify-product-list-page.png",
-        subtitle: {
-          en: "Clear and Organized Product Listings",
-          jp: "見やすく整理された商品一覧ページ",
-        },
-        description: {
-          en: "Products displayed clearly with filtering options, allowing visitors to quickly find and select the ideal party props for any occasion.",
-          jp: "フィルター機能付きで商品を分かりやすく表示し、あらゆるイベントに最適なパーティープロップスを素早く見つけられます。",
-        },
-      },
-      {
-        id: "2",
-        image:
-          "/project-images/lush-party/party-props-shopify-product-detail-page.png",
-        subtitle: {
-          en: "Detailed Product Pages Optimized for Conversion",
-          jp: "コンバージョン最適化された詳細な商品ページ",
-        },
-        description: {
-          en: "Each product page offers detailed descriptions, vibrant images, and straightforward purchasing steps designed to boost conversions.",
-          jp: "各商品ページは、詳細な説明、鮮やかな画像、わかりやすい購入ステップを提供し、コンバージョンを促進します。",
-        },
-      },
-      {
-        id: "3",
-        image:
-          "/project-images/lush-party/party-props-shopify-collections-page.png",
-        subtitle: {
-          en: "Easy Navigation with Organized Collections",
-          jp: "整理されたコレクションによる簡単なナビゲーション",
-        },
-        description: {
-          en: "Product collections are neatly categorized, making it simple for customers to find exactly what they need quickly.",
-          jp: "商品コレクションがきちんと分類されており、お客様が必要な商品を素早く見つけられます。",
-        },
-      },
-    ],
-    features: {
-      en: [
-        "User-friendly Shopify store designed for optimal conversions",
-        "Clear navigation and intuitive product organization",
-        "Customizable prop options tailored to business needs",
-        "SEO-friendly design for increased visibility",
-        "Responsive and mobile-friendly experience",
-        "Shopify App Integration",
-      ],
-      jp: [
-        "コンバージョン最適化されたユーザーフレンドリーなShopifyストア",
-        "明確なナビゲーションと直感的な商品整理",
-        "ビジネスニーズに応じたカスタマイズ可能なプロップス",
-        "視認性を向上させるSEO対応のデザイン",
-        "レスポンシブかつモバイルフレンドリーなユーザー体験",
-        "Shopifyアプリ統合",
-      ],
-    },
-    challenges: {
-      en: "The client needed an e-commerce store capable of clearly presenting diverse party props and customized options, optimized for businesses and event planners seeking quick and easy ordering.",
-      jp: "多様なパーティープロップスやカスタマイズオプションを明確に提示し、企業やイベントプランナーが迅速かつ容易に注文できるeコマースストアを必要としていました。",
-    },
-    solution: {
-      en: "Delivered an engaging Shopify website, strategically designed for effortless browsing and clear communication of both ready-made and custom products, resulting in higher customer satisfaction and increased sales.",
-      jp: "既製品とカスタム製品の両方を簡単に閲覧でき、明確に伝えるよう戦略的にデザインされた魅力的なShopifyウェブサイトを提供し、顧客満足度と売上向上につなげました。",
-    },
-    results: {
-      en: [
-        "Streamlined shopping experience resulting in increased conversions",
-        "Improved visibility and engagement through SEO optimization",
-        "Efficient management and ordering of custom products for businesses",
-      ],
-      jp: [
-        "ショッピング体験の合理化によりコンバージョン率が向上",
-        "SEO最適化により視認性とエンゲージメントが向上",
-        "企業向けのカスタム製品管理・注文プロセスの効率化",
+        "SEOを進めやすいコンテンツ基盤を作れた",
+        "ブランドの訴求が明確になった",
+        "Shopifyへの導線を整理できた",
       ],
     },
   },
@@ -468,7 +635,9 @@ export function getProjectBySlug(slug: string): Project | undefined {
 }
 
 export function getFeaturedProjects(): Project[] {
-  return projects.filter((project) => project.featured);
+  return projects
+    .filter((project) => project.featured)
+    .sort((a, b) => (a.featuredRank ?? 999) - (b.featuredRank ?? 999));
 }
 
 export function getProjectsByCategory(category: string): Project[] {

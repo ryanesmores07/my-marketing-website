@@ -1,0 +1,50 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#08111D"/>
+  <text x="96" y="118" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Search Intent &amp; Device Mix</text>
+  <text x="96" y="164" fill="#94A3B8" font-family="Arial, sans-serif" font-size="26">Google Ads efficiency and mobile-heavy behavior for Episou JP</text>
+
+  <rect x="96" y="212" width="656" height="592" rx="36" fill="#0E1726" stroke="#243041"/>
+  <text x="144" y="286" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Paid search efficiency</text>
+
+  <text x="144" y="390" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="86" font-weight="700">150</text>
+  <text x="144" y="432" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="26">Google Search clicks</text>
+
+  <rect x="144" y="492" width="224" height="132" rx="28" fill="#111B2B" stroke="#243041"/>
+  <text x="176" y="536" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Average CPC</text>
+  <text x="176" y="584" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="32" font-weight="700">JPY 193</text>
+  <text x="176" y="610" fill="#94A3B8" font-family="Arial, sans-serif" font-size="16">per click</text>
+
+  <rect x="392" y="492" width="224" height="132" rx="28" fill="#111B2B" stroke="#243041"/>
+  <text x="424" y="536" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Brand CTR</text>
+  <text x="424" y="584" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="32" font-weight="700">33.33%</text>
+  <text x="424" y="610" fill="#94A3B8" font-family="Arial, sans-serif" font-size="16">high-intent search traffic</text>
+
+  <rect x="144" y="662" width="472" height="92" rx="24" fill="#0B1220" stroke="#243041"/>
+  <text x="176" y="700" fill="#38BDF8" font-family="Arial, sans-serif" font-size="22" font-weight="700">Top intent signal</text>
+  <text x="176" y="732" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="22">Branded search captured demand efficiently.</text>
+
+  <rect x="848" y="212" width="656" height="592" rx="36" fill="#0E1726" stroke="#243041"/>
+  <text x="896" y="286" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Device mix</text>
+
+  <rect x="896" y="360" width="520" height="64" rx="32" fill="#111827"/>
+  <rect x="896" y="360" width="395" height="64" rx="32" fill="#38BDF8"/>
+  <rect x="1291" y="360" width="114" height="64" rx="32" fill="#64748B"/>
+  <rect x="1405" y="360" width="11" height="64" rx="6" fill="#F59E0B"/>
+
+  <rect x="896" y="474" width="170" height="102" rx="24" fill="#111B2B" stroke="#243041"/>
+  <rect x="1092" y="474" width="170" height="102" rx="24" fill="#111B2B" stroke="#243041"/>
+  <rect x="1288" y="474" width="170" height="102" rx="24" fill="#111B2B" stroke="#243041"/>
+
+  <text x="928" y="516" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Mobile</text>
+  <text x="928" y="556" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="34" font-weight="700">76%</text>
+
+  <text x="1124" y="516" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Desktop</text>
+  <text x="1124" y="556" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="34" font-weight="700">22%</text>
+
+  <text x="1320" y="516" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Tablet</text>
+  <text x="1320" y="556" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="34" font-weight="700">2%</text>
+
+  <rect x="896" y="662" width="520" height="92" rx="24" fill="#0B1220" stroke="#243041"/>
+  <text x="928" y="706" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="22">Landing pages and ad copy had to stay</text>
+  <text x="928" y="736" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="22">mobile-first to match real buyer behavior.</text>
+</svg>

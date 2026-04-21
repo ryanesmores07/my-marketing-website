@@ -1,0 +1,32 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#08111D"/>
+  <text x="96" y="118" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Funnel Performance Snapshot</text>
+  <text x="96" y="164" fill="#94A3B8" font-family="Arial, sans-serif" font-size="26">From trial learning into Month 2 purchase efficiency</text>
+
+  <polygon points="250,250 1350,250 1146,420 454,420" fill="#1D4ED8" fill-opacity="0.9"/>
+  <polygon points="430,444 1170,444 1034,590 566,590" fill="#7C3AED" fill-opacity="0.92"/>
+  <polygon points="566,614 1034,614 918,734 682,734" fill="#16A34A" fill-opacity="0.92"/>
+
+  <text x="800" y="340" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="46" font-weight="700" text-anchor="middle">TOF</text>
+  <text x="800" y="390" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">42 add to carts</text>
+  <text x="800" y="424" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">Month 2 optimization window</text>
+
+  <text x="800" y="530" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="46" font-weight="700" text-anchor="middle">MOF</text>
+  <text x="800" y="578" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">3 purchases at ROAS 3.42</text>
+
+  <text x="800" y="682" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="46" font-weight="700" text-anchor="middle">BOF</text>
+  <text x="800" y="728" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">2 purchases at ROAS 3.80</text>
+
+  <rect x="120" y="764" width="420" height="92" rx="24" fill="#0F172A" stroke="#243041"/>
+  <rect x="590" y="764" width="420" height="92" rx="24" fill="#0F172A" stroke="#243041"/>
+  <rect x="1060" y="764" width="420" height="92" rx="24" fill="#0F172A" stroke="#243041"/>
+
+  <text x="156" y="804" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Trial signal</text>
+  <text x="156" y="838" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">61 add to carts</text>
+
+  <text x="626" y="804" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Checkout intent</text>
+  <text x="626" y="838" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">29 checkout starts</text>
+
+  <text x="1096" y="804" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Interpretation</text>
+  <text x="1096" y="838" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="26" font-weight="700">Enough lower-funnel signal</text>
+</svg>

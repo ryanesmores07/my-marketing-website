@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,6 @@ const QRCodeModal = ({
 }: QRCodeModalProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile device
   useEffect(() => {
     const checkMobile = () => {
       const userAgent = navigator.userAgent.toLowerCase();
@@ -37,41 +36,40 @@ const QRCodeModal = ({
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const content = {
     en: {
       line: {
-        title: "Scan LINE QR Code",
+        title: "Scan the LINE QR code",
         description:
-          "Open LINE app and scan this QR code to add me as a friend",
-        fallbackText: "Can't scan? Click here to open LINE",
+          "Open LINE and scan this QR code to add me and start chatting.",
+        fallbackText: "Open LINE",
         fallbackUrl: contactConfig.line.url,
       },
       whatsapp: {
-        title: "Scan WhatsApp QR Code",
-        description: "Open WhatsApp and scan this QR code to start chatting",
-        fallbackText: "Can't scan? Click here to open WhatsApp",
+        title: "Scan the WhatsApp QR code",
+        description:
+          "Open WhatsApp and scan this QR code to start a conversation.",
+        fallbackText: "Open WhatsApp",
         fallbackUrl: contactConfig.whatsapp.url,
       },
       closeButton: "Close",
     },
     jp: {
       line: {
-        title: "LINE QRコードをスキャン",
+        title: "LINEのQRコード",
         description:
-          "LINEアプリを開いて、このQRコードをスキャンして友達追加してください",
-        fallbackText: "スキャンできない場合、こちらをクリックしてLINEを開く",
+          "LINEアプリでこのQRコードを読み取ると、そのまま連絡できます。",
+        fallbackText: "LINEを開く",
         fallbackUrl: contactConfig.line.url,
       },
       whatsapp: {
-        title: "WhatsApp QRコードをスキャン",
+        title: "WhatsAppのQRコード",
         description:
-          "WhatsAppを開いて、このQRコードをスキャンしてチャットを開始",
-        fallbackText:
-          "スキャンできない場合、こちらをクリックしてWhatsAppを開く",
+          "WhatsAppアプリでこのQRコードを読み取ると、そのまま連絡できます。",
+        fallbackText: "WhatsAppを開く",
         fallbackUrl: contactConfig.whatsapp.url,
       },
       closeButton: "閉じる",
@@ -87,60 +85,51 @@ const QRCodeModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white border border-gray-200 shadow-2xl text-gray-900">
+      <DialogContent className="border border-gray-200 bg-white text-gray-900 shadow-2xl sm:max-w-md">
         <DialogTitle className="sr-only">{platformContent.title}</DialogTitle>
 
-        <div className="relative">
-          <div className="text-center space-y-4 pt-8">
-            {/* Platform icon and title */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Image
-                src={`/images/${platform}.png`}
-                alt={platform === "line" ? "LINE" : "WhatsApp"}
-                width={32}
-                height={32}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-              />
-              <h2 className="text-xl font-semibold">{platformContent.title}</h2>
-            </div>
-
-            {/* Description */}
-            <p className="text-sm text-gray-600 mb-6">
-              {platformContent.description}
-            </p>
-
-            {/* QR Code */}
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <Image
-                  src={contactConfig.qrCodes[platform]}
-                  alt={`${platform === "line" ? "LINE" : "WhatsApp"} QR Code`}
-                  width={200}
-                  height={200}
-                  className="border-2 border-gray-200 rounded-lg"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                />
-              </div>
-            </div>
-
-            {/* Fallback link - Only show for LINE or WhatsApp on mobile */}
-            {(platform === "line" || (platform === "whatsapp" && isMobile)) && (
-              <div className="pt-4 border-t">
-                <Button
-                  variant="outline"
-                  onClick={handleFallbackClick}
-                  className="w-full"
-                >
-                  {platformContent.fallbackText}
-                </Button>
-              </div>
-            )}
-
-            {/* Close button */}
-            <Button variant="ghost" onClick={onClose} className="w-full">
-              {t.closeButton}
-            </Button>
+        <div className="space-y-4 pt-8 text-center">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <Image
+              src={`/images/${platform}.png`}
+              alt={platform === "line" ? "LINE" : "WhatsApp"}
+              width={32}
+              height={32}
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
+            <h2 className="text-xl font-semibold">{platformContent.title}</h2>
           </div>
+
+          <p className="mb-6 text-sm text-gray-600">
+            {platformContent.description}
+          </p>
+
+          <div className="mb-6 flex justify-center">
+            <Image
+              src={contactConfig.qrCodes[platform]}
+              alt={`${platform === "line" ? "LINE" : "WhatsApp"} QR code`}
+              width={200}
+              height={200}
+              className="rounded-lg border-2 border-gray-200"
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
+          </div>
+
+          {(platform === "line" || (platform === "whatsapp" && isMobile)) && (
+            <div className="border-t pt-4">
+              <Button
+                variant="outline"
+                onClick={handleFallbackClick}
+                className="w-full"
+              >
+                {platformContent.fallbackText}
+              </Button>
+            </div>
+          )}
+
+          <Button variant="ghost" onClick={onClose} className="w-full">
+            {t.closeButton}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

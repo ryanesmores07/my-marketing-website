@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import { LanguageGate } from "@/components/language-gate";
+
+const siteUrl = "https://ernieryan.dev";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Ernie Ryan - Bilingual Web Developer & SEO Expert",
+    default:
+      "Ernie Ryan | Shopify Development & Performance Marketing for Ecommerce",
     template: "%s | Ernie Ryan",
   },
   description:
-    "Bilingual web developer based in Tokyo specializing in Shopify development and multilingual SEO strategies. 7+ years experience in cross-border e-commerce.",
+    "Bilingual freelance partner in Tokyo helping ecommerce brands improve Shopify storefronts, paid ads performance, and multilingual SEO across Japan and international markets.",
+  applicationName: "Ernie Ryan",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
@@ -17,18 +21,20 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   keywords: [
-    "web developer",
-    "Shopify",
-    "SEO",
-    "bilingual",
-    "Tokyo",
-    "e-commerce",
-    "multilingual",
-    "cross-border",
+    "Shopify developer Japan",
+    "Shopify development Tokyo",
+    "paid ads freelancer Japan",
+    "Google Ads ecommerce",
+    "Meta Ads ecommerce",
+    "multilingual SEO",
+    "bilingual ecommerce marketing",
+    "cross-border ecommerce",
+    "Japan ecommerce consultant",
   ],
-  authors: [{ name: "Ernie Ryan" }],
+  authors: [{ name: "Ernie Ryan", url: siteUrl }],
   creator: "Ernie Ryan",
   publisher: "Ernie Ryan",
+  referrer: "origin-when-cross-origin",
   robots: {
     index: true,
     follow: true,
@@ -40,38 +46,38 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ernieryan.dev",
-    title: "Ernie Ryan - Bilingual Web Developer & SEO Expert",
-    description:
-      "Bilingual web developer based in Tokyo specializing in Shopify development and multilingual SEO strategies. 7+ years experience in cross-border e-commerce.",
+    url: siteUrl,
     siteName: "Ernie Ryan",
+    title:
+      "Ernie Ryan | Shopify Development & Performance Marketing for Ecommerce",
+    description:
+      "Bilingual ecommerce growth support spanning Shopify development, paid ads management, and multilingual SEO for brands selling in Japan and beyond.",
     images: [
       {
-        url: "https://ernieryan.dev/images/ryan-main.jpg",
+        url: "/images/ernieryan-main-photo.png",
         width: 1200,
-        height: 630,
-        alt: "Ernie Ryan - Bilingual Web Developer & SEO Expert",
-        type: "image/jpeg",
+        height: 1200,
+        alt: "Ernie Ryan - Shopify development and performance marketing partner",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ernie Ryan - Bilingual Web Developer & SEO Expert",
+    title:
+      "Ernie Ryan | Shopify Development & Performance Marketing for Ecommerce",
     description:
-      "Bilingual web developer based in Tokyo specializing in Shopify development and multilingual SEO strategies.",
-    images: ["https://ernieryan.dev/images/ryan-main.jpg"],
-    creator: "@ernieryan", // Add your actual Twitter handle
-    site: "@ernieryan", // Add your actual Twitter handle
+      "Bilingual ecommerce growth support across Shopify, paid ads, and multilingual SEO.",
+    images: ["/images/ernieryan-main-photo.png"],
   },
-  verification: {
-    google: "your-google-verification-code", // Add your actual verification code
-  },
-  category: "technology",
-  classification: "Web Development",
+  category: "business",
+  classification: "Ecommerce Web Development and Performance Marketing",
   other: {
     "theme-color": "#ec4899",
     "color-scheme": "light dark",
@@ -89,10 +95,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <LanguageGate />
-      {children}
-    </>
-  );
+  return children;
 }
