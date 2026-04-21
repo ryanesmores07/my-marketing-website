@@ -61,7 +61,7 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
       <div className="absolute inset-0 -z-10 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
 
       <div className="relative mx-auto h-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 flex w-full justify-center lg:mb-20">
+        <div className="mb-8 sm:mb-16 flex w-full justify-center lg:mb-20">
           <h1 className="min-h-[4rem] max-w-full whitespace-nowrap text-center text-[clamp(2rem,14vw,24rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
             ERNIE RYAN
           </h1>
