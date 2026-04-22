@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbopack",
+    "dev": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev",
+    "dev:turbo": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

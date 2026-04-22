@@ -13,13 +13,6 @@ export const metadata: Metadata = {
   description:
     "Bilingual freelance partner in Tokyo helping ecommerce brands improve Shopify storefronts, paid ads performance, and multilingual SEO across Japan and international markets.",
   applicationName: "Ernie Ryan",
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
-      { url: "/favicon.jpg", sizes: "32x32", type: "image/jpeg" },
-    ],
-    apple: "/apple-touch-icon.png",
-  },
   keywords: [
     "Shopify developer Japan",
     "Shopify development Tokyo",
@@ -58,15 +51,6 @@ export const metadata: Metadata = {
       "Ernie Ryan | Shopify Development & Performance Marketing for Ecommerce",
     description:
       "Bilingual ecommerce growth support spanning Shopify development, paid ads management, and multilingual SEO for brands selling in Japan and beyond.",
-    images: [
-      {
-        url: "/images/ernieryan-main-photo.png",
-        width: 1200,
-        height: 1200,
-        alt: "Ernie Ryan - Shopify development and performance marketing partner",
-        type: "image/png",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -74,7 +58,16 @@ export const metadata: Metadata = {
       "Ernie Ryan | Shopify Development & Performance Marketing for Ecommerce",
     description:
       "Bilingual ecommerce growth support across Shopify, paid ads, and multilingual SEO.",
-    images: ["/images/ernieryan-main-photo.png"],
+  },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   category: "business",
   classification: "Ecommerce Web Development and Performance Marketing",
@@ -86,7 +79,6 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-title": "Ernie Ryan",
     "application-name": "Ernie Ryan",
     "msapplication-TileColor": "#ec4899",
-    "msapplication-config": "/browserconfig.xml",
   },
 };
 

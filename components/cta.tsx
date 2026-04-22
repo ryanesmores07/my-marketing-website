@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
-import { ContactModal } from "./contact-modal";
+
+const ContactModal = dynamic(
+  () => import("./contact-modal").then((mod) => mod.ContactModal),
+  { ssr: false }
+);
 
 interface CTAProps {
   locale?: "en" | "jp";
@@ -85,11 +90,13 @@ const CTA = ({ locale = "en" }: CTAProps) => {
         </div>
       </div>
 
-      <ContactModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        locale={locale}
-      />
+      {isModalOpen && (
+        <ContactModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          locale={locale}
+        />
+      )}
     </section>
   );
 };

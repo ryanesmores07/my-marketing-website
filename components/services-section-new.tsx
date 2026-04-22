@@ -195,7 +195,8 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
                   width={320}
                   height={320}
                   className="relative z-10 h-80 w-80 object-contain drop-shadow-2xl"
-                  priority
+                  loading="lazy"
+                  sizes="320px"
                 />
 
                 <div className="absolute left-1/4 top-1/4 h-2 w-2 animate-ping rounded-full bg-blue-400 opacity-60" />
