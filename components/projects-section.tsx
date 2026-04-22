@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/content/projects";
-import { ProjectModal } from "@/components/project-modal";
 import { Locale } from "@/i18n-config";
+
+const ProjectModal = dynamic(
+  () => import("@/components/project-modal").then((mod) => mod.ProjectModal),
+  { ssr: false }
+);
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -101,6 +106,8 @@ export const ProjectsSection = ({
                         src={project.mainImage}
                         alt={project.title[locale]}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        loading="lazy"
                         className={`transition-transform duration-500 group-hover:scale-[1.03] ${
                           projectHeroIsGraphic
                             ? "object-contain bg-[#08111d] p-6"
@@ -234,12 +241,14 @@ export const ProjectsSection = ({
         </div>
       </section>
 
-      <ProjectModal
-        project={selectedProject}
-        locale={locale as Locale}
-        isOpen={isModalOpen}
-        onClose={closeProjectModal}
-      />
+      {isModalOpen && selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          locale={locale as Locale}
+          isOpen={isModalOpen}
+          onClose={closeProjectModal}
+        />
+      )}
     </>
   );
 };

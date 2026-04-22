@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import profileImage from "@/public/images/ernieryan-main-photo.png";
 
 export const runtime = "edge";
 
@@ -16,21 +17,21 @@ export default function Icon() {
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           borderRadius: "50%",
           overflow: "hidden",
-          background: "linear-gradient(135deg, #ec4899 0%, #06b6d4 100%)",
+          background: "#0b1020",
         }}
       >
         <img
-          src="https://ernieryan.dev/images/ernieryan-main-photo.jpg"
-          alt="Ernie Ryan"
+          src={profileImage.src}
+          alt="Ernie Ryan profile image favicon"
+          width={size.width}
+          height={size.height}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            borderRadius: "50%",
+            objectPosition: "50% 22%",
           }}
         />
       </div>

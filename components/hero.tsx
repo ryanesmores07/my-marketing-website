@@ -1,21 +1,8 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroCTAButton } from "@/components/hero-cta-button";
-
-const ShinyText: React.FC<{ children: React.ReactNode }> = React.memo(
-  ({ children }) => (
-    <span className="inline-block animate-shine text-foreground shiny-text dark:text-[#b5b5b5a4]">
-      {children}
-    </span>
-  )
-);
-
-ShinyText.displayName = "ShinyText";
 
 interface HeroProps {
   heroData: {
@@ -48,7 +35,7 @@ const statsByLocale = {
   ],
 } as const;
 
-export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
+export function Hero({ heroData, locale = "en" }: HeroProps) {
   const currentContent =
     heroData[locale as keyof typeof heroData] || heroData.en;
   const stats = statsByLocale[locale as "en" | "jp"] || statsByLocale.en;
@@ -60,17 +47,17 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
     >
       <div className="absolute inset-0 -z-10 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
 
-      <div className="relative mx-auto h-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 sm:mb-16 flex w-full justify-center lg:mb-20">
-          <h1 className="min-h-[4rem] max-w-full whitespace-nowrap text-center text-[clamp(2rem,14vw,24rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
-            ERNIE RYAN
-          </h1>
-        </div>
+      <div className="relative mb-8 flex w-full justify-center px-4 sm:mb-16 sm:px-6 lg:mb-20 lg:px-8">
+        <h1 className="min-h-[4rem] min-w-0 max-w-full whitespace-nowrap text-center text-[clamp(2rem,15vw,26rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
+          ERNIE RYAN
+        </h1>
+      </div>
 
+      <div className="relative mx-auto h-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-6xl">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="relative flex items-center justify-center lg:order-2 lg:justify-end">
-              <div className="relative z-10 h-80 w-80 lg:h-96 lg:w-96">
+              <div className="relative z-10 h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96">
                 <div
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary opacity-75 motion-safe:animate-spin will-change-transform"
                   style={{ animationDuration: "8s" }}
@@ -147,7 +134,9 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
           {stats.map((stat) => (
             <div key={`${stat.value}-${stat.label}`} className="text-center">
               <div className="mb-2 text-3xl font-black text-primary lg:text-4xl">
-                <ShinyText>{stat.value}</ShinyText>
+                <span className="inline-block animate-shine text-foreground shiny-text dark:text-[#b5b5b5a4]">
+                  {stat.value}
+                </span>
               </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </div>
@@ -156,6 +145,4 @@ export const Hero = React.memo(({ heroData, locale = "en" }: HeroProps) => {
       </div>
     </section>
   );
-});
-
-Hero.displayName = "Hero";
+}

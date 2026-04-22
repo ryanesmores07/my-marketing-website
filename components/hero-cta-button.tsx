@@ -2,8 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
-import { ContactModal } from "./contact-modal";
+
+const ContactModal = dynamic(
+  () => import("./contact-modal").then((mod) => mod.ContactModal),
+  { ssr: false }
+);
 
 interface HeroCTAButtonProps {
   ctaText: string;
@@ -44,11 +49,13 @@ export const HeroCTAButton = ({
         <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
 
-      <ContactModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        locale={locale}
-      />
+      {isModalOpen && (
+        <ContactModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          locale={locale}
+        />
+      )}
     </>
   );
 };

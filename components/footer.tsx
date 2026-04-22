@@ -33,13 +33,12 @@ function LocalTime() {
           timeZone: "Asia/Tokyo",
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
         }) + ", JST"
       );
     };
 
     update();
-    const interval = setInterval(update, 1000);
+    const interval = setInterval(update, 30000);
     return () => clearInterval(interval);
   }, []);
 

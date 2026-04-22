@@ -71,23 +71,11 @@ export async function generateMetadata({
       siteName: "Ernie Ryan",
       title: meta.title,
       description: meta.description,
-      images: [
-        {
-          url: "/images/ernieryan-main-photo.png",
-          width: 1200,
-          height: 1200,
-          alt:
-            locale === "jp"
-              ? "Ernie Ryan - Shopify構築・広告運用・SEO支援"
-              : "Ernie Ryan - Shopify development, paid ads, and SEO support",
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
-      images: ["/images/ernieryan-main-photo.png"],
     },
   };
 }

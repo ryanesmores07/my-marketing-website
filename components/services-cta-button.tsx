@@ -1,9 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ContactModal } from "./contact-modal";
+
+const ContactModal = dynamic(
+  () => import("./contact-modal").then((mod) => mod.ContactModal),
+  { ssr: false }
+);
 
 interface ServicesCTAButtonProps {
   locale: "en" | "jp";
@@ -41,11 +46,13 @@ export const ServicesCTAButton = ({ locale }: ServicesCTAButtonProps) => {
         </span>
       </Button>
 
-      <ContactModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        locale={locale}
-      />
+      {isModalOpen && (
+        <ContactModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          locale={locale}
+        />
+      )}
     </>
   );
 };
