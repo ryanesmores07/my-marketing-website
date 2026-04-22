@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import profileImage from "@/public/images/ernieryan-main-photo.png";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const size = {
   width: 32,
@@ -24,7 +24,7 @@ export default function Icon() {
       >
         <img
           src={profileImage.src}
-          alt="Ernie Ryan profile image favicon"
+          alt="Ernie Ryan favicon portrait"
           width={size.width}
           height={size.height}
           style={{
