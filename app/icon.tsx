@@ -1,5 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import profileImage from "@/public/images/ernieryan-main-photo.png";
 
 export const runtime = "nodejs";
 
@@ -9,7 +10,16 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default async function Icon() {
+  const imagePath = join(
+    process.cwd(),
+    "public",
+    "images",
+    "ernieryan-main-photo.png",
+  );
+  const imageBuffer = await readFile(imagePath);
+  const imageDataUrl = `data:image/png;base64,${imageBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -23,7 +33,7 @@ export default function Icon() {
         }}
       >
         <img
-          src={profileImage.src}
+          src={imageDataUrl}
           alt="Ernie Ryan favicon portrait"
           width={size.width}
           height={size.height}
