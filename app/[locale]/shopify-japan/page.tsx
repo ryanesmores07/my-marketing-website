@@ -110,6 +110,8 @@ const copy = {
       secondaryCta: "See work examples",
       proofPills: ["Tokyo-based", "EN / JP bilingual", "Shopify build + growth"],
       proofPanel: {
+        name: "Ernie Ryan",
+        role: "Tokyo-based bilingual partner",
         title: "Tokyo-based bilingual partner",
         body: "Shopify setup, localization, ads, tracking, and creative support for Japan-market ecommerce.",
         points: [
@@ -118,6 +120,7 @@ const copy = {
           "Ads, tracking, and creative support",
           "One partner instead of scattered handoffs",
         ],
+        photoAlt: "Ernie Ryan, bilingual Shopify partner based in Tokyo",
       },
     },
     audience: {
@@ -299,6 +302,8 @@ const copy = {
       secondaryCta: "実績を見る",
       proofPills: ["東京拠点", "日英バイリンガル", "Shopify構築＋集客"],
       proofPanel: {
+        name: "Ernie Ryan",
+        role: "東京拠点のバイリンガルパートナー",
         title: "東京拠点のバイリンガルパートナー",
         body: "日本市場向けECのShopify構築、ローカライズ、広告、計測、クリエイティブ支援まで対応します。",
         points: [
@@ -307,6 +312,7 @@ const copy = {
           "広告・計測・クリエイティブ支援",
           "複数の外注先に分けずに相談可能",
         ],
+        photoAlt: "東京拠点のバイリンガルShopifyパートナー、Ernie Ryan",
       },
     },
     audience: {
@@ -574,10 +580,32 @@ export default async function ShopifyJapanPage({ params }: PageProps) {
             </div>
 
             <aside aria-label={t.hero.proofPanel.title} className="lg:col-span-5">
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-7">
-                <p className="mb-2 text-lg font-bold text-foreground">
-                  {t.hero.proofPanel.title}
-                </p>
+              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                <div className="mb-6 flex flex-col items-center text-center">
+                  <div className="relative mb-4">
+                    <div
+                      className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-primary/50 via-accent/40 to-primary/50 opacity-70 blur-[3px]"
+                      aria-hidden="true"
+                    />
+                    <div className="relative h-40 w-40 overflow-hidden rounded-full ring-4 ring-background sm:h-48 sm:w-48 lg:h-56 lg:w-56">
+                      <Image
+                        src="/images/ernieryan-main-photo.png"
+                        alt={t.hero.proofPanel.photoAlt}
+                        fill
+                        sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 224px"
+                        className="object-cover object-[50%_22%]"
+                        priority
+                      />
+                    </div>
+                  </div>
+                  <p className="text-lg font-bold text-foreground sm:text-xl">
+                    {t.hero.proofPanel.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t.hero.proofPanel.role}
+                  </p>
+                </div>
+                <div className="mb-5 h-px bg-border" />
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
                   {t.hero.proofPanel.body}
                 </p>
