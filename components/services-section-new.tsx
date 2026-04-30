@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { services } from "@/content/services";
 import { ServicesCTAButton } from "@/components/services-cta-button";
 
@@ -24,6 +26,11 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
       ctaBody:
         "Whether you are building from scratch, improving conversion paths, or trying to make paid spend work harder, I can help connect strategy, execution, and reporting in one workflow.",
       ctaImageAlt: "Abstract globe representing connected ecommerce operations",
+      japanCalloutEyebrow: "Selling in Japan?",
+      japanCalloutTitle: "Bilingual Shopify support for the Japan market",
+      japanCalloutBody:
+        "Setup, localization, ads, and tracking — for brands selling into Japan or going cross-border from Japan.",
+      japanCalloutLink: "See the Shopify Japan page",
     },
     jp: {
       badge: "サービス",
@@ -34,6 +41,11 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
       ctaBody:
         "新規構築、CV導線の見直し、広告運用の立て直しまで、分断しやすい作業をひとつの流れで支援します。",
       ctaImageAlt: "連携したEC運用を表現した抽象的なグラフィック",
+      japanCalloutEyebrow: "日本市場向け",
+      japanCalloutTitle: "日本市場向けShopify支援はこちら",
+      japanCalloutBody:
+        "構築、ローカライズ、広告、計測まで。日本国内向け／日本から海外向けに展開するブランドを支援します。",
+      japanCalloutLink: "Shopify Japanページを見る",
     },
   }[locale];
 
@@ -102,6 +114,31 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 lg:mt-20">
+          <Link
+            href={`/${locale}/shopify-japan`}
+            className="group block rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:p-8"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-2xl">
+                <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+                  {copy.japanCalloutEyebrow}
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-foreground sm:text-2xl">
+                  {copy.japanCalloutTitle}
+                </h3>
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {copy.japanCalloutBody}
+                </p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary group-hover:underline">
+                {copy.japanCalloutLink}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </div>
+          </Link>
         </div>
 
         <div className="relative overflow-hidden pb-20 pt-10 lg:pt-32">

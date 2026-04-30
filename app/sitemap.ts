@@ -5,10 +5,19 @@ const baseUrl = "https://ernieryan.dev";
 const lastModified = new Date("2026-04-20T00:00:00+09:00");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return i18n.locales.map((locale) => ({
+  const home = i18n.locales.map((locale) => ({
     url: `${baseUrl}/${locale}`,
     lastModified,
     changeFrequency: "weekly" as const,
     priority: locale === "en" ? 1 : 0.95,
   }));
+
+  const shopifyJapan = i18n.locales.map((locale) => ({
+    url: `${baseUrl}/${locale}/shopify-japan`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: locale === "en" ? 0.9 : 0.85,
+  }));
+
+  return [...home, ...shopifyJapan];
 }

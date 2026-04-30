@@ -71,11 +71,20 @@ export async function generateMetadata({
       siteName: "Ernie Ryan",
       title: meta.title,
       description: meta.description,
+      images: [
+        {
+          url: `${baseUrl}/images/ernieryan-main-photo.png`,
+          width: 1200,
+          height: 630,
+          alt: "Ernie Ryan — Bilingual Shopify and ecommerce growth partner in Tokyo",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
+      images: [`${baseUrl}/images/ernieryan-main-photo.png`],
     },
   };
 }

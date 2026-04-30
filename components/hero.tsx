@@ -126,6 +126,16 @@ export function Hero({ heroData, locale = "en" }: HeroProps) {
                   </Button>
                 </Link>
               </div>
+
+              <Link
+                href={`/${locale}/shopify-japan`}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+              >
+                {locale === "jp"
+                  ? "日本市場向けShopify支援はこちら"
+                  : "Selling in Japan? See my Shopify Japan service"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
