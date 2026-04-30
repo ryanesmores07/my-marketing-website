@@ -7,7 +7,7 @@ export const staticHeroData = {
     ],
     description:
       "I help ecommerce brands grow across Japan and international markets through bilingual Shopify development, paid ads management, and multilingual SEO.",
-    ctaText: "Start a Project",
+    ctaText: "Discuss Your Japan Shopify Project",
   },
   jp: {
     questions: [
@@ -17,6 +17,6 @@ export const staticHeroData = {
     ],
     description:
       "Shopify構築、広告運用、日英対応SEOを通じて、日本市場と海外市場の両方でECブランドの成長を支援しています。",
-    ctaText: "相談する",
+    ctaText: "日本向けShopify案件を相談する",
   },
 };
