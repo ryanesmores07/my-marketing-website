@@ -328,6 +328,124 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "mitozz-shopify-store",
+    client: "Mitozz Japan",
+    slug: "mitozz-shopify-store",
+    title: {
+      en: "Mitozz Japan Shopify Store",
+      jp: "Mitozz Japan Shopifyストア",
+    },
+    shortDescription: {
+      en: "A Japanese-language Shopify storefront for a premium mitochondrial supplement, designed around brand story, scientific clarity, and subscription conversion.",
+      jp: "ミトコンドリア系プレミアムサプリ向けに、ブランドストーリー、科学的な分かりやすさ、定期購入への導線を意識して構築した日本語Shopifyストアです。",
+    },
+    description: {
+      en: "Mitozz needed a storefront that felt premium, explained the science behind the product without overwhelming first-time visitors, and made the subscription option the natural path to purchase. I built the Shopify store end-to-end, structured the brand story and science education sections, set up the product page with subscribe-and-save, and shaped a content hub to support organic discovery and ongoing customer education.",
+      jp: "Mitozzでは、プレミアム感を保ちながら、科学的な背景を初めて訪れた人にも分かりやすく伝え、定期購入を自然な購入導線として機能させるストアが必要でした。Shopifyストアを一から構築し、ブランドストーリーとサイエンス解説のセクションを設計、商品ページに定期購入オプションを組み込み、SEOと継続的な顧客教育を支えるブログ／コンテンツハブを整えました。",
+    },
+    mainImage: "/project-images/mitozz-shopify-store/brand-story-hero.png",
+    category: "ecommerce",
+    technologies: [
+      "Shopify",
+      "Subscriptions",
+      "Localization",
+      "Content Strategy",
+      "SEO",
+    ],
+    liveUrl: "https://mitozzjp.myshopify.com/",
+    featured: true,
+    featuredRank: 3,
+    completedAt: "2026-03-01",
+    screenshots: [
+      {
+        id: "1",
+        image: "/project-images/mitozz-shopify-store/product-detail.png",
+        subtitle: {
+          en: "Product page with subscribe-and-save",
+          jp: "定期購入オプション付き商品ページ",
+        },
+        description: {
+          en: "The product page was structured around clear pricing, benefit bullets, and a one-time vs. subscribe-and-save choice that nudges toward retention from the first purchase.",
+          jp: "価格、ベネフィット、単品購入と定期購入の選択肢を整理し、初回購入の段階から継続利用につながりやすい商品ページにしました。",
+        },
+      },
+      {
+        id: "2",
+        image: "/project-images/mitozz-shopify-store/brand-story-hero.png",
+        subtitle: {
+          en: "Brand story page",
+          jp: "ブランドストーリーページ",
+        },
+        description: {
+          en: "The About section sets the tone for the brand with editorial photography and a calm, premium layout that supports trust before the science explanation.",
+          jp: "編集的なビジュアルと落ち着いたレイアウトで、サイエンス解説に入る前にブランドへの信頼感を作るAboutセクションです。",
+        },
+      },
+      {
+        id: "3",
+        image: "/project-images/mitozz-shopify-store/science-education.png",
+        subtitle: {
+          en: "Science and how-it-works section",
+          jp: "サイエンス・仕組み解説セクション",
+        },
+        description: {
+          en: "Mitochondrial science was translated into a visual, easy-to-skim explanation so first-time visitors could understand the value proposition without medical jargon.",
+          jp: "ミトコンドリアの科学的背景を、専門用語に頼らずビジュアル中心で読み解けるよう構成し、初回訪問でも価値が伝わる形に整えました。",
+        },
+      },
+      {
+        id: "4",
+        image: "/project-images/mitozz-shopify-store/content-hub.png",
+        subtitle: {
+          en: "Blog and content hub",
+          jp: "ブログ・コンテンツハブ",
+        },
+        description: {
+          en: "A blog section was set up to support SEO, ongoing customer education, and longer-form content that builds category authority over time.",
+          jp: "SEO、継続的な顧客教育、カテゴリ内での権威性を支えるための、ブログ・コンテンツハブを整備しました。",
+        },
+      },
+    ],
+    features: {
+      en: [
+        "End-to-end Shopify storefront build",
+        "Subscribe-and-save product page setup",
+        "Brand story and science education sections",
+        "Editorial-style premium presentation",
+        "Blog / content hub for SEO and education",
+        "Japanese-first storefront experience",
+      ],
+      jp: [
+        "Shopifyストアの一気通貫構築",
+        "定期購入導線を組み込んだ商品ページ",
+        "ブランドストーリーとサイエンス解説セクション",
+        "プレミアム感を意識した編集的な見せ方",
+        "SEOと顧客教育を支えるブログ／コンテンツハブ",
+        "日本語前提のストア体験設計",
+      ],
+    },
+    challenges: {
+      en: "The brand needed to communicate a science-backed product without overwhelming new visitors, while making subscription the obvious purchase path on a premium-priced item.",
+      jp: "科学的な根拠をしっかり伝えつつも、初訪問のユーザーが情報量で離脱しないようにし、価格帯の高い商品でも定期購入が自然な選択肢として機能する設計が必要でした。",
+    },
+    solution: {
+      en: "I built the Shopify storefront with a clear brand-first hero, a simplified science explanation layer, a subscription-ready product page, and a content hub that supports both SEO and long-term retention.",
+      jp: "ブランド前面のヒーロー、ハードルを下げたサイエンス解説、定期購入を組み込んだ商品ページ、そしてSEOとリテンションの両方を支えるコンテンツハブを軸にShopifyストアを構築しました。",
+    },
+    results: {
+      en: [
+        "Launched a premium Japanese Shopify storefront",
+        "Made subscribe-and-save the default purchase path",
+        "Built a content foundation for SEO and ongoing retention",
+      ],
+      jp: [
+        "プレミアム感のある日本語Shopifyストアを公開",
+        "定期購入を自然な購入導線として確立",
+        "SEOとリテンションを支えるコンテンツ基盤を構築",
+      ],
+    },
+  },
+  {
     id: "mizu-japan-homeware",
     client: "Mizu Japan",
     slug: "japanese-homeware-shopify-store",
@@ -348,7 +466,7 @@ export const projects: Project[] = [
     technologies: ["Shopify", "Online Consultation", "SEO"],
     liveUrl: "https://mizu-japan.com/",
     featured: true,
-    featuredRank: 3,
+    featuredRank: 4,
     completedAt: "2024-02-14",
     screenshots: [
       {
@@ -448,7 +566,7 @@ export const projects: Project[] = [
     technologies: ["Shopify", "SEO", "UX/UI Design"],
     liveUrl: "https://www.lushpartystudio.com/",
     featured: true,
-    featuredRank: 4,
+    featuredRank: 5,
     completedAt: "2023-07-01",
     screenshots: [
       {
@@ -548,7 +666,7 @@ export const projects: Project[] = [
     technologies: ["WordPress", "Shopify Integration", "SEO"],
     liveUrl: "https://nisabakri.com/",
     featured: true,
-    featuredRank: 5,
+    featuredRank: 6,
     completedAt: "2024-01-01",
     screenshots: [
       {

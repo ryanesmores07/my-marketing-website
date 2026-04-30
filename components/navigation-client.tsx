@@ -4,12 +4,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { NavCTAButton } from "@/components/nav-cta-button";
 import { useActiveSection } from "@/lib/use-active-section";
@@ -73,6 +67,17 @@ export const NavigationClient = ({
   const localeHref = (nextLocale: string) =>
     activeSection ? `/${nextLocale}#${activeSection}` : `/${nextLocale}`;
 
+  const handleLocaleChange = (nextLocale: string) => {
+    handleLanguageSwitch(nextLocale);
+    if (nextLocale === locale) return;
+
+    window.location.assign(localeHref(nextLocale));
+  };
+
+  const handleDesktopLanguageToggle = () => {
+    handleLocaleChange(locale === "jp" ? "en" : "jp");
+  };
+
   const navLinkClass = (href: string, base: string, activeColor: string) => {
     const id = href.replace(/^#/, "");
     return `${base} ${
@@ -111,38 +116,24 @@ export const NavigationClient = ({
       </div>
 
       <div className="hidden items-center space-x-3 md:flex">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              aria-label={copy.changeLanguage}
-            >
-              <Globe className="mr-2 h-4 w-4" aria-hidden="true" />
-              {locale.toUpperCase()}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem asChild>
-              <Link
-                href={localeHref("en")}
-                lang="en"
-                onClick={() => handleLanguageSwitch("en")}
-              >
-                English
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                href={localeHref("jp")}
-                lang="ja"
-                onClick={() => handleLanguageSwitch("jp")}
-              >
-                日本語
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label={copy.changeLanguage}
+          onPointerDown={(event) => {
+            event.preventDefault();
+            handleDesktopLanguageToggle();
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              handleDesktopLanguageToggle();
+            }
+          }}
+        >
+          <Globe className="mr-2 h-4 w-4" aria-hidden="true" />
+          {locale.toUpperCase()}
+        </Button>
 
         <ThemeSwitcher />
 
@@ -198,8 +189,9 @@ export const NavigationClient = ({
                     href={localeHref("en")}
                     lang="en"
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    onClick={() => {
-                      handleLanguageSwitch("en");
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleLocaleChange("en");
                       setIsMenuOpen(false);
                     }}
                   >
@@ -209,8 +201,9 @@ export const NavigationClient = ({
                     href={localeHref("jp")}
                     lang="ja"
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    onClick={() => {
-                      handleLanguageSwitch("jp");
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleLocaleChange("jp");
                       setIsMenuOpen(false);
                     }}
                   >
