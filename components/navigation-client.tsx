@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,12 +26,17 @@ export const NavigationClient = ({
   locale,
 }: NavigationClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isOnHome = pathname === `/${locale}` || pathname === `/${locale}/`;
 
   const sectionIds = useMemo(
     () => navigationItems.map((item) => item.href.replace(/^#/, "")),
     [navigationItems]
   );
   const activeSection = useActiveSection(sectionIds);
+
+  const resolveHref = (hash: string) =>
+    isOnHome ? hash : `/${locale}${hash}`;
 
   const copy = {
     language: locale === "jp" ? "言語" : "Language",
@@ -64,8 +70,13 @@ export const NavigationClient = ({
     }
   };
 
-  const localeHref = (nextLocale: string) =>
-    activeSection ? `/${nextLocale}#${activeSection}` : `/${nextLocale}`;
+  const localeHref = (nextLocale: string) => {
+    if (!isOnHome) {
+      const rest = pathname?.replace(/^\/(en|jp)/, "") ?? "";
+      return `/${nextLocale}${rest}`;
+    }
+    return activeSection ? `/${nextLocale}#${activeSection}` : `/${nextLocale}`;
+  };
 
   const handleLocaleChange = (nextLocale: string) => {
     handleLanguageSwitch(nextLocale);
@@ -80,9 +91,8 @@ export const NavigationClient = ({
 
   const navLinkClass = (href: string, base: string, activeColor: string) => {
     const id = href.replace(/^#/, "");
-    return `${base} ${
-      id === activeSection ? activeColor : "text-muted-foreground"
-    }`;
+    const isActive = isOnHome && id === activeSection;
+    return `${base} ${isActive ? activeColor : "text-muted-foreground"}`;
   };
 
   return (
@@ -91,12 +101,13 @@ export const NavigationClient = ({
         <div className="ml-10 flex items-baseline space-x-4">
           {navigationItems.map((item) => {
             const id = item.href.replace(/^#/, "");
-            const isActive = id === activeSection;
+            const isActive = isOnHome && id === activeSection;
+            const href = resolveHref(item.href);
 
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={href}
                 aria-current={isActive ? "page" : undefined}
                 className={navLinkClass(
                   item.href,
@@ -104,6 +115,7 @@ export const NavigationClient = ({
                   "text-foreground"
                 )}
                 onClick={(e) => {
+                  if (!isOnHome) return;
                   e.preventDefault();
                   handleScrollToSection(item.href);
                 }}
@@ -156,12 +168,13 @@ export const NavigationClient = ({
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             {navigationItems.map((item) => {
               const id = item.href.replace(/^#/, "");
-              const isActive = id === activeSection;
+              const isActive = isOnHome && id === activeSection;
+              const href = resolveHref(item.href);
 
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={href}
                   aria-current={isActive ? "page" : undefined}
                   className={navLinkClass(
                     item.href,
@@ -169,6 +182,10 @@ export const NavigationClient = ({
                     "text-foreground"
                   )}
                   onClick={(e) => {
+                    if (!isOnHome) {
+                      setIsMenuOpen(false);
+                      return;
+                    }
                     e.preventDefault();
                     setIsMenuOpen(false);
                     handleScrollToSection(item.href);

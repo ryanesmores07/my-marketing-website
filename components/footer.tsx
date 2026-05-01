@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FooterScrollLinks } from "@/components/footer-scroll-links";
 
 interface FooterProps {
   locale: string;
@@ -14,6 +14,13 @@ const menuLinks = [
   { href: "#about", label: { en: "About", jp: "プロフィール" } },
   { href: "#testimonials", label: { en: "Testimonials", jp: "お客様の声" } },
   { href: "#cta", label: { en: "Contact", jp: "お問い合わせ" } },
+];
+
+const pageLinks = [
+  {
+    href: "/shopify-japan",
+    label: { en: "Shopify Japan", jp: "Shopify Japan" },
+  },
 ];
 
 const socialLinks = [
@@ -70,12 +77,22 @@ export const Footer = ({ locale }: FooterProps) => {
           <ul className="space-y-1">
             {menuLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <FooterScrollLinks
                   href={link.href}
+                  label={link.label[locale as "en" | "jp"] || link.label.en}
+                  locale={locale}
                   className="text-sm text-foreground hover:underline"
-                >
-                  {link.label[locale as "en" | "jp"] || link.label.en}
-                </Link>
+                />
+              </li>
+            ))}
+            {pageLinks.map((link) => (
+              <li key={link.href}>
+                <FooterScrollLinks
+                  href={`/${locale}${link.href}`}
+                  label={link.label[locale as "en" | "jp"] || link.label.en}
+                  locale={locale}
+                  className="text-sm text-foreground hover:underline"
+                />
               </li>
             ))}
           </ul>

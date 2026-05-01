@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { QRCodeModal } from "./qr-code-modal";
 import { contactConfig } from "@/lib/contact-config";
+import { trackEvent } from "@/lib/gtag";
 
 interface SmartContactHandlerProps {
   platform: "line" | "whatsapp";
@@ -38,6 +39,13 @@ const SmartContactHandler = ({
   }, []);
 
   const handleContact = () => {
+    trackEvent("contact_channel_click", {
+      locale,
+      contact_method: platform,
+      device_type: isMobile ? "mobile" : "desktop",
+      page_path: window.location.pathname,
+    });
+
     const encodedMessage = encodeURIComponent(
       contactConfig.messageTemplates[locale]
     );
