@@ -732,7 +732,7 @@ export default async function ShopifyJapanPage({ params }: PageProps) {
           </div>
 
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {t.adhoc.footnote}
             </p>
             <ShopifyJapanCTAButton label={t.adhoc.cta} locale={locale} />

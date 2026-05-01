@@ -4,6 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/gtag";
 
 const ContactModal = dynamic(
   () => import("./contact-modal").then((mod) => mod.ContactModal),
@@ -23,11 +24,20 @@ export const ShopifyJapanCTAButton = ({
 }: ShopifyJapanCTAButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleClick = () => {
+    trackEvent("shopify_japan_cta_click", {
+      locale,
+      cta_label: label,
+      page_path: window.location.pathname,
+    });
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <Button
         size="lg"
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleClick}
         className={`relative w-full overflow-hidden rounded-lg px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 sm:w-auto animate-shiny-gradient ${className}`}
         style={{
           background:

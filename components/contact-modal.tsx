@@ -13,6 +13,7 @@ import {
   serviceTypes,
   targetMarketOptions,
 } from "@/lib/contact-config";
+import { trackEvent } from "@/lib/gtag";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -209,10 +210,15 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
   useEffect(() => {
     if (formspreeState.succeeded) {
+      trackEvent("generate_lead", {
+        locale,
+        form_name: "contact_modal",
+        page_path: window.location.pathname,
+      });
       setIsSuccess(true);
       form.reset();
     }
-  }, [formspreeState.succeeded, form]);
+  }, [formspreeState.succeeded, form, locale]);
 
   const handleClose = () => {
     if (isSuccess) {
