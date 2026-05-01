@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev",
-    "dev:turbo": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --no-webstorage\" next dev --turbopack",
+    "dev": "next dev -p 3000",
+    "dev:turbo": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "analyze": "ANALYZE=true next build && npx @next/bundle-analyzer .next"
+    "analyze": "cross-env ANALYZE=true next build && npx @next/bundle-analyzer .next"
   },
   "engines": {
     "node": "22.x"

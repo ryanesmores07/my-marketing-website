@@ -27,7 +27,11 @@ export const Navigation = ({ locale }: NavigationProps) => {
               <Link
                 href={`/${locale}`}
                 className="text-xl font-bold text-foreground transition-colors hover:text-primary"
-                prefetch={false}
+                aria-label={
+                  locale === "jp"
+                    ? "ernieryan.dev — ホームに戻る"
+                    : "ernieryan.dev — Back to home"
+                }
               >
                 ernieryan.dev
               </Link>

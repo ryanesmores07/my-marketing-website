@@ -48,7 +48,14 @@ export function Hero({ heroData, locale = "en" }: HeroProps) {
       <div className="absolute inset-0 -z-10 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
 
       <div className="relative mb-8 flex w-full justify-center px-4 sm:mb-16 sm:px-6 lg:mb-20 lg:px-8">
-        <h1 className="min-h-[4rem] min-w-0 max-w-full whitespace-nowrap text-center text-[clamp(2rem,15vw,26rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]">
+        <h1
+          className="min-h-[4rem] min-w-0 max-w-full whitespace-nowrap text-center text-[clamp(2rem,15vw,26rem)] font-black leading-none tracking-tighter text-foreground lg:min-h-[6rem]"
+          aria-label={
+            locale === "jp"
+              ? "Ernie Ryan — 東京拠点のバイリンガルShopify開発・広告運用・多言語SEOパートナー"
+              : "Ernie Ryan — Bilingual Shopify Developer, Paid Ads & Multilingual SEO Partner in Tokyo"
+          }
+        >
           ERNIE RYAN
         </h1>
       </div>
@@ -126,6 +133,46 @@ export function Hero({ heroData, locale = "en" }: HeroProps) {
                   </Button>
                 </Link>
               </div>
+
+              <Link
+                href={`/${locale}/shopify-japan`}
+                aria-label={
+                  locale === "jp"
+                    ? "日本市場向けShopify支援ページを見る"
+                    : "See my dedicated Shopify Japan service page"
+                }
+                className="group inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 py-1.5 pl-2 pr-3.5 text-sm font-medium text-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                <span
+                  aria-hidden="true"
+                  role="img"
+                  className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-background text-base leading-none"
+                >
+                  {"🇯🇵"}
+                </span>
+                <span>
+                  {locale === "jp" ? (
+                    <>
+                      <span className="font-semibold text-primary">
+                        {"日本市場で販売中？"}
+                      </span>{" "}
+                      <span className="text-muted-foreground">
+                        {"Shopify Japan支援はこちら"}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-semibold text-primary">
+                        Selling in Japan?
+                      </span>{" "}
+                      <span className="text-muted-foreground">
+                        See my Shopify Japan service
+                      </span>
+                    </>
+                  )}
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 text-primary transition-transform duration-200 group-hover:translate-x-0.5" />
+              </Link>
             </div>
           </div>
         </div>

@@ -16,28 +16,33 @@ export const contactConfig = {
     whatsapp: "/images/Whatsapp-QR.jpeg",
   },
   messageTemplates: {
-    en: "Hi! I'm interested in your Shopify development, paid ads, or SEO support.",
-    jp: "こんにちは。Shopify構築、広告運用、SEO支援について相談したいです。",
+    en: "Hi Ryan, I’m interested in bilingual Shopify/ecommerce support for Japan. My store or website is: ",
+    jp: "Ryanさん、こんにちは。日本向けのShopify・ECサポートについて相談したいです。ストアまたはWebサイトはこちらです：",
   },
 };
 
 export const serviceTypes = {
   en: [
-    "Paid Ads Management & Performance Marketing",
-    "Shopify Development",
-    "SEO for Ecommerce & Multilingual Sites",
-    "Multilingual Content Writing",
-    "Web Design",
-    "Custom Web Development",
-    "Other",
+    "Shopify Japan Localization",
+    "Shopify Store Build or Improvement",
+    "Ecommerce Paid Ads",
+    "SEO / Content / Product Page Improvement",
+    "Instagram / Creative Asset Support",
+    "Bilingual Ecommerce Support",
+    "Not Sure Yet",
   ],
   jp: [
-    "広告運用・パフォーマンスマーケティング",
-    "Shopify構築",
-    "ECサイト・多言語サイトのSEO",
-    "多言語コンテンツ制作",
-    "Webデザイン",
-    "Web開発",
-    "その他",
+    "日本向けShopifyローカライズ",
+    "Shopify構築・改善",
+    "EC広告運用",
+    "SEO・コンテンツ・商品ページ改善",
+    "Instagram・クリエイティブ制作",
+    "日英ECサポート",
+    "まだ決まっていない",
   ],
+};
+
+export const targetMarketOptions = {
+  en: ["Japan", "Overseas", "Both Japan and overseas", "Not sure yet"],
+  jp: ["日本向け", "海外向け", "日本・海外の両方", "まだ決まっていない"],
 };

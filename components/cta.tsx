@@ -18,23 +18,23 @@ const CTA = ({ locale = "en" }: CTAProps) => {
 
   const content = {
     en: {
-      subtitle: "Need help with build, ads, or SEO?",
+      subtitle: "Selling in Japan or improving a bilingual ecommerce store?",
       headingLine1: "LET'S TALK",
-      headingLine2: "ABOUT WHAT'S NEXT",
+      headingLine2: "ABOUT YOUR NEXT STEP",
       body:
-        "Tell me what you are building, improving, or trying to fix. I can help turn it into a clear next step.",
-      button: "GET IN TOUCH",
+        "Tell me what you are building, improving, or trying to fix. I will review your store, market, or campaign and suggest the clearest next step.",
+      button: "GET PROJECT ADVICE",
       supporting: "Based in Tokyo, supporting ecommerce brands in Japan and abroad.",
       inquiries: "Direct email",
       email: "mytokyowebdev@ernieryan.dev",
     },
     jp: {
-      subtitle: "構築・広告・SEOの相談はこちら",
+      subtitle: "日本向けECやバイリンガルShopifyの改善を相談したい方へ",
       headingLine1: "まずは",
-      headingLine2: "ご相談ください",
+      headingLine2: "次の一手を相談",
       body:
-        "新規制作、改善施策、広告運用の見直しなど、今進めたいことを気軽にご相談ください。",
-      button: "お問い合わせ",
+        "構築したい内容、改善したい課題、現在つまずいている点を教えてください。ストア、対象市場、広告や導線を確認し、次に取るべき方向性を整理します。",
+      button: "相談する",
       supporting: "東京を拠点に、日本国内・海外向けのECブランドを支援しています。",
       inquiries: "メールでのご連絡",
       email: "mytokyowebdev@ernieryan.dev",

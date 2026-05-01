@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Languages, ShoppingBag, CreditCard } from "lucide-react";
 import { services } from "@/content/services";
 import { ServicesCTAButton } from "@/components/services-cta-button";
 
@@ -24,6 +26,28 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
       ctaBody:
         "Whether you are building from scratch, improving conversion paths, or trying to make paid spend work harder, I can help connect strategy, execution, and reporting in one workflow.",
       ctaImageAlt: "Abstract globe representing connected ecommerce operations",
+      japanCalloutEyebrow: "Selling in Japan?",
+      japanCalloutTitle: "Bilingual Shopify support for the Japan market",
+      japanCalloutBody:
+        "Setup, localization, ads, and tracking — for brands selling into Japan or going cross-border from Japan.",
+      japanCalloutLink: "See the Shopify Japan page",
+      japanCalloutProofPoints: [
+        {
+          icon: "languages",
+          title: "Bilingual EN / JP",
+          body: "Native-quality Japanese copy and EN/JP storefront from day one.",
+        },
+        {
+          icon: "shopping-bag",
+          title: "Shopify Markets",
+          body: "Cross-border setup, currency, shipping, and tax handled cleanly.",
+        },
+        {
+          icon: "credit-card",
+          title: "JP payments & checkout",
+          body: "Konbini, JCB, and local payment options buyers actually trust.",
+        },
+      ],
     },
     jp: {
       badge: "サービス",
@@ -34,6 +58,28 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
       ctaBody:
         "新規構築、CV導線の見直し、広告運用の立て直しまで、分断しやすい作業をひとつの流れで支援します。",
       ctaImageAlt: "連携したEC運用を表現した抽象的なグラフィック",
+      japanCalloutEyebrow: "日本市場向け",
+      japanCalloutTitle: "日本市場向けShopify支援はこちら",
+      japanCalloutBody:
+        "構築、ローカライズ、広告、計測まで。日本国内向け／日本から海外向けに展開するブランドを支援します。",
+      japanCalloutLink: "Shopify Japanページを見る",
+      japanCalloutProofPoints: [
+        {
+          icon: "languages",
+          title: "日英バイリンガル対応",
+          body: "ネイティブ品質の日本語コピーと、日英対応のストアフロントを最初から構築。",
+        },
+        {
+          icon: "shopping-bag",
+          title: "Shopify Markets",
+          body: "越境EC、通貨、配送、税金の設定までまとめて整えます。",
+        },
+        {
+          icon: "credit-card",
+          title: "国内決済・チェックアウト",
+          body: "コンビニ決済、JCB、日本のユーザーが安心して使える決済を導入。",
+        },
+      ],
     },
   }[locale];
 
@@ -102,6 +148,77 @@ export const ServicesSection = ({ locale = "en" }: ServicesSectionProps) => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 lg:mt-20">
+          <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md sm:p-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/5 blur-3xl"
+            />
+
+            <div className="relative grid items-start gap-10 lg:grid-cols-[1.1fr,1fr]">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                  <span aria-hidden="true" role="img" className="text-sm leading-none">
+                    {"🇯🇵"}
+                  </span>
+                  {copy.japanCalloutEyebrow}
+                </div>
+
+                <h3 className="mb-4 text-2xl font-bold leading-tight text-foreground sm:text-3xl lg:text-4xl">
+                  {copy.japanCalloutTitle}
+                </h3>
+
+                <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                  {copy.japanCalloutBody}
+                </p>
+
+                <div className="mt-8">
+                  <Link
+                    href={`/${locale}/shopify-japan`}
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  >
+                    {copy.japanCalloutLink}
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+              </div>
+
+              <ul className="grid gap-4 sm:grid-cols-1">
+                {copy.japanCalloutProofPoints.map((point) => {
+                  const Icon =
+                    point.icon === "languages"
+                      ? Languages
+                      : point.icon === "shopping-bag"
+                        ? ShoppingBag
+                        : CreditCard;
+                  return (
+                    <li
+                      key={point.title}
+                      className="flex items-start gap-4 rounded-xl border border-border/70 bg-background/50 p-4 transition-colors hover:border-primary/30"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-foreground">
+                          {point.title}
+                        </div>
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          {point.body}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div className="relative overflow-hidden pb-20 pt-10 lg:pt-32">

@@ -8,7 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Send, Loader2 } from "lucide-react";
 import { useForm as useFormspreeForm, ValidationError } from "@formspree/react";
 import { toast } from "sonner";
-import { contactConfig, serviceTypes } from "@/lib/contact-config";
+import {
+  contactConfig,
+  serviceTypes,
+  targetMarketOptions,
+} from "@/lib/contact-config";
+import { trackEvent } from "@/lib/gtag";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,8 +39,10 @@ type ContactFormData = {
   name: string;
   email: string;
   serviceType: string;
+  storeUrl: string;
+  targetMarket: string;
   message: string;
-  website: string;
+  companyWebsite: string;
 };
 
 interface ContactModalProps {
@@ -46,11 +53,11 @@ interface ContactModalProps {
 
 const content = {
   en: {
-    title: "Let's Talk About Your Project",
-    profileTitle: "Shopify Development & Performance Marketing",
-    consultationTitle: "Project consultation",
+    title: "Tell Me About Your Ecommerce Project",
+    profileTitle: "Bilingual Shopify & Ecommerce Growth Support",
+    consultationTitle: "Project fit check",
     consultationDescription:
-      "Tell me what you are building, what you want to improve, or where you are stuck. I will review it and come back with the next best step.",
+      "Share your store, target market, and main goal. I will review the context and reply with the best next step.",
     availability: "Based in Tokyo, supporting clients in Japan and abroad",
     location: "Tokyo, Japan",
     contactInfoTitle: "Project details",
@@ -58,20 +65,24 @@ const content = {
     emailLabel: "Email",
     serviceTypeLabel: "Service type",
     serviceTypePlaceholder: "Select a service...",
+    storeUrlLabel: "Website / store URL",
+    storeUrlPlaceholder: "https://yourstore.com",
+    targetMarketLabel: "Target market",
+    targetMarketPlaceholder: "Select target market...",
     messageLabel: "Message",
     messagePlaceholder:
-      "Tell me about your website, ads, market, or the challenge you want to solve...",
+      "Tell me about your Shopify store, target market, current issue, or what you want to improve...",
     sendButton: "Send Message",
-    quickContactTitle: "Prefer direct contact?",
+    quickContactTitle: "Prefer LINE or WhatsApp?",
     quickContactDescription:
-      "If messaging is easier, you can also reach out on LINE or WhatsApp.",
+      "You can also send a quick first message if that is easier.",
     lineButton: "LINE",
     whatsappButton: "WhatsApp",
     lineSubtext:
-      "Useful for a first message, quick questions, or follow-ups during a project.",
+      "Best for first messages, quick questions, or follow-ups.",
     successTitle: "Message sent",
     successMessage:
-      "Thanks for reaching out. I received your message and will get back to you soon.",
+      "Thanks for reaching out. I received your message and will get back to you with the next step.",
     closeButton: "Close",
     tooFast: "Submission was too fast. Please try again.",
     submitting: "Sending...",
@@ -83,15 +94,15 @@ const content = {
       email: "Please enter a valid email address.",
       serviceType: "Please select a service type.",
       message: "Message must be at least 10 characters.",
-      website: "Invalid submission.",
+      companyWebsite: "Invalid submission.",
     },
   },
   jp: {
-    title: "プロジェクトについて相談する",
-    profileTitle: "Shopify構築・広告運用支援",
-    consultationTitle: "ご相談内容",
+    title: "EC・Shopify案件について相談する",
+    profileTitle: "Shopify構築・EC成長支援（日英対応）",
+    consultationTitle: "案件内容の確認",
     consultationDescription:
-      "新規制作、改善したい点、今つまずいていることなどをお知らせください。内容を確認したうえで、次の進め方をご提案します。",
+      "ストアURL、対象市場、現在の課題や目的を共有してください。内容を確認し、次に取るべき方向性をご返信します。",
     availability: "東京を拠点に、日本国内・海外向けの案件を支援しています",
     location: "東京, 日本",
     contactInfoTitle: "お問い合わせ内容",
@@ -99,20 +110,24 @@ const content = {
     emailLabel: "メールアドレス",
     serviceTypeLabel: "ご相談内容",
     serviceTypePlaceholder: "サービスを選択してください",
+    storeUrlLabel: "Webサイト / ストアURL",
+    storeUrlPlaceholder: "https://yourstore.com",
+    targetMarketLabel: "対象市場",
+    targetMarketPlaceholder: "対象市場を選択してください",
     messageLabel: "メッセージ",
     messagePlaceholder:
-      "Webサイト、広告運用、対象市場、今の課題などをお知らせください...",
+      "Shopifyストア、対象市場、現在の課題、改善したい内容などを教えてください...",
     sendButton: "送信する",
-    quickContactTitle: "LINE / WhatsAppで連絡する",
+    quickContactTitle: "LINE / WhatsAppで相談する",
     quickContactDescription:
-      "メールより気軽に相談したい場合は、LINEまたはWhatsAppでもご連絡いただけます。",
+      "まずは簡単にメッセージしたい場合は、LINEまたはWhatsAppでもご連絡いただけます。",
     lineButton: "LINE",
     whatsappButton: "WhatsApp",
     lineSubtext:
-      "初回のご相談、簡単な質問、進行中のやり取りにも使いやすい連絡方法です。",
+      "初回相談、簡単な質問、進行中のやり取りに使いやすい連絡方法です。",
     successTitle: "送信が完了しました",
     successMessage:
-      "お問い合わせありがとうございます。内容を確認のうえ、順次ご返信します。",
+      "お問い合わせありがとうございます。内容を確認し、次の進め方についてご返信します。",
     closeButton: "閉じる",
     tooFast: "送信が早すぎました。少し時間をおいて再度お試しください。",
     submitting: "送信中...",
@@ -124,7 +139,7 @@ const content = {
       email: "有効なメールアドレスを入力してください。",
       serviceType: "ご相談内容を選択してください。",
       message: "メッセージを10文字以上で入力してください。",
-      website: "無効な送信です。",
+      companyWebsite: "無効な送信です。",
     },
   },
 } as const;
@@ -136,8 +151,10 @@ const getContactFormSchema = (locale: "en" | "jp") => {
     name: z.string().min(2, t.name),
     email: z.string().email(t.email),
     serviceType: z.string().min(1, t.serviceType),
+    storeUrl: z.string(),
+    targetMarket: z.string(),
     message: z.string().min(10, t.message),
-    website: z.string().max(0, t.website),
+    companyWebsite: z.string().max(0, t.companyWebsite),
   });
 };
 
@@ -154,8 +171,10 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       name: "",
       email: "",
       serviceType: "",
+      storeUrl: "",
+      targetMarket: "",
       message: "",
-      website: "",
+      companyWebsite: "",
     },
   });
 
@@ -167,7 +186,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       return;
     }
 
-    if (data.website) {
+    if (data.companyWebsite) {
       return;
     }
 
@@ -175,6 +194,8 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("serviceType", data.serviceType);
+    formData.append("storeUrl", data.storeUrl);
+    formData.append("targetMarket", data.targetMarket);
     formData.append("message", data.message);
     formData.append("locale", locale);
 
@@ -189,10 +210,15 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
   useEffect(() => {
     if (formspreeState.succeeded) {
+      trackEvent("generate_lead", {
+        locale,
+        form_name: "contact_modal",
+        page_path: window.location.pathname,
+      });
       setIsSuccess(true);
       form.reset();
     }
-  }, [formspreeState.succeeded, form]);
+  }, [formspreeState.succeeded, form, locale]);
 
   const handleClose = () => {
     if (isSuccess) {
@@ -329,6 +355,59 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
                     <FormField
                       control={form.control}
+                      name="storeUrl"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="store-url">
+                            {t.storeUrlLabel}
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              id="store-url"
+                              type="url"
+                              placeholder={t.storeUrlPlaceholder}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="targetMarket"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="target-market">
+                            {t.targetMarketLabel}
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger id="target-market">
+                                <SelectValue
+                                  placeholder={t.targetMarketPlaceholder}
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {targetMarketOptions[locale].map((market) => (
+                                <SelectItem key={market} value={market}>
+                                  {market}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="message"
                       render={({ field }) => (
                         <FormItem>
@@ -350,10 +429,10 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
                     <FormField
                       control={form.control}
-                      name="website"
+                      name="companyWebsite"
                       render={({ field }) => (
                         <FormItem className="sr-only">
-                          <FormLabel>Website</FormLabel>
+                          <FormLabel>Company website</FormLabel>
                           <FormControl>
                             <Input
                               type="text"
