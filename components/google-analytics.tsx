@@ -10,9 +10,11 @@ export const GoogleAnalytics = () => (
     <Script id="google-analytics" strategy="afterInteractive">
       {`
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+        window.gtag = window.gtag || function gtag(){dataLayer.push(arguments);}
+        window.gtag('js', new Date());
+        window.gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+        window.gtagReady = true;
+        window.dispatchEvent(new Event('gtag-ready'));
       `}
     </Script>
   </>

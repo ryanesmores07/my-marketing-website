@@ -6,6 +6,7 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    gtagReady?: boolean;
   }
 }
 
@@ -38,14 +39,16 @@ export const trackEvent = (
   gtag("event", eventName, params);
 };
 
-export const trackPageView = (url: string) => {
+export const trackPageView = (url: string, title?: string) => {
   const gtag = getGtag();
 
   if (!gtag) {
     return;
   }
 
-  gtag("config", GA_MEASUREMENT_ID, {
+  gtag("event", "page_view", {
+    send_to: GA_MEASUREMENT_ID,
+    page_title: title ?? document.title,
     page_path: url,
     page_location: `${window.location.origin}${url}`,
   });
