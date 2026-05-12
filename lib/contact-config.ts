@@ -23,6 +23,11 @@ export const contactConfig = {
 
 export const serviceTypes = {
   en: [
+    "Shopify Japan Readiness Audit",
+    "Shopify Localization Fix",
+    "GA4 / Meta / Google Ads Tracking Setup",
+    "Product Page / Landing Page Cleanup",
+    "Shopify App or Theme Troubleshooting",
     "Shopify Japan Localization",
     "Shopify Store Build or Improvement",
     "Ecommerce Paid Ads",
@@ -32,13 +37,66 @@ export const serviceTypes = {
     "Not Sure Yet",
   ],
   jp: [
+    "日本市場向けShopify診断（準備度チェック）",
+    "Shopifyのローカライズ修正",
+    "GA4・Meta・Google広告の計測タグ設定",
+    "商品ページ・LPの整理・改善",
+    "Shopifyアプリ・テーマのトラブル対応",
     "日本向けShopifyローカライズ",
-    "Shopify構築・改善",
+    "Shopifyストアの構築・改善",
     "EC広告運用",
     "SEO・コンテンツ・商品ページ改善",
-    "Instagram・クリエイティブ制作",
-    "日英ECサポート",
+    "Instagram・クリエイティブ制作支援",
+    "日英対応のECサポート",
     "まだ決まっていない",
+  ],
+};
+
+export const budgetOptions = {
+  en: [
+    "Under $500",
+    "$500-$1,000",
+    "$1,000-$2,000",
+    "$2,000+",
+    "Not sure yet",
+  ],
+  jp: [
+    "500ドル未満",
+    "500〜1,000ドル",
+    "1,000〜2,000ドル",
+    "2,000ドル以上",
+    "未定・相談したい",
+  ],
+};
+
+export const urgencyOptions = {
+  en: ["This week", "This month", "1-3 months", "Just researching"],
+  jp: [
+    "今週中に連絡したい",
+    "今月中",
+    "1〜3か月以内",
+    "まだ情報収集中",
+  ],
+};
+
+export const leadSourceOptions = {
+  en: [
+    "Google search",
+    "Upwork",
+    "Referral",
+    "LinkedIn",
+    "Partner / agency",
+    "WhatsApp / LINE",
+    "Other",
+  ],
+  jp: [
+    "Google検索",
+    "Upwork",
+    "ご紹介",
+    "LinkedIn",
+    "パートナー・代理店経由",
+    "WhatsApp / LINE",
+    "その他",
   ],
 };
 

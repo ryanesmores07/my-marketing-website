@@ -485,9 +485,39 @@ const copy = {
 
 const featuredSlugs = ["mitozz-shopify-store", "episou-shopify-store"];
 
+const entryOffers = {
+  en: {
+    eyebrow: "Focused entry offers",
+    title: "Start small, prove the fit, then scale what works.",
+    body:
+      "For under-$2k projects, the highest-ROI first step is usually one clear fix or audit. Each offer is scoped to solve a real ecommerce bottleneck without forcing a full rebuild.",
+    items: [
+      "Shopify Japan readiness audit",
+      "Shopify localization fix",
+      "GA4 / Meta / Google Ads tracking setup",
+      "Product page / landing page conversion cleanup",
+      "Shopify app or theme troubleshooting",
+    ],
+  },
+  jp: {
+    eyebrow: "Focused entry offers",
+    title: "Start small, prove the fit, then scale what works.",
+    body:
+      "For under-$2k projects, the highest-ROI first step is usually one clear fix or audit. Each offer is scoped to solve a real ecommerce bottleneck without forcing a full rebuild.",
+    items: [
+      "Shopify Japan readiness audit",
+      "Shopify localization fix",
+      "GA4 / Meta / Google Ads tracking setup",
+      "Product page / landing page conversion cleanup",
+      "Shopify app or theme troubleshooting",
+    ],
+  },
+} as const;
+
 export default async function ShopifyJapanPage({ params }: PageProps) {
   const { locale } = await params;
   const t = copy[locale];
+  const offers = entryOffers[locale];
   const meta = metadataByLocale[locale];
 
   const projects = featuredSlugs
@@ -698,6 +728,33 @@ export default async function ShopifyJapanPage({ params }: PageProps) {
 
       <section id="shopify-help" className="border-t border-border bg-background py-20 lg:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 grid gap-8 border-b border-border pb-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <span className="mb-4 inline-flex rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                {offers.eyebrow}
+              </span>
+              <h2 className="mb-4 text-3xl font-bold leading-tight text-foreground sm:text-4xl">
+                {offers.title}
+              </h2>
+              <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
+                {offers.body}
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {offers.items.map((offer) => (
+                <div
+                  key={offer}
+                  className="flex min-h-20 items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-sm"
+                >
+                  <Target className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <span className="text-sm font-semibold leading-relaxed text-foreground">
+                    {offer}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="mb-12 max-w-3xl">
             <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">
               {t.adhoc.title}

@@ -45,6 +45,11 @@ const SmartContactHandler = ({
       device_type: isMobile ? "mobile" : "desktop",
       page_path: window.location.pathname,
     });
+    trackEvent(`${platform}_click`, {
+      locale,
+      device_type: isMobile ? "mobile" : "desktop",
+      page_path: window.location.pathname,
+    });
 
     const encodedMessage = encodeURIComponent(
       contactConfig.messageTemplates[locale]
