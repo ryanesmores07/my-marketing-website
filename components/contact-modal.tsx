@@ -9,11 +9,15 @@ import { Mail, Send, Loader2 } from "lucide-react";
 import { useForm as useFormspreeForm, ValidationError } from "@formspree/react";
 import { toast } from "sonner";
 import {
+  budgetOptions,
   contactConfig,
+  leadSourceOptions,
   serviceTypes,
   targetMarketOptions,
+  urgencyOptions,
 } from "@/lib/contact-config";
 import { trackEvent } from "@/lib/gtag";
+import { getMarketingAttribution } from "@/lib/marketing-attribution";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,6 +45,9 @@ type ContactFormData = {
   serviceType: string;
   storeUrl: string;
   targetMarket: string;
+  budget: string;
+  urgency: string;
+  leadSource: string;
   message: string;
   companyWebsite: string;
 };
@@ -69,9 +76,17 @@ const content = {
     storeUrlPlaceholder: "https://yourstore.com",
     targetMarketLabel: "Target market",
     targetMarketPlaceholder: "Select target market...",
+    budgetLabel: "Budget range",
+    budgetPlaceholder: "Select budget...",
+    urgencyLabel: "Timeline",
+    urgencyPlaceholder: "Select timeline...",
+    leadSourceLabel: "How did you find me?",
+    leadSourcePlaceholder: "Select source...",
     messageLabel: "Message",
     messagePlaceholder:
       "Tell me about your Shopify store, target market, current issue, or what you want to improve...",
+    emailPlaceholder: "your@email.com",
+    honeypotLabel: "Company website",
     sendButton: "Send Message",
     quickContactTitle: "Prefer LINE or WhatsApp?",
     quickContactDescription:
@@ -93,6 +108,9 @@ const content = {
       name: "Name must be at least 2 characters.",
       email: "Please enter a valid email address.",
       serviceType: "Please select a service type.",
+      budget: "Please select a budget range.",
+      urgency: "Please select a timeline.",
+      leadSource: "Please select how you found me.",
       message: "Message must be at least 10 characters.",
       companyWebsite: "Invalid submission.",
     },
@@ -104,19 +122,27 @@ const content = {
     consultationDescription:
       "ストアURL、対象市場、現在の課題や目的を共有してください。内容を確認し、次に取るべき方向性をご返信します。",
     availability: "東京を拠点に、日本国内・海外向けの案件を支援しています",
-    location: "東京, 日本",
+    location: "東京都（日本）",
     contactInfoTitle: "お問い合わせ内容",
     nameLabel: "お名前",
     emailLabel: "メールアドレス",
+    emailPlaceholder: "例：name@example.com",
+    honeypotLabel: "会社のウェブサイト",
     serviceTypeLabel: "ご相談内容",
-    serviceTypePlaceholder: "サービスを選択してください",
-    storeUrlLabel: "Webサイト / ストアURL",
-    storeUrlPlaceholder: "https://yourstore.com",
+    serviceTypePlaceholder: "内容を選択してください",
+    storeUrlLabel: "Webサイト／ストアのURL",
+    storeUrlPlaceholder: "https://example.com",
     targetMarketLabel: "対象市場",
     targetMarketPlaceholder: "対象市場を選択してください",
+    budgetLabel: "ご予算の目安",
+    budgetPlaceholder: "ご予算を選択してください",
+    urgencyLabel: "希望スケジュール",
+    urgencyPlaceholder: "希望時期を選択してください",
+    leadSourceLabel: "知ったきっかけ",
+    leadSourcePlaceholder: "選択してください",
     messageLabel: "メッセージ",
     messagePlaceholder:
-      "Shopifyストア、対象市場、現在の課題、改善したい内容などを教えてください...",
+      "ShopifyストアのURL、対象市場、現在の課題、改善したい点などを具体的にご記入ください…",
     sendButton: "送信する",
     quickContactTitle: "LINE / WhatsAppで相談する",
     quickContactDescription:
@@ -138,6 +164,9 @@ const content = {
       name: "お名前を2文字以上で入力してください。",
       email: "有効なメールアドレスを入力してください。",
       serviceType: "ご相談内容を選択してください。",
+      budget: "ご予算の目安を選択してください。",
+      urgency: "希望スケジュールを選択してください。",
+      leadSource: "知ったきっかけを選択してください。",
       message: "メッセージを10文字以上で入力してください。",
       companyWebsite: "無効な送信です。",
     },
@@ -153,6 +182,9 @@ const getContactFormSchema = (locale: "en" | "jp") => {
     serviceType: z.string().min(1, t.serviceType),
     storeUrl: z.string(),
     targetMarket: z.string(),
+    budget: z.string().min(1, t.budget),
+    urgency: z.string().min(1, t.urgency),
+    leadSource: z.string().min(1, t.leadSource),
     message: z.string().min(10, t.message),
     companyWebsite: z.string().max(0, t.companyWebsite),
   });
@@ -173,6 +205,9 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       serviceType: "",
       storeUrl: "",
       targetMarket: "",
+      budget: "",
+      urgency: "",
+      leadSource: "",
       message: "",
       companyWebsite: "",
     },
@@ -190,14 +225,23 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       return;
     }
 
+    const attribution = getMarketingAttribution();
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("serviceType", data.serviceType);
     formData.append("storeUrl", data.storeUrl);
     formData.append("targetMarket", data.targetMarket);
+    formData.append("budget", data.budget);
+    formData.append("urgency", data.urgency);
+    formData.append("leadSource", data.leadSource);
     formData.append("message", data.message);
     formData.append("locale", locale);
+    Object.entries(attribution).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
 
     await formspreeHandleSubmit(formData);
   };
@@ -213,6 +257,10 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
       trackEvent("generate_lead", {
         locale,
         form_name: "contact_modal",
+        service_type: form.getValues("serviceType"),
+        budget: form.getValues("budget"),
+        urgency: form.getValues("urgency"),
+        lead_source: form.getValues("leadSource"),
         page_path: window.location.pathname,
       });
       setIsSuccess(true);
@@ -258,6 +306,13 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                 <div className="text-gray-700">{t.location}</div>
                 <a
                   href={`mailto:${contactConfig.email}`}
+                  onClick={() =>
+                    trackEvent("email_click", {
+                      locale,
+                      page_path: window.location.pathname,
+                      link_location: "contact_modal",
+                    })
+                  }
                   className="text-gray-600 underline underline-offset-2"
                 >
                   {contactConfig.email}
@@ -312,7 +367,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                             <Input
                               id="email"
                               type="email"
-                              placeholder="your@email.com"
+                              placeholder={t.emailPlaceholder}
                               {...field}
                             />
                           </FormControl>
@@ -408,6 +463,96 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
 
                     <FormField
                       control={form.control}
+                      name="budget"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="budget">{t.budgetLabel}</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger id="budget">
+                                <SelectValue placeholder={t.budgetPlaceholder} />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {budgetOptions[locale].map((budget) => (
+                                <SelectItem key={budget} value={budget}>
+                                  {budget}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="urgency"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="urgency">{t.urgencyLabel}</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger id="urgency">
+                                <SelectValue
+                                  placeholder={t.urgencyPlaceholder}
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {urgencyOptions[locale].map((urgency) => (
+                                <SelectItem key={urgency} value={urgency}>
+                                  {urgency}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="leadSource"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="lead-source">
+                            {t.leadSourceLabel}
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger id="lead-source">
+                                <SelectValue
+                                  placeholder={t.leadSourcePlaceholder}
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {leadSourceOptions[locale].map((source) => (
+                                <SelectItem key={source} value={source}>
+                                  {source}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="message"
                       render={({ field }) => (
                         <FormItem>
@@ -432,7 +577,7 @@ const ContactModal = ({ isOpen, onClose, locale }: ContactModalProps) => {
                       name="companyWebsite"
                       render={({ field }) => (
                         <FormItem className="sr-only">
-                          <FormLabel>Company website</FormLabel>
+                          <FormLabel>{t.honeypotLabel}</FormLabel>
                           <FormControl>
                             <Input
                               type="text"

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
+import { trackEvent } from "@/lib/gtag";
 
 const ContactModal = dynamic(
   () => import("./contact-modal").then((mod) => mod.ContactModal),
@@ -65,7 +66,14 @@ const CTA = ({ locale = "en" }: CTAProps) => {
       </p>
 
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          trackEvent("main_cta_click", {
+            locale,
+            page_path: window.location.pathname,
+            cta_label: t.button,
+          });
+          setIsModalOpen(true);
+        }}
         className="mt-2 flex items-center rounded-full bg-neutral-800 px-14 py-6 text-xl font-bold shadow-lg transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2"
         tabIndex={0}
         aria-label={t.button}
@@ -81,6 +89,13 @@ const CTA = ({ locale = "en" }: CTAProps) => {
           <span className="block">{t.inquiries}</span>
           <a
             href={`mailto:${t.email}`}
+            onClick={() =>
+              trackEvent("email_click", {
+                locale,
+                page_path: window.location.pathname,
+                link_location: "footer_cta",
+              })
+            }
             className="underline underline-offset-2 transition hover:text-neutral-200"
             tabIndex={0}
             aria-label={`Email ${t.email}`}
